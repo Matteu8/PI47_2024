@@ -68,12 +68,12 @@
             </div>
 
             <div class="mb-3">
-                <label for="">Questionario:</label>
+                <label for="">Assunto</label>
                 <select class="form-select" id="estados" name="bt_questionario">
-                    <option value="AC">Elogio</option>
-                    <option value="AL">Reclamaçao</option>
-                    <option value="AP">Duvida</option>
-                    <option value="AM">Mensagem</option>
+                    <option value="">Elogio</option>
+                    <option value="">Reclamaçao</option>
+                    <option value="">Duvida</option>
+                    <option value="">Mensagem</option>
                    
                     
                 </select>
@@ -81,10 +81,14 @@
            
             
             <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="insitra sua duvida" aria-label="Search">
+            <label for="">Mensagem</label>
+
+            <textarea class="form-control me-2"name="" id=""></textarea>
+          
           <button class="btn btn_teste" type="submit"></button>
-          <input class="form-control btn btn-success" type="submit" value="enviar"><br>
+          
         </form>
+        <input class="form-control btn btn-success" type="submit" value="enviar">
       </div>
     </div>
   </nav>
