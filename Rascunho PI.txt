@@ -1,8 +1,0 @@
-Index (Compras)
-Cadastro de Clientes - *Parte do Cliente*(Nome, Email, Telefone, Senha,) Login Convidado caso quiser se cadastrar
-Cadastro de Lanches - *Parte do Funcionario* (Nome, Descrição, imagem, preço)
-Cadastro de Bebidas - *Parte do Funcionario* (Nome, Descrição, imagem, preço)
-Cadastro de Sobremesas - *Parte do Funcionario* (Nome, Descrição, imagem, preço)
-Pagamento - *Parte do Cliente*
-Gerenciamento de Estoque
-Banco de Dados em Geral
