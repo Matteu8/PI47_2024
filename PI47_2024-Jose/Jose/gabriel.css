@@ -5,10 +5,11 @@
           padding: 0;
       }
       footer {
+          position: fixed;
           background-color: #004A8D;
           color: #fff;
           text-align: center;
-          padding: 20px;
+          padding: 10px;
           position: relative;
           bottom: 0;
           width: 100%;
@@ -92,7 +93,10 @@
                 color: #fff;
                 text-align: center;
                 padding: 10px 0;
+<<<<<<< HEAD
                 position: fixed;
+=======
+>>>>>>> 0ed37c7994f9a5c406dc4760d35505cfa8daac45
                 bottom: 0;
                 width: 100%;
             }
