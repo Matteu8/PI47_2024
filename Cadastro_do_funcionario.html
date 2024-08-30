@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro-dos-funcionarios</title>
+</head>
+<body>
+
+<h1>Cadastro-dos-funcionarios</h1>
+    
+<form action="process.php" method="POST">
+    <label for="nome">Nome:</label><br>
+    <input type="text" id="nome" name="nome" required><br>
+
+    <label for="funcionario">Funcionário/Cliente:</label>
+    
+    <input type="checkbox" name="funcionario" id="funcionario"><br>
+    <input type="text" id="funcionario_nome" name="funcionario_nome" required><br>
+
+
+    <label for="E-mail">E-mail</label><br>
+    <input type="text" id="E-mail" name="E-mail" required><br><br>
+
+    <label for="Telefone">Telefone:</label><br>
+    <input type="Telefone" id="Telefone" name="Telefone" required><br><br>
+
+    <label for="senha">Senha:</label><br>
+        <input type="password" id="senha" name="senha" required><br><br>
+
+    <label for="confirmar_senha">Confirmar Senha:</label><br>
+        <input type="password" id="confirmar_senha" name="confirmar_senha" required><br><br>
+
+    <input type="submit" value="Cadastrar">
+
+</body>
+</html>
