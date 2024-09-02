@@ -102,19 +102,28 @@
     <div class="container">
         <form action="" method="post">
 
-            <label for="">Nome Do Lanche</label>
+            <label for="">Nome do Lanche:</label>
             <input class="form-control"  type="text" name="bt_nome">
-            
-            <label for="">Ingredientes</label>
+                <br>
+                <br>
+            <label for="">Ingredientes:</label>
             <input class="form-control" type="text" name="bt_ingredientes">
-
-            <label for="">Preço</label>
+                <br>
+                <br>
+            <label for="">Preço:</label>
             <input class="form-control" type="text" name="bt_preco" >
-
-            <label for="">Quantidade</label>
+                <br>
+                <br>
+            <label for="">Quantidade:</label>
             <input class="form-control" type="text" name="bt_quantidade" >
-
+                <br>
+                <br>
+            <label for="">Foto:</label>
+            <input class="form-control" type="file" name="bt_quantidade" >
+                <br>
+                <br>
             <input class="btn btn-success "  type="submit" value="Cadastrar">
+            <br>
             <input class="btn btn-danger " type="reset" value="Voltar">
 
         </form>
