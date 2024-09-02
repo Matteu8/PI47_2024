@@ -11,7 +11,82 @@
                     die($mysqlierrno);
 
         
+
     }
+
+
+ 
+
+
+
+
+
+    /* colocar o name * aqui está como foto */
+    /*
+    if (isset($_FILES["foto"]) && $_FILES["foto"]["error"] == 0) {
+
+        // Verifique se o arquivo é uma imagem
+        $check = getimagesize($_FILES["foto"]["tmp_name"]);
+        if ($check === false) {
+            die("O arquivo não é uma imagem.");
+        }
+
+        // Verifique a extensão do arquivo
+        $extensoesPermitidas = array('jpeg', 'jpg', 'png', 'gif');
+        $extensaoArquivo = strtolower(pathinfo($_FILES["foto"]["name"], PATHINFO_EXTENSION));
+        if (!in_array($extensaoArquivo, $extensoesPermitidas)) {
+            die("Tipo de arquivo não suportado.");
+        }
+
+        // Verifique o tamanho do arquivo (por exemplo, limite de 5MB aqui)
+        if ($_FILES["foto"]["size"] > 5000000) {
+            die("Arquivo muito grande!! Max: 5MB");
+        }
+
+        // Defina o local para salvar a imagem
+        $diretorioUpload = "../img/recebidos_lanche/";
+        $novoNomeArquivo = uniqid() . "." . $extensaoArquivo;
+        $caminhoFinal = $diretorioUpload . $novoNomeArquivo;
+
+   
+
+        // Tente mover o arquivo temporário para o diretório final
+        if (!move_uploaded_file($_FILES["foto"]["tmp_name"], $caminhoFinal)) {
+            die("Ocorreu um erro ao fazer o upload da imagem.");
+        }
+
+        // Atualize o caminho da imagem no banco de dados
+        $stmt = $mysqli->prepare("UPDATE pi_2023_sus_pessoas SET camimg = ? WHERE id_pessoa = ?");
+        $stmt->bind_param("ss", $caminhoFinal, $id);
+        if (!$stmt->execute()) {
+            die("Erro ao atualizar o caminho da imagem no banco de dados.");
+        }
+
+        // Atualize a variável de sessão para refletir a mudança feita
+        $_SESSION["foto_perfil_caminho"] = $caminhoFinal;
+
+        // Redirecione o usuário de volta para a mesma página
+        header("Location: minha_conta.php");
+        exit;
+
+
+    }else if(isset($_FILES["foto"]) && $_FILES["foto"]["error"] != 0) {
+        die("Erro no upload do arquivo.");
+    }
+}else{
+    $usuario["nome"] = "Não atenticado";
+    $usuario["sobrenome"] = "Não atenticado";
+    $usuario["telefone"] = "Não atenticado"; 
+    $usuario["endereco"]= "Não atenticado";
+    $usuario["cpf"]= "Não atenticado";
+    $usuario['id_pessoa']= "Não atenticado";
+    $usuario["email"]= "Não atenticado";
+    $usuario["datanasc"]= "Não atenticado";
+    $usuario["numerocartaosus"]= "Não atenticado";
+}
+*/
+
+?>
 
 ?>
 

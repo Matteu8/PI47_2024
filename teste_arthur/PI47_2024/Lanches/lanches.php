@@ -41,6 +41,7 @@
         </div>
         <div class="product">
             <img src="img/esfihadebacon.jpg.jpg" alt="">
+           
             <h2>Esfiha de bacon</h2>
             <p></p>
             <div class="price">R$ 15,00</div>
