@@ -689,7 +689,7 @@
 
       <?php  
       
-       require ("rodape.php")
+       include ("teste_mateus.php")
       
       ?>
 
