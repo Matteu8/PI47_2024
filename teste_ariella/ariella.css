@@ -99,3 +99,19 @@ footer {
     bottom: 0;
     width: 100%;
 }
+
+footer {
+    background-color: #004a8d;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    bottom: 0;
+    width: 100%;
+}
+header{
+   color: #fff;
+}
+
+#enviar{
+    background-color:  #004a8d;
+}

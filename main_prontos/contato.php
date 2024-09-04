@@ -3,45 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagina de contato</title>
+    <title>Página de contato</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<style>
-      body {
-          font-family: Arial, sans-serif;
-          margin: 0;
-          padding: 0;
-      }
-      footer {
-          background-color: #333;
-          color: #fff;
-          text-align: center;
-          padding: 20px;
-          position: relative;
-          bottom: 0;
-          width: 100%;
-      }
-      footer a {
-          color: #fff;
-          text-decoration: none;
-      }
-      footer a:hover {
-          text-decoration: underline;
-      }
-      .footer-links {
-          margin: 10px 0;
-      }
-      .footer-links a {
-          margin: 0 10px;
-      }
-      .social-icons {
-          margin: 10px 0;
-      }
-      .social-icons a {
-          margin: 0 5px;
-      }
-  </style>
+<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="ariella.css">
+
 </head>
 <body>
  <!-- ####################################################################################### -->
@@ -50,19 +17,23 @@
                 <a href="/principal/"><img src="img/topo_site_bl1_2018.png" class="img img-responsive"></a>
             </div>
         </div>
+        
+        <header>
+            <h1>Página de Contato</h1>
+        </header>
+    
+<div class="container">
+<div class="container">
+     
 
-<div class="container text-center">
-        <h1>Pagina de contato</h1>
     </div>
-    <div class="container">
+    <div class="">
         <form action="" method="post">
 
             <label for="">Nome:</label>
             <input class="form-control" type="text" name="bt_nome">
             <div class="mb-3">
-                <label for="">Email:</label>
-                <input class="form-control" type="text" name="bt_email">
-
+                
                 <label for="">Telefone</label>
                 <input class="form-control" type="text" name="bt_telefone">
             </div>
@@ -88,7 +59,7 @@
           <button class="btn btn_teste" type="submit"></button>
           
         </form>
-        <input class="form-control btn btn-success" type="submit" value="enviar">
+        <input id="enviar" class="form-control btn btn-success" type="submit" value="Enviar">
       </div>
     </div>
   </nav>
@@ -102,7 +73,7 @@
         
     </div>
     <div class="social-icons">
-        
+  
     </div>
     <p>&copy; 2024 Sua Empresa. Todos os direitos reservados.</p>
 </footer>
