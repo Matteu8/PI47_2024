@@ -17,10 +17,10 @@
 
     <div class="F">
 
-        <h1><span class="badge text-bg-secondary">Estudantes</span></h1>
+        <h1><span class="badge text-bg-secondary">Programadores</span></h1>
         <br>
         
-        <h2><span class="badge text-bg-danger">HTML</span></h2>
+        <h2><span class="badge text-bg-danger">Frontend</span></h2>
     </div>
 
 
