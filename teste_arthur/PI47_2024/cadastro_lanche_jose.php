@@ -50,7 +50,9 @@
             if (!$stmt->execute()) {
                 die("Erro ao atualizar o caminho da imagem no banco de dados.");
             }
-            
+            if(isset($_FILES)){
+                var_dump($_FILES);
+            }
         }        
             
                     

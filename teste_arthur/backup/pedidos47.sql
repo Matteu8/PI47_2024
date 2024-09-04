@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 02-Set-2024 às 18:58
+-- Tempo de geração: 04-Set-2024 às 19:20
 -- Versão do servidor: 5.7.36
 -- versão do PHP: 7.4.26
 
@@ -83,16 +83,18 @@ CREATE TABLE IF NOT EXISTS `lanches` (
   `nome` varchar(50) NOT NULL,
   `ingredientes` varchar(300) NOT NULL,
   `preco` varchar(20) NOT NULL,
-  `quantidade` varchar(10) NOT NULL,
+  `foto` varchar(300) NOT NULL,
   PRIMARY KEY (`id_lanches`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `lanches`
 --
 
-INSERT INTO `lanches` (`id_lanches`, `nome`, `ingredientes`, `preco`, `quantidade`) VALUES
-(1, 'X-tudo', 'Tem tudo e mais um pouco', 'R$ 19,99', '1');
+INSERT INTO `lanches` (`id_lanches`, `nome`, `ingredientes`, `preco`, `foto`) VALUES
+(1, 'X-tudo', 'Tem tudo e mais um pouco', 'R$ 19,99', ''),
+(11, 'PÃ£o com ovo', 'pÃ£o e ovo frito', 'R$ 3,99', 'Pao-com-Ovo.jpg'),
+(13, 'PÃ£o com ovo', 'pÃ£o e ovo frito', 'R$ 3,99', 'as-logo-design-template-6cb212472d4c9fdbc0784695e6464e6f_screen.jpg');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
