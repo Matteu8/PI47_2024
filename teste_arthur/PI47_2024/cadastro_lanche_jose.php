@@ -4,68 +4,57 @@
     if(isset($_POST["bt_nome"])){
         $nome = $_POST["bt_nome"];
         $ingredientes = $_POST["bt_ingredientes"];
-        $quantidade = $_POST["bt_quantidade"];
         $preco = $_POST["bt_preco"];
+        $foto = $_POST["foto"];
         $mysqlierrno = "erro";
-
-        $mysqli->query("INSERT INTO lanches (nome, ingredientes, preco, quantidade) values('$nome', '$ingredientes', '$preco', '$quantidade')") or
+        
+        $mysqli->query("INSERT INTO lanches (nome, ingredientes, preco, foto) values('$nome','$ingredientes', '$preco','$foto')") or
                     die($mysqlierrno);
 
-                      /* colocar o name * aqui está como foto */
-                    if (isset($_FILES["foto"]) && $_FILES["foto"]["error"] == 0) {
+        /* colocar o name * aqui está como foto */
+        if (isset($_FILES["foto"]) && $_FILES["foto"]["error"] == 0) {
 
-                        // Verifique se o arquivo é uma imagem
-                        $check = getimagesize($_FILES["foto"]["tmp_name"]);
-                        if ($check === false) {
-                            die("O arquivo não é uma imagem.");
-                        }
-                
-                        // Verifique a extensão do arquivo
-                        $extensoesPermitidas = array('jpeg', 'jpg', 'png', 'gif');
-                        $extensaoArquivo = strtolower(pathinfo($_FILES["foto"]["name"], PATHINFO_EXTENSION));
-                        if (!in_array($extensaoArquivo, $extensoesPermitidas)) {
-                            die("Tipo de arquivo não suportado.");
-                        }
-                
-                        // Verifique o tamanho do arquivo (por exemplo, limite de 5MB aqui)
-                        if ($_FILES["foto"]["size"] > 5000000) {
-                            die("Arquivo muito grande!! Max: 5MB");
-                        }
-                
-                        // Defina o local para salvar a imagem
-                        $diretorioUpload = "../lanches/img/";
-                        $novoNomeArquivo = uniqid() . "." . $extensaoArquivo;
-                        $caminhoFinal = $diretorioUpload . $novoNomeArquivo;
-                
-                   
-                
-                        // Tente mover o arquivo temporário para o diretório final
-                        if (!move_uploaded_file($_FILES["foto"]["tmp_name"], $caminhoFinal)) {
-                            die("Ocorreu um erro ao fazer o upload da imagem.");
-                        }
-                
-                        // Atualize o caminho da imagem no banco de dados
-                        $stmt = $mysqli->prepare("UPDATE pi_2023_sus_pessoas SET camimg = ? WHERE id_pessoa = ?");
-                        $stmt->bind_param("ss", $caminhoFinal, $id);
-                        if (!$stmt->execute()) {
-                            die("Erro ao atualizar o caminho da imagem no banco de dados.");
-                        }
-                        var_dump($_FILES);
-                    }        
+            // Verifique se o arquivo é uma imagem
+            $check = getimagesize($_FILES["foto"]["tmp_name"]);
+            if ($check === false) {
+                die("O arquivo não é uma imagem.");
+            }
+    
+            // Verifique a extensão do arquivo
+            $extensoesPermitidas = array('jpeg', 'jpg', 'png', 'gif');
+            $extensaoArquivo = strtolower(pathinfo($_FILES["foto"]["name"], PATHINFO_EXTENSION));
+            if (!in_array($extensaoArquivo, $extensoesPermitidas)) {
+                die("Tipo de arquivo não suportado.");
+            }
+    
+            // Verifique o tamanho do arquivo (por exemplo, limite de 5MB aqui)
+            if ($_FILES["foto"]["size"] > 5000000) {
+                die("Arquivo muito grande!! Max: 5MB");
+            }
+    
+            // Defina o local para salvar a imagem
+            $diretorioUpload = "PI47_2024/lanches/img/";
+            $novoNomeArquivo = uniqid() . "." . $extensaoArquivo;
+            $caminhoFinal = $diretorioUpload . $novoNomeArquivo;
+    
+       
+    
+            // Tente mover o arquivo temporário para o diretório final
+            if (!move_uploaded_file($_FILES["foto"]["tmp_name"], $caminhoFinal)) {
+                die("Ocorreu um erro ao fazer o upload da imagem.");
+            }
+    
+            // Atualize o caminho da imagem no banco de dados
+            $stmt = $mysqli->prepare("UPDATE pi_2023_sus_pessoas SET camimg = ? WHERE id_pessoa = ?");
+            $stmt->bind_param("ss", $caminhoFinal, $id);
+            if (!$stmt->execute()) {
+                die("Erro ao atualizar o caminho da imagem no banco de dados.");
+            }
+            
+        }        
+            
                     
     }
-
-
-    
- 
-
-
-
-
-
-  
-    
-  
 
 ?>
 
@@ -169,17 +158,14 @@
             <input class="form-control" type="text" name="bt_preco" >
                 <br>
                 <br>
-            <label for="">Quantidade:</label>
-            <input class="form-control" type="text" name="bt_quantidade" >
-                <br>
-                <br>
             <label for="">Foto:</label>
             <input class="form-control" type="file" name="foto" >
                 <br>
                 <br>
             <input class="btn btn-success "  type="submit" value="Cadastrar">
-            <br>
+            
             <input class="btn btn-danger " type="reset" value="Voltar">
+            
 
         </form>
         <?php 

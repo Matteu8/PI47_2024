@@ -1,7 +1,7 @@
 
 <?php 
 
-    $consulta = "SELECT * FROM lanches WHERE id_lanches"
+    
 
 ?>
 
@@ -106,6 +106,18 @@
             <p></p>
             <div class="price">R$ 30,00</div>
         </div>
+
+        <?php 
+            if(isset($caminhoFinal)){
+                $funcionou = $consulta = "SELECT * FROM lanches WHERE id_lanches";
+                $div = ""
+            }
+
+            if(isset($funcionou)){
+                echo = "$div";
+            }
+
+        ?>
     </div>
 </div>
 <br>
