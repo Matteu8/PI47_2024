@@ -10,7 +10,7 @@
         $mysqli->query("INSERT INTO lanches (nome, ingredientes, preco, quantidade) values('$nome', '$ingredientes', '$preco', '$quantidade')") or
                     die($mysqlierrno);
 
-        
+       
 
     }
 
