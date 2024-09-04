@@ -5,13 +5,13 @@
         $nome = $_POST["bt_nome"];
         $ingredientes = $_POST["bt_ingredientes"];
         $preco = $_POST["bt_preco"];
-        $foto = $_POST["foto"];
+       // $foto = $_FILES["foto"];
         $mysqlierrno = "erro";
         
-        $mysqli->query("INSERT INTO lanches (nome, ingredientes, preco, foto) values('$nome','$ingredientes', '$preco','$foto')") or
-                    die($mysqlierrno);
-
+        
+        
         /* colocar o name * aqui está como foto */
+        
         if (isset($_FILES["foto"]) && $_FILES["foto"]["error"] == 0) {
 
             // Verifique se o arquivo é uma imagem
@@ -33,28 +33,30 @@
             }
     
             // Defina o local para salvar a imagem
-            $diretorioUpload = "PI47_2024/lanches/img/";
+            $diretorioUpload = "Lanches/img/";
             $novoNomeArquivo = uniqid() . "." . $extensaoArquivo;
             $caminhoFinal = $diretorioUpload . $novoNomeArquivo;
-    
-       
-    
+
+         
+            
             // Tente mover o arquivo temporário para o diretório final
             if (!move_uploaded_file($_FILES["foto"]["tmp_name"], $caminhoFinal)) {
                 die("Ocorreu um erro ao fazer o upload da imagem.");
             }
-    
+            
+            $mysqli->query("INSERT INTO lanches (nome, ingredientes, preco, foto) values('$nome','$ingredientes', '$preco','$caminhoFinal')") or
+                    die($mysqlierrno);
+            /*
             // Atualize o caminho da imagem no banco de dados
             $stmt = $mysqli->prepare("UPDATE pi_2023_sus_pessoas SET camimg = ? WHERE id_pessoa = ?");
             $stmt->bind_param("ss", $caminhoFinal, $id);
             if (!$stmt->execute()) {
                 die("Erro ao atualizar o caminho da imagem no banco de dados.");
             }
-            if(isset($_FILES)){
-                var_dump($_FILES);
-            }
-        }        
-            
+           */
+        } 
+        
+         
                     
     }
 
@@ -146,7 +148,7 @@
     </header>
     
     <div class="container">
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data"> <!--para permitir o envio de arquivos. -->
 
             <label for="">Nome do Lanche:</label>
             <input class="form-control"  type="text" name="bt_nome">
