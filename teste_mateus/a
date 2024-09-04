@@ -1,0 +1,10 @@
+ <?php
+ $sql = "SELECT * FROM tabela_login WHERE email =  '$email'";
+    
+        $sql_exec = $mysqli->query($sql) or die ($mysqli->error);
+        $usuario = $sql_exec->fetch_assoc();
+
+        $mysqli->query("INSERT INTO tabela_login (nome, email, senha) values('$nome', '$email', '$senha')") or
+                     die($mysqlierrno);
+
+  
