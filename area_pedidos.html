@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área de pedidos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 10px;
+            color: #555;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="date"] {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        input[type="submit"] {
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Area de Pedidos</h1>
+    <form action="processar_relatorios_pedidos.php" method="POST">
+        <label for="relatorios_pedidos_nome">Nome dos Pedidos:</label>
+        <input type="text" id="relatorios_pedidos_nome" name="relatorios_pedidos_nome" required>
+
+        <label for="pedidos_de_lanches">Pedidos de Lanches:</label>
+        <input type="text" id="pedidos_de_lanches" name="pedidos_de_lanches" required>
+
+        <label for="pedidos_de_bebidas">Pedidos de Bebidas:</label>
+        <input type="text" id="pedidos_de_bebidas" name="pedidos_de_bebidas" required>
+
+        <label for="pedido_de_sobremesas">Pedido de Sobremesas:</label>
+        <input type="text" id="pedido_de_sobremesas" name="pedido_de_sobremesas" required>
+
+        <label for="atualizacao_dos_pedidos">Atualização dos Pedidos:</label>
+        <input type="checkbox" id="atualizacao_dos_pedidos" name="atualizacao_dos_pedidos">
+
+        <input type="submit" value="Salvar">
+    </form>
+</div>
+
+</body>
+</html>
