@@ -116,7 +116,7 @@
 
 
                 <?php 
-            if(isset($caminhoFinal)){
+            if ()
                 $funcionou = "SELECT * FROM lanches WHERE id_lanches";
                 $div = "";
             }
