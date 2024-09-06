@@ -143,8 +143,8 @@ $qntd = $retorno_consulta->num_rows; // retornar quantidade de linhas
                         <img src="<?php echo htmlspecialchars($profissional['caminho_foto']); ?>" alt="Foto do profissional" class="img-thumbnail">
                     </td>
                     
-                    <td><a class="btn btn-primary" href="alterar_pro.php?id_funcionario=<?php echo $profissional['id_funcionario']; ?>">Alterar</a></td>
-                    <td><a class="btn btn-danger" href="deletar_pro.php?id_funcionario=<?php echo $profissional['id_funcionario']; ?>">Deletar</a></td>
+                    <td><a class="btn btn-primary" href="alterar_funcionario.php?id_funcionario=<?php echo $profissional['id_funcionario']; ?>">Alterar</a></td>
+                    <td><a class="btn btn-danger" href="deletar_funcionario.php?id_funcionario=<?php echo $profissional['id_funcionario']; ?>">Deletar</a></td>
                 </tr>
             <?php } ?>
         </tbody>

@@ -2,21 +2,21 @@
 include("conexao.php");
 
 // Depois, se um ID foi passado via GET, busque os detalhes desse médico para exibição
-if (isset($_GET['id_nome'])) {
-    $id_nome = $_GET['id_nome'];
-    $sql_consultar = "SELECT * FROM pi_2024_profissionais WHERE id_nome= '$id_nome'";
+if (isset($_GET['id_funcionario'])) {
+    $id_funcionario = $_GET['id_funcionario'];
+    $sql_consultar = "SELECT * FROM basico_tabela WHERE id_funcionario= '$id_funcionario'";
     $mysqli_consultar = $mysqli->query($sql_consultar) or die($mysqli->error);
     $consultar = $mysqli_consultar->fetch_assoc();
 
     // Primeiro, verifique se o formulário foi enviado e, em caso afirmativo, processe a submissão
-    if (isset($_POST['id_nome'])) {
-        $id_nome = $_POST['id_nome'];
+    if (isset($_POST['id_funcionario'])) {
+        $id_funcionario = $_POST['id_funcionario'];
         $nome = $_POST['nome'];
         $telefone = $_POST['telefone'];
-        $especialidade = $_POST['especialidade'];
+        $cargo = $_POST['cargo'];
         $endereco = $_POST['endereco'];
         $cpf = $_POST['cpf'];
-        $crm = $_POST['crm'];
+       
         $datanasc = $_POST['datanasc'];
         $email = $_POST['email'];
         $senha = $_POST['senha'];
@@ -51,9 +51,9 @@ if (isset($_GET['id_nome'])) {
         }
 
         // Atualizando os dados no banco de dados
-        $sql_alterar = "UPDATE pi_2024_profissionais SET nome = '$nome', telefone = '$telefone', especialidade = '$especialidade', endereco = '$endereco', cpf = '$cpf', crm = '$crm', datanasc = '$datanasc', email = '$email', senha = '$senha', caminho = '$caminho_banco' WHERE id_nome = '$id_nome'";
+        $sql_alterar = "UPDATE basico_tabela SET nome = '$nome', telefone = '$telefone', cargo = '$cargo', endereco = '$endereco', cpf = '$cpf', datanasc = '$datanasc', email = '$email', senha = '$senha', caminho_foto = '$caminho_banco' WHERE id_funcionario = '$id_funcionario'";
         $mysqli_alterar = $mysqli->query($sql_alterar) or die($mysqli->error);
-        header("Location:consultar_profissionais.php");
+        header("Location:consultar_funcionarios.php");
     }
 }
 ?>
@@ -77,14 +77,14 @@ if (isset($_GET['id_nome'])) {
         <form action="" method="post" enctype="multipart/form-data">
             <h1 class="text-center">Alterar - Médico</h1>
             <label class="form-label" for="nome">Nome</label>
-            <input type="hidden" name="id_nome" value="<?php echo htmlspecialchars($consultar['id_nome']); ?>">
+            <input type="hidden" name="id_funcionario" value="<?php echo htmlspecialchars($consultar['id_funcionario']); ?>">
             <input class="form-control" type="text" name="nome" value="<?php echo htmlspecialchars($consultar['nome']); ?>">
 
             <label class="form-label" for="telefone">Telefone</label>
             <input class="form-control" type="text" name="telefone" value="<?php echo htmlspecialchars($consultar['telefone']); ?>">
 
-            <label class="form-label" for="especialidade">Especialidade</label>
-            <input class="form-control" type="text" name="especialidade" value="<?php echo htmlspecialchars($consultar['especialidade']); ?>">
+            <label class="form-label" for="cargo">cargo</label>
+            <input class="form-control" type="text" name="cargo" value="<?php echo htmlspecialchars($consultar['cargo']); ?>">
 
             <label class="form-label" for="endereco">Endereço</label>
             <input class="form-control" type="text" name="endereco" value="<?php echo htmlspecialchars($consultar['endereco']); ?>">
@@ -104,14 +104,14 @@ if (isset($_GET['id_nome'])) {
             <label class="form-label" for="bt_foto">Foto</label>
             <input class="form-control" type="file" name="bt_foto">
 
-            <?php if ($consultar['caminho']) : ?>
+            <?php if ($consultar['caminho_foto']) : ?>
                 <div class="mt-3 text-center"> <!-- Adiciona a classe text-center para centralizar o conteúdo -->
-                    <img src="<?php echo htmlspecialchars($consultar['caminho']); ?>" alt="Foto do médico" class="img-thumbnail">
+                    <img src="<?php echo htmlspecialchars($consultar['caminho_foto']); ?>" alt="Foto do médico" class="img-thumbnail">
                 </div>
             <?php endif; ?>
 
             <input class="btn btn-success mt-3" type="submit" value="Alterar">
-            <a class="btn btn-primary mt-3" href="consultar_profissionais.php">Voltar</a>
+            <a class="btn btn-primary mt-3" href="consultar_funcionario.php">Voltar</a>
         </form>
     </div>
 
