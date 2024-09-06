@@ -5,7 +5,7 @@
         $nome = $_POST["bt_nome"];
         $ingredientes = $_POST["bt_ingredientes"];
         $preco = $_POST["bt_preco"];
-       // $foto = $_FILES["foto"];
+       
         $mysqlierrno = "erro";
         
         
@@ -46,14 +46,7 @@
             
             $mysqli->query("INSERT INTO lanches (nome, ingredientes, preco, foto) values('$nome','$ingredientes', '$preco','$caminhoFinal')") or
                     die($mysqlierrno);
-            /*
-            // Atualize o caminho da imagem no banco de dados
-            $stmt = $mysqli->prepare("UPDATE pi_2023_sus_pessoas SET camimg = ? WHERE id_pessoa = ?");
-            $stmt->bind_param("ss", $caminhoFinal, $id);
-            if (!$stmt->execute()) {
-                die("Erro ao atualizar o caminho da imagem no banco de dados.");
-            }
-           */
+           
         } 
         
          
