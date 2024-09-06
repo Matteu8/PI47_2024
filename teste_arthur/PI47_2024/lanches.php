@@ -2,18 +2,16 @@
     require "conexao.php";
 
 
-    $funcionou = "SELECT * FROM lanches WHERE id_lanches";
-    $sql_exec = $mysqli->query($funcionou) or die ($mysqli->error);
-            $usuario = $sql_exec->fetch_assoc();
+
+        $funcionou = "SELECT * FROM lanches WHERE email = '$email' ";
     
-            $div = "<div class='product'>
-                        <img src='Lanches/img/arepascolombianas.jpg' alt="">
-                        <h2>Arepas Colombianas</h2>
-                        <p></p>
-                        <div class='price'>R$ 10,00</div>
-                    </div>";
+        $sql_exec = $mysqli->query($funcionou) or die ($mysqli->error);
+        $usuario = $sql_exec->fetch_assoc();
+    
+            $div = "";
+                    
     if ($funcionou){
-        echo "$div";
+        var_dump($funcionou); 
     }
 
 ?>
