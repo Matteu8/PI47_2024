@@ -1,3 +1,67 @@
+<?php
+    include("conexao.php");
+
+    if(!isset($_SESSION)){
+        session_start();
+    }
+
+    
+    if(isset($_POST['bt_nome'])){ 
+        var_dump($_POST['bt_nome']);
+
+        
+        $Nome= $_POST['bt_nome'];
+        $preco = $_POST['bt_preco'];
+        $quantidade = $_POST['bt_quantidade'];
+        $imagem = $_POST['bt_imagem'];
+       
+
+        if(isset($_POST['nome'])){
+            
+            
+                /* Só vai executar os códigos abaixo
+                se for VERDADEIRO. */ 
+        
+                
+                //$senha = md5($_POST['bt_senha']);
+
+
+
+
+                $nome = $_POST['bt_nome'];
+                $preco = $_POST['bt_preco'];
+                $quantidade = $_POST['bt_quantidade'];
+                $imagem = $_POST['bt_imagem'];
+               
+                
+                
+    
+                 $mysqli->query("INSERT INTO sobremesa1 (nome, preco, quantidade, imagem) values ('$nome','$email','$quantidade','$imagem')") or
+                    die($mysqlierrno);
+                
+                
+                
+                
+        
+        }else{
+                
+                /* else é o senão */
+                /* Quando for falso executar os códigos
+                abaixo: */
+                $mensagem = "<div class='alert alert-danger mt-3'> Senha inválida </div>";
+                
+        }
+        }
+    
+    
+    
+    
+    
+   
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,7 +70,7 @@
     <title>Cadastro de sobremesa</title>
     <nav class="navbar fixed-top bg-body-tertiary">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Sobremesa</a>
+        
         </div>
       </nav>
 </head>
@@ -91,25 +155,16 @@
     <div class="container">
         <form action="" method="post">
             <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" required>
+            <input type="text" id="nome" name="bt_nome" required >
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="sobremesa">Escolha sua sobremesa favorita:</label>
-            <select id="sobremesa" name="sobremesa" required>
-                <option value="Brigadeiro">Brigadeiro</option>
-                <option value="Beijinho">Beijinho</option>
-                <option value="Quindim">Quindim</option>
-                <option value="Sonho_doce_de_leite">Sonho doce de leite</option>
-                <option value="Mousse_de_limão">Mousse de limão</option>
-                <option value="Mousse_de_maracujá">Mousse de maracujá</option>
-                <option value="Mousse_de_morango">Mousse de morango</option>
-                <option value="Pão_de_mel">Pão de mel</option>
-            </select>
+            <label for="preco">preço</label>
+            <input type="preco" id="preco" name="bt_preco" required>
 
             <label for="quantidade">Quantidade:</label>
-            <input type="number" id="quantidade" name="quantidade" min="1" required>
+            <input type="number" id="quantidade" name="bt_quantidade" min="1" required>
+
+            <label class="form-label" for="bt_imagem">Imagem</label>
+            <input class="form-control" type="file" name="bt_imagem">
 
             <button type="submit">Enviar</button>
         </form>
