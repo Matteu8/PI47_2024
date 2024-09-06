@@ -1,7 +1,20 @@
 <?php 
     require "conexao.php";
+
+
+    $funcionou = "SELECT * FROM lanches WHERE id_lanches";
+    $sql_exec = $mysqli->query($funcionou) or die ($mysqli->error);
+            $usuario = $sql_exec->fetch_assoc();
     
-    $caminhoFinal = 
+            $div = "<div class='product'>
+                        <img src='Lanches/img/arepascolombianas.jpg' alt="">
+                        <h2>Arepas Colombianas</h2>
+                        <p></p>
+                        <div class='price'>R$ 10,00</div>
+                    </div>";
+    if ($funcionou){
+        echo "$div";
+    }
 
 ?>
 
@@ -44,7 +57,6 @@
                     <h2>Arepas Colombianas</h2>
                     <p></p>
                     <div class="price">R$ 10,00</div>
-
                 </div>
                 <div class="product">
                     <img src="Lanches/img/esfihadebacon.jpg.jpg" alt="">
@@ -116,14 +128,7 @@
 
 
                 <?php 
-            if ()
-                $funcionou = "SELECT * FROM lanches WHERE id_lanches";
-                $div = "";
-            }
-
-            if(isset($funcionou)){
-                echo     "";
-            }
+            
 
         ?>
             </div>
