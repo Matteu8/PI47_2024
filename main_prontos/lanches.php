@@ -52,7 +52,7 @@
             <?php while ($lanche = $sql_exec->fetch_assoc()) { ?>
             
                 <div class="product">
-                    <img src="<?php echo $lanche['foto']  ?>"   >
+                    <img src="<?php echo $lanche['foto']  ?>">
                     <h2><?php echo $lanche['nome']?></h2>
                     <p><?php echo $lanche['ingredientes']?></p> 
                     <div class="price"><?php echo $lanche['preco']?></div>
