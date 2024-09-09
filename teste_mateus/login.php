@@ -1,28 +1,37 @@
 <?php
 include "conexao.php";
 
-if (!isset($_SESSION)) {
+if(!isset($_SESSION)){
   session_start();
 }
-if (isset($_SESSION["nome"])) {
-  header("Location:deucerto.php");
-} else {
-  if (isset($_POST["email"])) {
-    $email = $_POST["email"];
-    $senha = $_POST["senha"];
-    
 
-    $sql = "SELECT * FROM /*tabela*/  WHERE email = '$email' ";
 
-    $sql_exec = $mysqli->query($sql) or die($mysqli->error);
-    $usuario = $sql_exec->fetch_assoc();
+if (isset($_POST["senha"])) {
+  $email = $_POST["email"];
+  $senha = $_POST["senha"];
+
+  $sql = "SELECT * FROM clientes WHERE email =  '$email'";
+
+  $sql_exec = $mysqli->query($sql) or die($mysqli->error);
+  $usuario = $sql_exec->fetch_assoc();
+
+  if (password_verify($senha, $usuario['senha'])) {
+
+
+    $_SESSION["id_cliente"] = $usuario['id_cliente'];
+    $_SESSION["nome"] = $usuario['nome'];
+    $_SESSION["curso"] = $usuario['curso'];
+    $_SESSION["periodo"] = $usuario['periodo'];
+    $_SESSION["telefone"] = $usuario['telefone'];
+    $_SESSION["email"] = $usuario['email'];
+    $_SESSION["senha"] = $usuario['senha'];
+
+
+    header("Location:test.php");
+  } else {
+    echo ("<script> alert('Erro de senha')</script>");
   }
 }
-
-
-
-
-
 
 ?>
 
@@ -52,7 +61,7 @@ if (isset($_SESSION["nome"])) {
       <a href="/principal/"><img src="img/topo_site_bl1_2018.png" class="img img-responsive"></a>
     </div>
   </div>
-  <div class="conteiner d-flex justify-content-center mt-2">
+  <div class="conteiner d-flex justify-content-center mt-5">
     <form class="form" method="post">
       <p class="title">Login </p>
       <p class="message">Faça o login agora e tenha acesso total ao nosso aplicativo. </p>
@@ -67,7 +76,7 @@ if (isset($_SESSION["nome"])) {
       </label>
 
       <button class="submit" type="submit">Entrar</button>
-      <p class="signin"> Não tem uma conta ? <a href="#">Cadastre-se</a> </p>
+      <p class="signin"> Não tem uma conta ? <a href="cadastro_cliente.php">Cadastre-se</p>
     </form>
   </div>
   <footer>
