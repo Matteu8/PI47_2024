@@ -1,7 +1,16 @@
 <?php 
     require "conexao.php";
+
+
+
+        $funcionou = "SELECT * FROM lanches ";
     
-    $caminhoFinal = 
+        $sql_exec = $mysqli->query($funcionou) or die ($mysqli->error);
+        //$usuario = $sql_exec->fetch_assoc();
+    
+           
+                    
+   
 
 ?>
 
@@ -39,93 +48,18 @@
         <div class="container">
             <div class="product-list">
 
+            
+            <?php while ($lanche = $sql_exec->fetch_assoc()) { ?>
+            
                 <div class="product">
-                    <img src="Lanches/img/arepascolombianas.jpg" alt="">
-                    <h2>Arepas Colombianas</h2>
-                    <p></p>
-                    <div class="price">R$ 10,00</div>
-
-                </div>
-                <div class="product">
-                    <img src="Lanches/img/esfihadebacon.jpg.jpg" alt="">
-
-                    <h2>Esfiha de bacon</h2>
-                    <p></p>
-                    <div class="price">R$ 15,00</div>
-                </div>
-                <div class="product">
-                    <img src="Lanches/img/pizzadesushi.jpg" alt="">
-                    <h2>Pizza de sushi</h2>
-                    <p></p>
-                    <div class="price">R$ 15,00</div>
-                </div>
-                <div class="product">
-                    <img src="Lanches/img/sopademandioca.jpg" alt="">
-                    <h2>Sopa de mandioca</h2>
-                    <p></p>
-                    <div class="price">R$ 20,00</div>
-                </div>
-                <div class="product">
-                    <img src="Lanches/img/tacaca.jpg" alt="">
-                    <h2>Tacaca</h2>
-                    <p></p>
-                    <div class="price">R$ 30,00</div>
-                </div>
-                <div class="product">
-                    <img src="Lanches/img/bolinhadequeijo.jpg" alt="">
-                    <h2>Bolinha de queijo</h2>
-                    <p></p>
-                    <div class="price">R$ 5,00</div>
-                </div>
-                <div class="product">
-                    <img src="Lanches/img/bolinhodemandioca.jpg" alt="">
-                    <h2>Bolinha de queijo</h2>
-                    <p></p>
+                    <img src="<?php echo $lanche['foto']  ?>" alt="">
+                    <h2><?php echo $lanche['nome']  ?></h2>
+                    <p></p> 
                     <div class="price">R$ 10,00</div>
                 </div>
-                <div class="product">
-                    <img src="Lanches/img/almondegas.jpg" alt="">
-                    <h2>Almondegas </h2>
-                    <p></p>
-                    <div class="price">R$ 15,00</div>
-                </div>
-                <div class="product">
-                    <img src="Lanches/img/frangoxadrez.jpg" alt="">
-                    <h2>Frango Xadrez</h2>
-                    <p></p>
-                    <div class="price">R$ 25,00</div>
-                </div>
-                <div class="product">
-                    <img src="Lanches/img/esfihadequeijo.jpg" alt="">
-                    <h2>esfiha de queijo</h2>
-                    <p></p>
-                    <div class="price">R$ 15,00</div>
-                </div>
-                <div class="product">
-                    <img src="Lanches/img/hotroll.jpg" alt="">
-                    <h2>Hot Roll</h2>
-                    <p></p>
-                    <div class="price">R$ 25,00</div>
-                </div>
-                <div class="product">
-                    <img src="Lanches/img/frangoempanado.jpg" alt="">
-                    <h2>Frango empanado</h2>
-                    <p></p>
-                    <div class="price">R$ 30,00</div>
-                </div>
-
-
-                <?php 
-            if(isset($caminhoFinal)){
-                $funcionou = "SELECT * FROM lanches WHERE id_lanches";
-                $div = "";
-            }
-
-            if(isset($funcionou)){
-                echo     "";
-            }
-
-        ?>
+            <?php } ?>
+        
+               
             </div>
         </div>
         <br>
