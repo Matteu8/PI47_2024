@@ -131,7 +131,7 @@
 </head>
 <body>
     <div class="menu">
-        <h1>Bem-vindo, <?php  ?></h1>
+        <h1>Bem-vindo, <?php  ?></h1> <!-- colocar_os_links_certos -->
         <a href="pedidos_do_dia.php">Pedidos Do Dia</a>
         <a href="cancelar_pedidos.php">candelar Pedidos</a>
         <a href="cadastrar_funcionario.php">Cadastrar Funcionario</a>
