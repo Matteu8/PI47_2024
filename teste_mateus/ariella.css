@@ -355,6 +355,8 @@ header{
   background-color: rgb(56, 90, 194);
 }
 
+
+/*  Inicio login*/
 @keyframes pulse {
   from {
     transform: scale(0.9);
@@ -366,3 +368,9 @@ header{
     opacity: 0;
   }
 }
+
+/* fim login */
+
+
+
+
