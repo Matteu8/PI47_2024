@@ -48,6 +48,8 @@ if (isset($_GET['id_funcionario'])) {
             if (!$deucerto) {
                 die("Falha ao mover o arquivo para o diretório de destino.");
             }
+        }else{
+            $caminho_banco = $consultar['caminho'];
         }
 
         // Atualizando os dados no banco de dados
@@ -106,7 +108,7 @@ if (isset($_GET['id_funcionario'])) {
 
             <?php if ($consultar['caminho_foto']) : ?>
                 <div class="mt-3 text-center"> <!-- Adiciona a classe text-center para centralizar o conteúdo -->
-                    <img src="<?php echo htmlspecialchars($consultar['caminho_foto']); ?>" alt="Foto do médico" class="img-thumbnail">
+                    <img src="<?php echo($consultar['caminho_foto']); ?>" alt="Foto do médico" class="img-thumbnail">
                 </div>
             <?php endif; ?>
 
