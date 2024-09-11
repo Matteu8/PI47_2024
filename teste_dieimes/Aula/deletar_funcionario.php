@@ -22,7 +22,7 @@ if (isset($_GET['id_funcionario'])) {
 // Deletar o Funcionario se o botão de deletar for clicado
 if (isset($_POST['delete_id'])) {
     $delete_id = $_POST['delete_id'];
-    $delete_query = "DELETE FROM basico_tabela WHERE id_funcionario = ?";
+    $delete_query = "DELETE * FROM basico_tabela WHERE id_funcionario = ?";
     $stmt = $mysqli->prepare($delete_query);
     $stmt->bind_param('i', $delete_id);
 
