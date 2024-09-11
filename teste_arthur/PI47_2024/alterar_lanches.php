@@ -2,61 +2,68 @@
 
   require ("conexao.php");
 
-    if(isset($_POST["nome"])){      
-      $nome = $_POST["nome"];
-      $ingredientes = $_POST["ingredientes"];
-      $preco = $_POST["preco"];
-      $foto = $_FILES["foto"];
-      
-
-      $sql_consultar = "SELECT * FROM lanches ";
-      $mysqli_consultar = $mysqli->query($sql_consultar) or die($mysqli->error);
-      $consultar = $mysqli_consultar->fetch_assoc();
+    if(isset($_GET["id_alterar"])){
+      if(isset($_POST["nome"])){      
+        $nome = $_POST["nome"];
+        $ingredientes = $_POST["ingredientes"];
+        $preco = $_POST["preco"];
+        $foto = $_FILES["foto"];
+        
   
-
-      if (isset($_FILES["foto"]) && $_FILES["foto"]["error"] == 0) {
-
-        // Verifique se o arquivo é uma imagem
-        $check = getimagesize($_FILES["foto"]["tmp_name"]);
-        if ($check === false) {
-            die("O arquivo não é uma imagem.");
+        $sql_consultar = "SELECT * FROM lanches ";
+        $mysqli_consultar = $mysqli->query($sql_consultar) or die($mysqli->error);
+        $consultar = $mysqli_consultar->fetch_assoc();
+    
+  
+        if (isset($_FILES["foto"]) && $_FILES["foto"]["error"] == 0) {
+  
+          // Verifique se o arquivo é uma imagem
+          $check = getimagesize($_FILES["foto"]["tmp_name"]);
+          if ($check === false) {
+              die("O arquivo não é uma imagem.");
+          }
+  
+          // Verifique a extensão do arquivo
+          $extensoesPermitidas = array('jpeg', 'jpg', 'png', 'gif');
+          $extensaoArquivo = strtolower(pathinfo($_FILES["foto"]["name"], PATHINFO_EXTENSION));
+          if (!in_array($extensaoArquivo, $extensoesPermitidas)) {
+              die("Tipo de arquivo não suportado.");
+          }
+  
+          // Verifique o tamanho do arquivo (por exemplo, limite de 5MB aqui)
+          if ($_FILES["foto"]["size"] > 5000000) {
+              die("Arquivo muito grande!! Max: 5MB");
+          }
+  
+          // Defina o local para salvar a imagem
+          $diretorioUpload = "recebidos/";
+          $novoNomeArquivo = uniqid() . "." . $extensaoArquivo;
+          $caminhoFinal = $diretorioUpload . $novoNomeArquivo;
+  
+          // Tente mover o arquivo temporário para o diretório final
+          if (!move_uploaded_file($_FILES["foto"]["tmp_name"], $caminhoFinal)) {
+              die("Ocorreu um erro ao fazer o upload da imagem.");
+          }
+  
+      
+  
         }
+        
+  
+            // Atualizando os dados no banco de dados
+          $sql_alterar = "UPDATE lanches SET nome = '$nome', ingredientes = '$ingredientes', preco = '$preco', foto = '$foto'";
+          $mysqli_alterar = $mysqli->query($sql_alterar) or die($mysqli->error);
+          header("Location:");
+  
+          $mysqli->query("INSERT INTO lanches (nome, ingredientes, preco, foto) values('$nome','$ingredientes', '$preco','$caminhoFinal')") or
+                      die($mysqlierrno);
+      } 
 
-        // Verifique a extensão do arquivo
-        $extensoesPermitidas = array('jpeg', 'jpg', 'png', 'gif');
-        $extensaoArquivo = strtolower(pathinfo($_FILES["foto"]["name"], PATHINFO_EXTENSION));
-        if (!in_array($extensaoArquivo, $extensoesPermitidas)) {
-            die("Tipo de arquivo não suportado.");
-        }
-
-        // Verifique o tamanho do arquivo (por exemplo, limite de 5MB aqui)
-        if ($_FILES["foto"]["size"] > 5000000) {
-            die("Arquivo muito grande!! Max: 5MB");
-        }
-
-        // Defina o local para salvar a imagem
-        $diretorioUpload = "recebidos/";
-        $novoNomeArquivo = uniqid() . "." . $extensaoArquivo;
-        $caminhoFinal = $diretorioUpload . $novoNomeArquivo;
-
-        // Tente mover o arquivo temporário para o diretório final
-        if (!move_uploaded_file($_FILES["foto"]["tmp_name"], $caminhoFinal)) {
-            die("Ocorreu um erro ao fazer o upload da imagem.");
-        }
+    }else{
+      die ("Não entrar diretamente na página alterar.php sem passar primeiro na página consultar");
+    }
 
     
-
-      }
-      
-
-          // Atualizando os dados no banco de dados
-        $sql_alterar = "UPDATE lanches SET nome = '$nome', ingredientes = '$ingredientes', preco = '$preco', foto = '$foto'";
-        $mysqli_alterar = $mysqli->query($sql_alterar) or die($mysqli->error);
-        header("Location:");
-
-        $mysqli->query("INSERT INTO lanches (nome, ingredientes, preco, foto) values('$nome','$ingredientes', '$preco','$caminhoFinal')") or
-                    die($mysqlierrno);
-    }  
   
 
 
