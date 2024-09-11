@@ -4,7 +4,9 @@ include "conexao.php";
 if(!isset($_SESSION)){
   session_start();
 }
-
+if(isset($_SESSION["nome"])){
+  header("Location:test.php");
+}
 
 if (isset($_POST["senha"])) {
   $email = $_POST["email"];
