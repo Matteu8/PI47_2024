@@ -1,3 +1,38 @@
+<?php 
+    require("conexao.php");
+
+    
+
+    if (isset($_POST["nome"])) {
+        $nome = $_POST['nome'];
+        $email = $_POST['email'];
+        $senha = $_POST["senha"];
+        $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+
+        $sql = "SELECT * FROM funcionarios WHERE email =  '$email'";
+        $sql_exec = $mysqli->query($sql) or die($mysqli->error);
+
+    if ($sql_exec->num_rows > 0) {
+
+
+    } else {
+
+        $mysqlierrno = "falha";
+
+        $mysqli->query("INSERT INTO funcionarios (nome, email, senha) values('$nome', '$email', '$senha')") or
+                    die($mysqlierrno);
+
+        header("Location:editar_funcionario.php");
+
+        exit();
+    }
+    }
+
+    
+    
+        
+    ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -29,27 +64,35 @@
 
     
 
-    <form class="form">
+    <form class="form" method="post">
         <p class="title">Cadastro </p>
             <div class="flex">
             <label>
-                <input required="" placeholder="" type="text" class="input">
+                <input required="" placeholder="" type="text" class="input" name="nome">
                 <span>Nome</span>
             </label>
            
         </div>  
                 
         <label>
-            <input required="" placeholder="" type="email" class="input">
+            <input required="" placeholder="" type="email" class="input" name="email">
             <span>Email</span>
         </label> 
+        <?php
+            if (isset($_POST["email"])) {
+                if ($sql_exec->num_rows > 0)
+                    echo "<div class='alert alert-danger mt-4' role='alert'>
+                        Você já tem uma conta!
+                    </div>";
+            }
+            ?>
             
         <label>
-            <input required="" placeholder="" type="password" class="input">
+            <input required="" placeholder="" type="password" class="input" name="senha">
             <span>Senha</span>
         </label>
         <label>
-            <input required="" placeholder="" type="password" class="input">
+            <input required="" placeholder="" type="password" class="input" name="rsenha">
             <span>Confirme sua Senha</span>
         </label>
         <button class="submit">Cadastrar</button>
