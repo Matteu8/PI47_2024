@@ -13,7 +13,7 @@ if (isset($_POST["senha"])) {
   $senha = $_POST["senha"];
 
   $sql = "SELECT * FROM clientes WHERE email =  '$email'";
-
+//testar com mais um sql
   $sql_exec = $mysqli->query($sql) or die($mysqli->error);
   $usuario = $sql_exec->fetch_assoc();
 
