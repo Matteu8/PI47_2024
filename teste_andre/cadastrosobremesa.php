@@ -8,15 +8,9 @@
     
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nome = $_POST['nome'] ?? '';
-    $preco = $_POST['preco'] ?? '';
-    $quantidade = $_POST['quantidade'] ?? '';
-    $imagem = $_POST['imagem'] ?? '';
-    
-    
-    $nome = $_POST['nome'] ?? '';
-    $preco = $_POST['preco'] ?? '';
-    $quantidade = intval($_POST['quantidade'] ?? 0);
+    $nome = $_POST['bt_nome'] ?? '';
+    $preco = $_POST['bt_preco'] ?? '';
+    $quantidade = intval($_POST['bt_quantidade'] ?? 0);
 
 
     if (isset($_FILES['bt_imagem'])) {
@@ -38,13 +32,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Preparar a instrução SQL
-    $stmt = $mysqli->prepare("INSERT INTO sobremesa1 (nome, preco, quantidade, imagem, ) VALUES ($nome, $preco, $quantidade, $imagem)");
+    $stmt = $mysqli->prepare("INSERT INTO sobremesa (nome, preco, quantidade, imagem) VALUES (?, ?, ?, ?)");
     
     if ($stmt === false) {
         die("Erro ao preparar a instrução SQL: " . $mysqli->error);
     }
     
-    $stmt->bind_param("sssssssss", $nome, $preco, $quantidade, $imagem);
+    $stmt->bind_param("ssis", $nome, $preco, $quantidade, $caminho_banco);
 
     if ($stmt->execute()) {
         echo "<script>Swal.fire('Success', 'Cadastro realizado com sucesso!', 'success');</script>";
