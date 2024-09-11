@@ -6,43 +6,58 @@
       $nome = $_POST["nome"];
       $ingredientes = $_POST["ingredientes"];
       $preco = $_POST["preco"];
+      $foto = $_FILES["foto"];
+      
 
-      $sql_consultar = "SELECT * FROM lanches WHERE id_lanches= '$id_lanches'";
+      $sql_consultar = "SELECT * FROM lanches ";
       $mysqli_consultar = $mysqli->query($sql_consultar) or die($mysqli->error);
       $consultar = $mysqli_consultar->fetch_assoc();
   
 
-      if (isset($_FILES['foto']) && $_FILES['bt_foto']['error'] === 0) {
-      $arquivo = $_FILES['foto'];
+      if (isset($_FILES["foto"]) && $_FILES["foto"]["error"] == 0) {
+
+        // Verifique se o arquivo é uma imagem
+        $check = getimagesize($_FILES["foto"]["tmp_name"]);
+        if ($check === false) {
+            die("O arquivo não é uma imagem.");
+        }
+
+        // Verifique a extensão do arquivo
+        $extensoesPermitidas = array('jpeg', 'jpg', 'png', 'gif');
+        $extensaoArquivo = strtolower(pathinfo($_FILES["foto"]["name"], PATHINFO_EXTENSION));
+        if (!in_array($extensaoArquivo, $extensoesPermitidas)) {
+            die("Tipo de arquivo não suportado.");
+        }
+
+        // Verifique o tamanho do arquivo (por exemplo, limite de 5MB aqui)
+        if ($_FILES["foto"]["size"] > 5000000) {
+            die("Arquivo muito grande!! Max: 5MB");
+        }
+
+        // Defina o local para salvar a imagem
+        $diretorioUpload = "recebidos/";
+        $novoNomeArquivo = uniqid() . "." . $extensaoArquivo;
+        $caminhoFinal = $diretorioUpload . $novoNomeArquivo;
+
+        // Tente mover o arquivo temporário para o diretório final
+        if (!move_uploaded_file($_FILES["foto"]["tmp_name"], $caminhoFinal)) {
+            die("Ocorreu um erro ao fazer o upload da imagem.");
+        }
+
+    
+
+      }
       
-      // Limite de tamanho do arquivo
-      if ($arquivo['size'] > 15000000) {
-          die("Arquivo muito grande!! Max: 15MB");
-      }
 
-      $pasta = "recebidos/";
-      $nome_arquivo = $arquivo['name'];
-      $novo_nome_arquivo = uniqid();
-      $extensao = strtolower(pathinfo($nome_arquivo, PATHINFO_EXTENSION));
-      $caminho_banco = $pasta . $novo_nome_arquivo . "." . $extensao;
-
-      // Verifique se o diretório existe, caso contrário, crie-o
-      if (!is_dir($pasta)) {
-          mkdir($pasta, 0777, true);
-      }
-
-      // Movendo o arquivo para o diretório correto
-      $deucerto = move_uploaded_file($arquivo["tmp_name"], $caminho_banco);
-
-      if (!$deucerto) {
-          die("Falha ao mover o arquivo para o diretório de destino.");
-      }
           // Atualizando os dados no banco de dados
-        $sql_alterar = "UPDATE lanches SET nome = '$nome', ingredientes = '$ingredientes' preco = '$preco' foto = '$foto' WHERE id_lanches = '$id_lanches'";
+        $sql_alterar = "UPDATE lanches SET nome = '$nome', ingredientes = '$ingredientes', preco = '$preco', foto = '$foto'";
         $mysqli_alterar = $mysqli->query($sql_alterar) or die($mysqli->error);
         header("Location:");
+
+        $mysqli->query("INSERT INTO lanches (nome, ingredientes, preco, foto) values('$nome','$ingredientes', '$preco','$caminhoFinal')") or
+                    die($mysqlierrno);
     }  
-  }
+  
 
 
 ?>
@@ -52,7 +67,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delelar lanche</title>
+    <title>Alterar lanche</title>
     <link rel="stylesheet" href="ariella.css">
 </head>
 <body>
@@ -88,22 +103,22 @@
       <p class="message">Altere os dados dos lanches de acordo com o seu objetivo .</p>
       
       <label>
-        <input required="" placeholder="" type="email" class="input" name="nome">
-        <span>Nome:</span>
+        <input required="" placeholder="" type="text" class="input" value="<?php echo ($consultar['nome']); ?>" name="nome">
+        <span>Nome:</span>                                                  
       </label>
 
       <label>
-        <input required="" placeholder="" type="email" class="input" name="ingredientes">
+        <input required="" placeholder="" type="text" class="input"  value="<?php echo ($consultar['ingredientes']); ?>" name="ingredientes" >
         <span>Ingredientes:</span>
       </label>
-      
-      <label>
-        <input required="" placeholder="" type="email" class="input" name="preco">
+  
+      <label>                                                               
+        <input required="" placeholder="" type="text" class="input" value="<?php echo ($consultar['preco']); ?>" name="preco">
         <span>Preço:</span>
       </label>
 
       <label>
-        <input required="" placeholder="" type="file" class="" name="foto">
+        <input required="" placeholder="" type="file" class="" value="<?php echo ($consultar['foto']); ?>" name="foto">
         <span>Foto:</span>
       </label>
 
