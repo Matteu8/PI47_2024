@@ -6,58 +6,56 @@
     }
 
     
-    if(isset($_POST['bt_nome'])){ 
-        var_dump($_POST['bt_nome']);
 
-        
-        $Nome= $_POST['bt_nome'];
-        $preco = $_POST['bt_preco'];
-        $quantidade = $_POST['bt_quantidade'];
-        $imagem = $_POST['bt_imagem'];
-       
-
-        if(isset($_POST['nome'])){
-            
-            
-                /* Só vai executar os códigos abaixo
-                se for VERDADEIRO. */ 
-        
-                
-                //$senha = md5($_POST['bt_senha']);
-
-
-
-
-                $nome = $_POST['bt_nome'];
-                $preco = $_POST['bt_preco'];
-                $quantidade = $_POST['bt_quantidade'];
-                $imagem = $_POST['bt_imagem'];
-               
-                
-                
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $nome = $_POST['nome'] ?? '';
+    $preco = $_POST['preco'] ?? '';
+    $quantidade = $_POST['quantidade'] ?? '';
+    $imagem = $_POST['imagem'] ?? '';
     
-                 $mysqli->query("INSERT INTO sobremesa1 (nome, preco, quantidade, imagem) values ('$nome','$email','$quantidade','$imagem')") or
-                    die($mysqlierrno);
-                
-                
-                
-                
-        
-        }else{
-                
-                /* else é o senão */
-                /* Quando for falso executar os códigos
-                abaixo: */
-                $mensagem = "<div class='alert alert-danger mt-3'> Senha inválida </div>";
-                
+    
+    $nome = $_POST['nome'] ?? '';
+    $preco = $_POST['preco'] ?? '';
+    $quantidade = intval($_POST['quantidade'] ?? 0);
+
+
+    if (isset($_FILES['bt_imagem'])) {
+        $arquivo = $_FILES['bt_imagem'];
+        if ($arquivo['size'] > 15000000) {
+            die("Arquivo muito grande!! Max: 15MB");
         }
+        if ($arquivo['error']) {
+            die("Falha ao enviar arquivo");
         }
+
+        $pasta = "recebidos.img/";
+        $nome_arquivo = $arquivo['name'];
+        $novo_nome_arquivo = uniqid();
+        $extensao = strtolower(pathinfo($nome_arquivo, PATHINFO_EXTENSION));
+        $caminho_banco = $pasta . $novo_nome_arquivo . "." . $extensao;
+
+        $deucerto = move_uploaded_file($arquivo["tmp_name"], $caminho_banco);
+    }
+
+    // Preparar a instrução SQL
+    $stmt = $mysqli->prepare("INSERT INTO sobremesa1 (nome, preco, quantidade, imagem, ) VALUES ($nome, $preco, $quantidade, $imagem)");
     
+    if ($stmt === false) {
+        die("Erro ao preparar a instrução SQL: " . $mysqli->error);
+    }
     
-    
-    
-    
-   
+    $stmt->bind_param("sssssssss", $nome, $preco, $quantidade, $imagem);
+
+    if ($stmt->execute()) {
+        echo "<script>Swal.fire('Success', 'Cadastro realizado com sucesso!', 'success');</script>";
+    } else {
+        echo "<script>Swal.fire('Error', 'Erro ao cadastrar: " . $stmt->error . "', 'error');</script>";
+    }
+
+    $stmt->close();
+}
+
+
 ?>
 
 
@@ -153,7 +151,7 @@
     </header>
    
     <div class="container">
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
             <label for="nome">Nome:</label>
             <input type="text" id="nome" name="bt_nome" required >
 
