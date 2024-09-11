@@ -53,7 +53,7 @@ if (isset($_GET['id_funcionario'])) {
         // Atualizando os dados no banco de dados
         $sql_alterar = "UPDATE basico_tabela SET nome = '$nome', telefone = '$telefone', cargo = '$cargo', endereco = '$endereco', cpf = '$cpf', datanasc = '$datanasc', email = '$email', senha = '$senha', caminho_foto = '$caminho_banco' WHERE id_funcionario = '$id_funcionario'";
         $mysqli_alterar = $mysqli->query($sql_alterar) or die($mysqli->error);
-        header("Location:consultar_funcionarios.php");
+        header("Location:consultar_funcionario.php");
     }
 }
 ?>
