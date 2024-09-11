@@ -1,3 +1,59 @@
+<?php
+    include("conexao.php");
+
+    if(!isset($_SESSION)){
+        session_start();
+    }
+
+    
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $nome = $_POST['bt_nome'] ?? '';
+    $preco = $_POST['bt_preco'] ?? '';
+    $quantidade = intval($_POST['bt_quantidade'] ?? 0);
+
+
+    if (isset($_FILES['bt_imagem'])) {
+        $arquivo = $_FILES['bt_imagem'];
+        if ($arquivo['size'] > 15000000) {
+            die("Arquivo muito grande!! Max: 15MB");
+        }
+        if ($arquivo['error']) {
+            die("Falha ao enviar arquivo");
+        }
+
+        $pasta = "recebidos.img/";
+        $nome_arquivo = $arquivo['name'];
+        $novo_nome_arquivo = uniqid();
+        $extensao = strtolower(pathinfo($nome_arquivo, PATHINFO_EXTENSION));
+        $caminho_banco = $pasta . $novo_nome_arquivo . "." . $extensao;
+
+        $deucerto = move_uploaded_file($arquivo["tmp_name"], $caminho_banco);
+    }
+
+    // Preparar a instrução SQL
+    $stmt = $mysqli->prepare("INSERT INTO sobremesa (nome, preco, quantidade, imagem) VALUES (?, ?, ?, ?)");
+    
+    if ($stmt === false) {
+        die("Erro ao preparar a instrução SQL: " . $mysqli->error);
+    }
+    
+    $stmt->bind_param("ssis", $nome, $preco, $quantidade, $caminho_banco);
+
+    if ($stmt->execute()) {
+        echo "<script>Swal.fire('Success', 'Cadastro realizado com sucesso!', 'success');</script>";
+    } else {
+        echo "<script>Swal.fire('Error', 'Erro ao cadastrar: " . $stmt->error . "', 'error');</script>";
+    }
+
+    $stmt->close();
+}
+
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,7 +62,7 @@
     <title>Cadastro de sobremesa</title>
     <nav class="navbar fixed-top bg-body-tertiary">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Sobremesa</a>
+        
         </div>
       </nav>
 </head>
@@ -89,27 +145,18 @@
     </header>
    
     <div class="container">
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
             <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" required>
+            <input type="text" id="nome" name="bt_nome" required >
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="sobremesa">Escolha sua sobremesa favorita:</label>
-            <select id="sobremesa" name="sobremesa" required>
-                <option value="Brigadeiro">Brigadeiro</option>
-                <option value="Beijinho">Beijinho</option>
-                <option value="Quindim">Quindim</option>
-                <option value="Sonho_doce_de_leite">Sonho doce de leite</option>
-                <option value="Mousse_de_limão">Mousse de limão</option>
-                <option value="Mousse_de_maracujá">Mousse de maracujá</option>
-                <option value="Mousse_de_morango">Mousse de morango</option>
-                <option value="Pão_de_mel">Pão de mel</option>
-            </select>
+            <label for="preco">preço</label>
+            <input type="preco" id="preco" name="bt_preco" required>
 
             <label for="quantidade">Quantidade:</label>
-            <input type="number" id="quantidade" name="quantidade" min="1" required>
+            <input type="number" id="quantidade" name="bt_quantidade" min="1" required>
+
+            <label class="form-label" for="bt_imagem">Imagem</label>
+            <input class="form-control" type="file" name="bt_imagem">
 
             <button type="submit">Enviar</button>
         </form>
