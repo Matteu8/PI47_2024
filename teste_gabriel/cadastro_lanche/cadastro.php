@@ -20,7 +20,7 @@
             }
     
             // Verifique a extensão do arquivo
-            $extensoesPermitidas = array('jpeg', 'jpg', 'png', 'gif', 'jfif');
+            $extensoesPermitidas = array('jpeg', 'jpg', 'png', 'gif', 'jfif' );
             $extensaoArquivo = strtolower(pathinfo($_FILES["foto"]["name"], PATHINFO_EXTENSION));
             if (!in_array($extensaoArquivo, $extensoesPermitidas)) {
                 die("Tipo de arquivo não suportado.");
@@ -112,8 +112,7 @@
         <label>
           
         </label>
-        <!-- <button class="submit">Cadastrar</button> -->
-        <input class="submit" type="submit" value="Cadastrar">
+        <button class="submit">Cadastrar</button>
         
     </form>
 </div>
