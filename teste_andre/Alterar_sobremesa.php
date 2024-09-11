@@ -1,6 +1,8 @@
 <?php
 include("conexao.php");
 
+
+
 // Depois, se um ID foi passado via GET, busque os detalhes desse médico para exibição
 if (isset($_GET['id_sobremesa'])) {
     $id_funcionario = $_GET['id_sobremesa'];
@@ -49,6 +51,8 @@ if (isset($_GET['id_sobremesa'])) {
         $mysqli_alterar = $mysqli->query($sql_alterar) or die($mysqli->error);
         header("Location:consultar_funcionarios.php");
     }
+}else{
+    die("Precisar voltar para página de consultar sobremesas, para depois selecionar a opção alterar.");
 }
 ?>
 
