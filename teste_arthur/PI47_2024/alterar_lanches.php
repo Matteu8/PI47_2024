@@ -8,7 +8,7 @@
       $preco = $_POST["preco"];
       $foto = $_FILES["foto"];
       
-
+      
       $sql_consultar = "SELECT * FROM lanches ";
       $mysqli_consultar = $mysqli->query($sql_consultar) or die($mysqli->error);
       $consultar = $mysqli_consultar->fetch_assoc();
