@@ -112,7 +112,8 @@
         <label>
           
         </label>
-        <button class="submit">Cadastrar</button>
+        <!-- <button class="submit">Cadastrar</button> -->
+        <input class="submit" type="submit" value="Cadastrar">
         
     </form>
 </div>
