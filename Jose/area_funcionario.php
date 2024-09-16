@@ -136,13 +136,13 @@
         <a href="cancelar_pedidos.php">candelar Pedidos</a>
         <a href="cadastrar_funcionario.php">Cadastrar Funcionario</a>
         <a href="adicionar_produtos.php">Adicionar Produtos</a>
-        <a href="area_funcionario.php">Em Breve</a>
-        <a href="area_funcionario.php">Em Breve</a>
+        <a href="area_funcionario.php">Em Breve</a> <!-- nao deixa ele sair deste local --> <!-- amenos que aqui tenha algo novo para adicionar -->
+        <a href="area_funcionario.php">Em Breve</a> <!-- nao deixa ele sair deste local -->
         <div class="logout">
             <a href="logout.php">Sair</a>
         </div>
 
     </div>
-        
+         
 </body>
 </html>
