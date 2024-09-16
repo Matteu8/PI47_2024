@@ -6,7 +6,7 @@ if (isset($_GET['id_funcionario'])) {
     $id_nome = $_GET['id_funcionario'];
     
     // Consulta os detalhes do Funcionario selecionado
-    $consultar_banco = "SELECT * FROM altera_sobremesa WHERE id_sobremesa = ?";
+    $consultar_banco = "SELECT * FROM sobremesa WHERE id_sobremesa = ?";
     $stmt = $mysqli->prepare($consultar_banco);
     $stmt->bind_param('i', $id_nome);
     $stmt->execute();

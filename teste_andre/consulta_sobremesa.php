@@ -1,7 +1,7 @@
 <?php
 include("conexao.php");
 
-$consultar_banco = "SELECT * FROM altera_sobremesa";
+$consultar_banco = "SELECT * FROM sobremesa";
 $retorno_consulta = $mysqli->query($consultar_banco) or die($mysqli->error);
 $qntd = $retorno_consulta->num_rows; // retornar quantidade de linhas
 ?>
@@ -130,13 +130,13 @@ $qntd = $retorno_consulta->num_rows; // retornar quantidade de linhas
                     <td><?php echo htmlspecialchars($profissional['preco']); ?></td>
                     <td><?php echo htmlspecialchars($profissional['quantidade']); ?></td>
                     <td>
-                        <img src="<?php echo($profissional['caminho_foto']); ?>" alt="Foto do profissional" class="img-thumbnail">
+                        <img src="<?php echo($profissional['imagem']); ?>" alt="Foto do profissional" class="img-thumbnail">
                     </td>
                     
-                    <td><a class="btn btn-primary" href="alterar_funcionario.php?id_funcionario=<?php echo $profissional['id_funcionario']; ?>">Alterar</a></td>
-                    <td><a class="btn btn-danger" href="deletar_funcionario.php?id_funcionario=<?php echo $profissional['id_funcionario']; ?>">Deletar</a></td>
+                    <td><a class="btn btn-primary" href="alterar_sobremesa.php?<?php echo $profissional['id_sobremesa']; ?>">Alterar</a></td>
+                    <td><a class="btn btn-danger" href="deletar_sobremesa.php?<?php echo $profissional['id_sobremesa']; ?>">Deletar</a></td>
                 </tr>
-            <?php var_dump($profissional);} ?>
+            <?php } ?>
         </tbody>
     </table>
 

@@ -6,7 +6,7 @@ include("conexao.php");
 // Depois, se um ID foi passado via GET, busque os detalhes desse médico para exibição
 if (isset($_GET['id_sobremesa'])) {
     $id_funcionario = $_GET['id_sobremesa'];
-    $sql_consultar = "SELECT * FROM altera_sobremesa WHERE id_funcionario= '$id_funcionario' ";
+    $sql_consultar = "SELECT * FROM sobremesa WHERE id_funcionario= '$id_funcionario' ";
     $mysqli_consultar = $mysqli->query($sql_consultar) or die($mysqli->error);
     $consultar = $mysqli_consultar->fetch_assoc();
 
@@ -47,7 +47,7 @@ if (isset($_GET['id_sobremesa'])) {
         }
 
         // Atualizando os dados no banco de dados
-        $sql_alterar = "UPDATE alterar_sobremesa SET nome = '$nome', preco = '$preco', quantidade = '$quantidade', caminho_foto = '$caminho_banco' WHERE id_funcionario = '$id_funcionario'";
+        $sql_alterar = "UPDATE sobremesa SET nome = '$nome', preco = '$preco', quantidade = '$quantidade', caminho_foto = '$caminho_banco' WHERE id_funcionario = '$id_funcionario'";
         $mysqli_alterar = $mysqli->query($sql_alterar) or die($mysqli->error);
         header("Location:consultar_funcionarios.php");
     }
