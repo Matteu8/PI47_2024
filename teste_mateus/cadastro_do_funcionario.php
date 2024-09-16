@@ -96,7 +96,7 @@
             <span>Confirme sua Senha</span>
         </label>
         <button class="submit">Cadastrar</button>
-        <p class="signin">Já tem uma conta? <a href="#">Entrar</a> </p>
+        <p class="signin">Já tem uma conta? <a href="login.php">Entrar</a> </p>
     </form>
 
 </div>
