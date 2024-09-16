@@ -2,6 +2,7 @@
 
   require ("conexao.php");
 
+  if(isset($_SESSION["id_adm"])){
     if(isset($_GET["id_alterar"])){
       if(isset($_POST["nome"])){      
         $nome = $_POST["nome"];
@@ -9,12 +10,12 @@
         $preco = $_POST["preco"];
         $foto = $_FILES["foto"];
         
-  
+        
         $sql_consultar = "SELECT * FROM lanches ";
         $mysqli_consultar = $mysqli->query($sql_consultar) or die($mysqli->error);
         $consultar = $mysqli_consultar->fetch_assoc();
-    
   
+        
         if (isset($_FILES["foto"]) && $_FILES["foto"]["error"] == 0) {
   
           // Verifique se o arquivo é uma imagem
@@ -44,11 +45,8 @@
           if (!move_uploaded_file($_FILES["foto"]["tmp_name"], $caminhoFinal)) {
               die("Ocorreu um erro ao fazer o upload da imagem.");
           }
-  
-      
-  
         }
-        
+  
   
             // Atualizando os dados no banco de dados
           $sql_alterar = "UPDATE lanches SET nome = '$nome', ingredientes = '$ingredientes', preco = '$preco', foto = '$foto'";
@@ -57,11 +55,15 @@
   
           $mysqli->query("INSERT INTO lanches (nome, ingredientes, preco, foto) values('$nome','$ingredientes', '$preco','$caminhoFinal')") or
                       die($mysqlierrno);
-      } 
+      }
 
-    }else{
-      die ("Não entrar diretamente na página alterar.php sem passar primeiro na página consultar");
     }
+
+  }else{
+    die("Ação não permitida");
+  }
+
+ 
 
     
   
