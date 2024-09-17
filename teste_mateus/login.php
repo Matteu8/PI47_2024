@@ -1,35 +1,36 @@
 <?php
+
 include "conexao.php";
 
 if(!isset($_SESSION)){
   session_start();
 }
 if(isset($_SESSION["nome"])){
-
+  header("Location:area_cliente.php");
 }
 
 if (isset($_POST["senha"])) {
   $email = $_POST["email"];
   $senha = $_POST["senha"];
 
-  $sql = "SELECT * FROM clientes WHERE email = '$email' AND senha = '$senha'";
-  
+  $sql = "SELECT * FROM clientes WHERE email =  '$email'";
+
   $sql_exec = $mysqli->query($sql) or die($mysqli->error);
   $user = $sql_exec->fetch_assoc();
 
   if (password_verify($senha, $user['senha'])) {
 
-   
-    $_SESSION["id_cliente"] = $user['id_clientes'];
-    $_SESSION["nome"] = $user['nome'];
-    $_SESSION["curso"] = $user['curso'];
-    $_SESSION["periodo"] = $user['periodo'];
-    $_SESSION["telefone"] = $user['telefone'];
-    $_SESSION["email"] = $user['email'];
-    $_SESSION["senha"] = $user['senha'];
+
+    $_SESSION["id_cliente"] = $usuario['id_clientes'];
+    $_SESSION["nome"] = $usuario['nome'];
+    $_SESSION["curso"] = $usuario['curso'];
+    $_SESSION["periodo"] = $usuario['periodo'];
+    $_SESSION["telefone"] = $usuario['telefone'];
+    $_SESSION["email"] = $usuario['email'];
+    $_SESSION["senha"] = $usuario['senha'];
 
 
-    header("Location:test.php");
+    header("Location:area_cliente.php");
   } else {
     echo ("<script> alert('Erro de senha')</script>");
   }
@@ -76,6 +77,7 @@ if (isset($_POST["senha"])) {
       <label>
         <input required="" placeholder="" type="password" class="input" name="senha">
         <span>Senha:</span>
+        
       </label>
 
       <button class="submit" type="submit">Entrar</button>

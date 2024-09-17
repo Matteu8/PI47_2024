@@ -9,11 +9,11 @@ if (isset($_POST["bt_nome"])) {
     $telefone = $_POST["bt_telefone"];
     $email = $_POST["bt_email"];
     $senha = $_POST["bt_senha"];
-    
 
-    
+
+
     $senha = password_hash($_POST['bt_senha'], PASSWORD_DEFAULT);
-    
+
     $sql = "SELECT * FROM clientes WHERE email =  '$email'";
     $sql_exec = $mysqli->query($sql) or die($mysqli->error);
 
@@ -24,14 +24,16 @@ if (isset($_POST["bt_nome"])) {
 
         $mysqlierrno = "falha";
 
-        $mysqli->query("INSERT INTO clientes (nome, curso, periodo, telefone, email, senha) values('$nome', '$curso', '$periodo', '$telefone', '$email', '$senha')") or
-            die($mysqlierrno);
+        $stmt = $mysqli->prepare("INSERT INTO clientes (nome, curso, periodo, telefone, email, senha) values(?, ?, ?, ?, ? ,? )");
+        $stmt->bind_param("ssssss", $nome, $curso, $periodo, $telefone, $email, $senha);
+        $stmt->execute();
+        $stmt->close();
 
         header("Location:login.php");
 
         exit();
     }
-    
+
 }
 
 ?>

@@ -67,9 +67,9 @@
         <a class="button cancel">Cancelar Pedido</a>
         <a class="button alter" >Alterar Pedido</a>
         <a class="button logout">Alterar Conta</a>
-        <a class="button">Cadastrar Funcionario</a>
+        <a href="cadastro_do_funcionario.php" class="button">Cadastrar Funcionario</a>
         <a class="button">Vizualizar feedback</a>
-        <a class="button logout">Sair</a>
+        <a href="sair.php" class="button logout">Sair</a>
     </div>
 
 

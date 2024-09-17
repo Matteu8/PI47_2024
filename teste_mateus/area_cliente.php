@@ -1,3 +1,15 @@
+<?php
+include("conexao.php");
+
+
+if(!isset($_SESSION)){
+    session_start();
+
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -59,15 +71,14 @@
     </style>
 </head>
 <body> 
-
     <div class="container">
         <h1>Área do Cliente</h1>
-        <p>Nome:</p>
-        <a class="button">Fazer Pedido</a>
+        <p>Nome: <?php echo $_SESSION["nome"]; ?></p>
+        <a href="pedido.php" class="button">Fazer Pedido</a>
         <a class="button cancel">Cancelar Pedido</a>
         <a class="button alter" >Alterar Pedido</a>
-        <a class="button logout">Alterar Conta</a>
-        <a class="button logout">Sair</a>
+        <a href="alterar_conta_cliente.php" class="button logout">Alterar Conta</a>
+        <a href="sair.php" class="button logout">Sair</a>
     </div>
 
 
