@@ -84,7 +84,7 @@ if (isset($_POST["bt_nome"])) {
             ?>
 
             <label for="">Senha:</label>
-            <input class="form-control" type="text" name="bt_senha">
+            <input class="form-control" type="password" name="bt_senha">
 
             <input class="btn btn-success " type="submit" value="Cadastrar">
             <input class="btn btn-danger " type="reset" value="Redefinir">

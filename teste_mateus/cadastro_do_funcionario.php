@@ -22,7 +22,7 @@
         $mysqli->query("INSERT INTO funcionarios (nome, email, senha) values('$nome', '$email', '$senha')") or
                     die($mysqlierrno);
 
-        header("Location:editar_funcionario.php");
+        header("Location:login.php");
 
         exit();
     }
@@ -59,7 +59,7 @@
     
 
 
-        <div class="container mt-5 d-flex justify-content-center">
+        <div class="container mt-2 d-flex justify-content-center">
      
 
     
@@ -80,10 +80,12 @@
         </label> 
         <?php
             if (isset($_POST["email"])) {
-                if ($sql_exec->num_rows > 0)
+                if ($sql_exec->num_rows > 0){
                     echo "<div class='alert alert-danger mt-4' role='alert'>
                         Você já tem uma conta!
                     </div>";
+                    
+                }
             }
             ?>
             
@@ -96,27 +98,26 @@
             <span>Confirme sua Senha</span>
         </label>
         <button class="submit">Cadastrar</button>
-        <p class="signin">Já tem uma conta? <a href="#">Entrar</a> </p>
+        <p class="signin">Já tem uma conta? <a href="login.php">Entrar</a> </p>
     </form>
 
 </div>
-    
-  </nav>
-   <h1></h1> 
-   <h1></h1> 
-   <h1></h1> 
-   <h1></h1> 
-  <footer>
-    <div class="footer-links">
-        <a href="#sobre">Sobre Nós</a>
-        
-    </div>
-    <div class="social-icons">
-  
-    </div>
-    
-    <p>&copy; 2024 Sua Empresa. Todos os direitos reservados.</p>
-</footer>
+</nav>
+  <h1></h1> 
+  <h1></h1> 
+  <h1></h1> 
+  <h1></h1> 
+ <footer>
+   <div class="footer-links">
+       <a href="#sobre">Sobre Nós</a>
+       
+   </div>
+   <div class="social-icons">
+ 
+   </div>
+   
+   <p>&copy; 2024 Sua Empresa. Todos os direitos reservados.</p>
+</footer> 
  
          
 </body>

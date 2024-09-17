@@ -5,34 +5,35 @@ if(!isset($_SESSION)){
   session_start();
 }
 if(isset($_SESSION["nome"])){
-  header("Location:test.php");
+
 }
 
 if (isset($_POST["senha"])) {
   $email = $_POST["email"];
   $senha = $_POST["senha"];
 
-  $sql = "SELECT * FROM clientes WHERE email =  '$email'";
-//testar com mais um sql
+  $sql = "SELECT * FROM clientes WHERE email = '$email' AND senha = '$senha'";
+  
   $sql_exec = $mysqli->query($sql) or die($mysqli->error);
-  $usuario = $sql_exec->fetch_assoc();
+  $user = $sql_exec->fetch_assoc();
 
-  if (password_verify($senha, $usuario['senha'])) {
+  if (password_verify($senha, $user['senha'])) {
 
-
-    $_SESSION["id_cliente"] = $usuario['id_cliente'];
-    $_SESSION["nome"] = $usuario['nome'];
-    $_SESSION["curso"] = $usuario['curso'];
-    $_SESSION["periodo"] = $usuario['periodo'];
-    $_SESSION["telefone"] = $usuario['telefone'];
-    $_SESSION["email"] = $usuario['email'];
-    $_SESSION["senha"] = $usuario['senha'];
+   
+    $_SESSION["id_cliente"] = $user['id_clientes'];
+    $_SESSION["nome"] = $user['nome'];
+    $_SESSION["curso"] = $user['curso'];
+    $_SESSION["periodo"] = $user['periodo'];
+    $_SESSION["telefone"] = $user['telefone'];
+    $_SESSION["email"] = $user['email'];
+    $_SESSION["senha"] = $user['senha'];
 
 
     header("Location:test.php");
   } else {
     echo ("<script> alert('Erro de senha')</script>");
   }
+  var_dump($user);
 }
 
 ?>
