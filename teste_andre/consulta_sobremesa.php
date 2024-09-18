@@ -134,7 +134,7 @@ $qntd = $retorno_consulta->num_rows; // retornar quantidade de linhas
                     </td>
                     
                     <td><a class="btn btn-primary" href="alterar_sobremesa.php?<?php echo $profissional['id_sobremesa']; ?>">Alterar</a></td>
-                    <td><a class="btn btn-danger" href="deletar_sobremesa.php?<?php echo $profissional['id_sobremesa']; ?>">Deletar</a></td>
+                    <td><a class="btn btn-danger" href="deletar_sobremesa.php?id_sobremesa=<?php echo $profissional['id_sobremesa']; ?>">Deletar</a></td>
                 </tr>
             <?php } ?>
         </tbody>
