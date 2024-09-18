@@ -15,8 +15,10 @@ if (isset($_POST["senha"])) {
 
   if ($tipo_usuario == 'cliente') {
     $tabela = 'clientes';
+    
   } elseif ($tipo_usuario == 'funcionario') {
     $tabela = 'funcionarios';
+   
   } else {
     echo ("<script> alert('Tipo de usuário inválido')</script>");
     exit;
@@ -28,18 +30,28 @@ if (isset($_POST["senha"])) {
   $resultado = $stmt->get_result();
   $usuario = $resultado->fetch_assoc();
 
+
   if ($usuario && password_verify($senha, $usuario['senha'])) {
-    $_SESSION["id_cliente"] = $usuario['id_clientes'];
-    $_SESSION["nome"] = $usuario['nome'];
-    $_SESSION["curso"] = $usuario['curso'];
-    $_SESSION["periodo"] = $usuario['periodo'];
-    $_SESSION["telefone"] = $usuario['telefone'];
-    $_SESSION["email"] = $usuario['email'];
-    $_SESSION["senha"] = $usuario['senha'];
+   
 
     if ($tipo_usuario == 'cliente') {
+      $_SESSION["id_cliente"] = $usuario['id_clientes'];
+      $_SESSION["nome"] = $usuario['nome'];
+      $_SESSION["curso"] = $usuario['curso'];
+      $_SESSION["periodo"] = $usuario['periodo'];
+      $_SESSION["telefone"] = $usuario['telefone'];
+      $_SESSION["email"] = $usuario['email'];
+      $_SESSION["senha"] = $usuario['senha'];
+      
       header("Location:area_cliente.php");
     } elseif ($tipo_usuario == 'funcionario') {
+      $_SESSION["id_cliente"] = $usuario['id_clientes'];
+      $_SESSION["nome"] = $usuario['nome'];
+      $_SESSION["curso"] = $usuario['curso'];
+      $_SESSION["periodo"] = $usuario['periodo'];
+      $_SESSION["telefone"] = $usuario['telefone'];
+      $_SESSION["email"] = $usuario['email'];
+      $_SESSION["senha"] = $usuario['senha'];
       header("Location:area_funcionarios.php"); 
     }
   } else {
