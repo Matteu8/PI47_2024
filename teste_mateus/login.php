@@ -2,10 +2,10 @@
 
 include "conexao.php";
 
-if(!isset($_SESSION)){
+if (!isset($_SESSION)) {
   session_start();
 }
-if(isset($_SESSION["nome"])){
+if (isset($_SESSION["nome"])) {
   header("Location:area_cliente.php");
 }
 
@@ -16,9 +16,9 @@ if (isset($_POST["senha"])) {
   $sql = "SELECT * FROM clientes WHERE email =  '$email'";
 
   $sql_exec = $mysqli->query($sql) or die($mysqli->error);
-  $user = $sql_exec->fetch_assoc();
+  $usuario = $sql_exec->fetch_assoc();
 
-  if (password_verify($senha, $user['senha'])) {
+  if (password_verify($senha, $usuario['senha'])) {
 
 
     $_SESSION["id_cliente"] = $usuario['id_clientes'];
@@ -34,7 +34,6 @@ if (isset($_POST["senha"])) {
   } else {
     echo ("<script> alert('Erro de senha')</script>");
   }
-  var_dump($user);
 }
 
 ?>
@@ -77,7 +76,7 @@ if (isset($_POST["senha"])) {
       <label>
         <input required="" placeholder="" type="password" class="input" name="senha">
         <span>Senha:</span>
-        
+
       </label>
 
       <button class="submit" type="submit">Entrar</button>

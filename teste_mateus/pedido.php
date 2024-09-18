@@ -14,6 +14,7 @@
 </head>
 
 <body>
+
     <div class="row visible-md visible-lg" style="background-color:#3a6da1;">
         <div class="col-md-5" style="background-color:#3a6da1; margin-right:0px; margin-left:0px">
             <a href="/principal/"><img src="img/topo_site_bl1_2018.png" class="img img-responsive"></a>
@@ -21,47 +22,41 @@
     </div>
     <div class="container">
         <h1 class="text-center">Pedidos</h1>
-    <div class="row">
-        <!-- Card 1 -->
-        <div class="col-md-4 mb-3 mt-5">
-            <div class="card">
-                <img src="img/lanche.jfif" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Lanches</h5>
-                    <a href="#" class="btn btn-primary">Pedir</a>
+        <div class="row">
+            <!-- Card 1 -->
+            <div class="col-md-4 mb-3 mt-5">
+                <div class="card">
+                    <img src="img/lanche.jfif" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Lanches</h5>
+                        <a href="#" class="btn btn-primary">Pedir</a>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Card 2 -->
-        <div class="col-md-4 mb-3 mt-5">
-            <div class="card">
-                <img src="img/bebida.jfif" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Bebidas</h5>
-                    <a href="#" class="btn btn-primary">Pedir</a>
+            <!-- Card 2 -->
+            <div class="col-md-4 mb-3 mt-5">
+                <div class="card">
+                    <img src="img/bebida.jfif" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Bebidas</h5>
+                        <a href="#" class="btn btn-primary">Pedir</a>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Card 3 -->
-        <div class="col-md-4 mb-3 mt-5">
-            <div class="card">
-                <img src="img/sobremesa.jfif" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Sobremesa</h5>
-                    <a href="#" class="btn btn-primary">Pedir</a>
+            <!-- Card 3 -->
+            <div class="col-md-4 mb-3 mt-5">
+                <div class="card">
+                    <img src="img/sobremesa.jfif" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Sobremesa</h5>
+                        <a href="#" class="btn btn-primary">Pedir</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-    </div>
-
-
-
-
 
     </nav>
     <h1></h1>
