@@ -132,7 +132,7 @@ $mysqli->set_charset("utf8mb4"); /* Acentuação */
                     <td><?php echo htmlspecialchars($lanches['preco']); ?></td>
                     <td><img src="<?php echo($lanches['foto']); ?>" class="img-thumbnail"></td>
                     <td><a class="btn btn-primary" href="alterar_lanches.php?id_alterar=<?php echo $lanches['id_lanches']; ?>">Alterar</a></td>
-                    <td><a class="btn btn-danger" href="deletar_lanches.php?<?php echo $lanches['id_lanches']; ?>">Deletar</a></td>
+                    <td><a class="btn btn-danger" href="deletar_lanches.php?id_deletar=<?php echo $lanches['id_lanches']; ?>">Deletar</a></td>
                 </tr>
             <?php } ?>
         </tbody>    

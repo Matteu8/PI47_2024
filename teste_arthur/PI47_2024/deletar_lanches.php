@@ -2,11 +2,11 @@
 include("conexao.php"); // Arquivo php referente ao banco de dados
 
 // Verifica se um ID foi passado via GET
-if (isset($_GET['1'])) {
-    $id_nome = $_GET['1'];
+if (isset($_GET['id_deletar'])) {
+    $id_nome = $_GET['id_deletar'];
 
     // Consulta os detalhes do Lanche selecionado
-    $consultar_banco = "SELECT * FROM lanches WHERE id_lanches = 1";
+    $consultar_banco = "SELECT * FROM lanches WHERE id_lanches = ?";
     $stmt = $mysqli->prepare($consultar_banco);
     $stmt->bind_param('i', $id_nome);
     $stmt->execute();
