@@ -18,68 +18,36 @@ if(!isset($_SESSION)){
     <title>Área de Cliente</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background-color: #f0f0f0;
-        }
-        .container {
-            width: 80%;
-            max-width: 800px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            padding: 20px;
-            box-sizing: border-box;
-            text-align: center;
-            margin-bottom: 30rem;
-        }
-        h1 {
-            margin-bottom: 20px;
-        }
-        .button {
-            display: inline-block;
-            margin: 10px;
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #007bff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-        .button.cancel {
-            background-color: #dc3545;
-        }
-        .button.alter {
-            background-color: #ffc107;
-        }
-        .button.logout {
-            background-color: #6c757d;
-        }
-        .button:hover {
-            opacity: 0.8;
-        }
-    </style>
+    <link rel="stylesheet" href="gabriell.css">
 </head>
 <body> 
-    <div class="container">
+<div class="row" style="background-color:#3a6da1;">
+        <div class="col-md-12">
+            <a href="/principal/">
+                <img src="img/topo_site_bl1_2018.png" class="img-fluid" alt="Logo">
+            </a>
+        </div>
+    </div>
+
+    <div class="container mt-4">
         <h1>Área do Cliente</h1>
         <p>Nome: <?php echo $_SESSION["nome"]; ?></p>
-        <a href="pedido.php" class="button">Fazer Pedido</a>
-        <a class="button cancel">Cancelar Pedido</a>
-        <a class="button alter" >Alterar Pedido</a>
-        <a href="alterar_conta_cliente.php" class="button logout">Alterar Conta</a>
-        <a href="sair.php" class="button logout">Sair</a>
+        
+        <div class="list-group mt-3">
+            <a href="pedido.php" class="list-group-item list-group-item-action">Fazer Pedido</a>
+            <a href="#" class="list-group-item list-group-item-action">Cancelar Pedido</a>
+            <a href="#" class="list-group-item list-group-item-action">Alterar Pedido</a>
+            <a href="alterar_conta_cliente.php" class="list-group-item list-group-item-action">Alterar Conta</a>
+            <a href="sair.php" class="list-group-item list-group-item-action ">Sair</a>
+        </div>
     </div>
+
+    <footer class="text-center mt-4">
+        <div class="social-icons">
+            <a href="Sobre Nós">Sobre Nós</a>
+        </div>
+        <p>&copy; 2024 Senac-PR. Todos os direitos reservados.</p>
+    </footer>
 
 
 </body>

@@ -45,17 +45,15 @@ if (isset($_POST["senha"])) {
       
       header("Location:area_cliente.php");
     } elseif ($tipo_usuario == 'funcionario') {
-      $_SESSION["id_cliente"] = $usuario['id_clientes'];
+      $_SESSION["id_funcionario"] = $usuario['id_funcionario'];
       $_SESSION["nome"] = $usuario['nome'];
-      $_SESSION["curso"] = $usuario['curso'];
-      $_SESSION["periodo"] = $usuario['periodo'];
-      $_SESSION["telefone"] = $usuario['telefone'];
       $_SESSION["email"] = $usuario['email'];
       $_SESSION["senha"] = $usuario['senha'];
       header("Location:area_funcionarios.php"); 
     }
   } else {
     echo ("<script> alert('Erro de senha ou Tipo de Usuário')</script>");
+    
   }
 }
 ?>
