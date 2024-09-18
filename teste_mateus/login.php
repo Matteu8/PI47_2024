@@ -1,11 +1,12 @@
 <?php
+
 include "conexao.php";
 
-if(!isset($_SESSION)){
+if (!isset($_SESSION)) {
   session_start();
 }
-if(isset($_SESSION["nome"])){
-  header("Location:test.php");
+if (isset($_SESSION["nome"])) {
+  header("Location:area_cliente.php");
 }
 
 if (isset($_POST["senha"])) {
@@ -20,7 +21,7 @@ if (isset($_POST["senha"])) {
   if (password_verify($senha, $usuario['senha'])) {
 
 
-    $_SESSION["id_cliente"] = $usuario['id_cliente'];
+    $_SESSION["id_cliente"] = $usuario['id_clientes'];
     $_SESSION["nome"] = $usuario['nome'];
     $_SESSION["curso"] = $usuario['curso'];
     $_SESSION["periodo"] = $usuario['periodo'];
@@ -29,7 +30,7 @@ if (isset($_POST["senha"])) {
     $_SESSION["senha"] = $usuario['senha'];
 
 
-    header("Location:test.php");
+    header("Location:area_cliente.php");
   } else {
     echo ("<script> alert('Erro de senha')</script>");
   }
@@ -75,6 +76,7 @@ if (isset($_POST["senha"])) {
       <label>
         <input required="" placeholder="" type="password" class="input" name="senha">
         <span>Senha:</span>
+
       </label>
 
       <button class="submit" type="submit">Entrar</button>
