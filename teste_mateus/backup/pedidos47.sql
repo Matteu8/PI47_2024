@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 04-Set-2024 às 19:20
+-- Tempo de geração: 18-Set-2024 às 19:25
 -- Versão do servidor: 5.7.36
 -- versão do PHP: 7.4.26
 
@@ -26,6 +26,21 @@ USE `pedidos47`;
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `bebidas`
+--
+
+DROP TABLE IF EXISTS `bebidas`;
+CREATE TABLE IF NOT EXISTS `bebidas` (
+  `id_bebidas` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(50) NOT NULL,
+  `preco` varchar(50) NOT NULL,
+  `quantidade` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_bebidas`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `clientes`
 --
 
@@ -37,15 +52,17 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `periodo` varchar(10) NOT NULL,
   `telefone` varchar(15) NOT NULL,
   `email` varchar(300) NOT NULL,
+  `senha` varchar(300) NOT NULL,
   PRIMARY KEY (`id_clientes`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `clientes`
 --
 
-INSERT INTO `clientes` (`id_clientes`, `nome`, `curso`, `periodo`, `telefone`, `email`) VALUES
-(1, 'Arthur', 'ProgramaÃ§Ã£o web', 'Tarde', '43 4002-8922', 'arthur@gmail.com');
+INSERT INTO `clientes` (`id_clientes`, `nome`, `curso`, `periodo`, `telefone`, `email`, `senha`) VALUES
+(1, 'Arthur', 'ProgramaÃ§Ã£o web', 'Tarde', '43 4002-8922', 'arthur@gmail.com', ''),
+(13, 'Mateus Vinicius', 'ProgramaÃ§Ã£o WEB', 'Tarde', '43 1234567899', 'mateus.68998@aluno.pr.senac.br', '$2y$10$SZe70tBBVcC1mxegOxp2Ju33bmZeYvjaSHEMN3jI4yMWX.n/eoqBa');
 
 -- --------------------------------------------------------
 
@@ -70,6 +87,28 @@ CREATE TABLE IF NOT EXISTS `contato` (
 
 INSERT INTO `contato` (`id_contato`, `nome`, `email`, `telefone`, `assunto`, `mensagem`) VALUES
 (1, 'Arthur', 'arthur@gmail.com', '43 4002-8922', 'Elogio', 'Gostei dos Lanches, mas poderia ser um pouco menos quente o lanche.');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `funcionarios`
+--
+
+DROP TABLE IF EXISTS `funcionarios`;
+CREATE TABLE IF NOT EXISTS `funcionarios` (
+  `id_funcionario` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(200) NOT NULL,
+  `email` varchar(300) NOT NULL,
+  `senha` varchar(300) NOT NULL,
+  PRIMARY KEY (`id_funcionario`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `funcionarios`
+--
+
+INSERT INTO `funcionarios` (`id_funcionario`, `nome`, `email`, `senha`) VALUES
+(2, 'Ronaldo FenÃ´meno', '1@1', '$2y$10$EAwcvd4aJy8lcpO7AY4xqe7i1vec6N1k8NNs7GtVY95/0FbtajBD.');
 
 -- --------------------------------------------------------
 
