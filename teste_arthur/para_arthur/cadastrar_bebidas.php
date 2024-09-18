@@ -14,9 +14,9 @@
     
         // Executando a consulta
         if ($mysqli->query($sql) === TRUE) {
-            echo "Bebida cadastrada com sucesso!";
+            $mensagem = "<div class='alert alert-success' role='alert'> Bebida cadastrada com sucesso!</div>";
         } else {
-            echo "Erro ao cadastrar bebida: " . $mysqli->error;
+            $mensagem = "<div class='alert alert-danger' role='alert'> Erro ao cadastrar bebida: </div>" . $mysqli->error;
         }
     
         // Fechando a conexão
@@ -41,7 +41,11 @@
     
 </head>
 <body>
-    <?php include("menu.php");?>
+<div class="row visible-md visible-lg" style="background-color:#3a6da1;">
+        <div class="col-md-5" style="background-color:#3a6da1; margin-right:0px; margin-left:0px">
+            <a href="/principal/"><img src="img/topo_site_bl1_2018.png" class="img img-responsive"></a>
+        </div>
+    </div>
 
     <div class="container text-center">
         <h1 class="mt-3">Cadastrar Bebidas</h1>
@@ -67,8 +71,11 @@
                 <input class="form-control" type="number" id="quantidade" name="quantidade" required>
             </div>       
 
-            
-
+            <?php if(isset($mensagem)){
+                echo $mensagem;
+            } ?>
+            <br>
+            <br>
             <input class="btn btn-success" type="submit" value="Cadastrar Bebida">
             <a  class="btn btn-secondary" href="#">Cancelar</a>
         </form>
