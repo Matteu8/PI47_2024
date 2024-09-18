@@ -87,6 +87,7 @@
   <html lang="pt-br">
 
   <head>
+  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alterar lanches</title>
@@ -97,27 +98,21 @@
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"></script>
-
-
-
-    <link rel="stylesheet" href="ariella.css">
+    <link rel="stylesheet" href="ariela.css">
+ 
   </head>
-
   <body>
-    <div class="row visible-md visible-lg" style="background-color:#3a6da1;">
-      <div class="col-md-5" style="background-color:#3a6da1; margin-right:0px; margin-left:0px">
-        <a href="/principal/"><img src="img/topo_site_bl1_2018.png" class="img img-responsive"></a>
-      </div>
-    </div>
-    <div class="conteiner d-flex justify-content-center mt-5">
-      <form class="form" method="post" enctype="multipart/form-data">
+  <div class="row visible-md visible-lg" style="background-color:#3a6da1;" >     
+            <div class="col-md-5" style="background-color:#3a6da1; margin-right:0px; margin-left:0px">
+                <a href="/principal/"><img src="img/topo_site_bl1_2018.png" class="img-responsive"></a>
+            </div>
+        </div>
+    
+    <div class="conteiner d-flex justify-content ">
+    
+    <form class="form" method="post" enctype="multipart/form-data">
         <p class="title">Alterar Lanche</p>
         <p class="message">Altere os dados dos lanches de acordo com o seu objetivo .</p>
-
-        <?php 
-      
-    
-    ?>
 
         <label>
           <input required="" placeholder="" type="text" class="input" value="<?php echo $row["nome"]?>" name="nome">
@@ -140,22 +135,18 @@
           <input placeholder="" type="file" class="" value="<?php echo $row["preco"] ?>" name="foto">
           <span>Foto:</span>
         </label>
-
         <button class="submit">Entrar</button>
-
-      </form>
+    </form>
     </div>
+
     <footer>
-
-      </div>
-      <div class="social-icons">
-        <a href="Srobre Nós">Sobre Nós</a>
-      </div>
-      <p>&copy; 2024 Senac-PR. Todos os direitos reservados.</p>
+    <div class="footer-links">
+        <a href="#sobre">Sobre Nós</a>
+    </div>
+    <div class="social-icons">
+    </div>
+    <p>&copy; 2024 Sua Empresa. Todos os direitos reservados.</p>
     </footer>
-  </body>
 
-  </html>
 </body>
-
 </html>
