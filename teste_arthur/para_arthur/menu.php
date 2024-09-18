@@ -1,6 +1,6 @@
 
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #3a6da1;">
-        <div class="container-fluid">
+        g<div class="container-fluid">
             <!-- Logo -->
             <a class="navbar-brand" href="index.php">
                 <img src="img/topo_site_bl1_2018.png" class="img-fluid" alt="Logo">

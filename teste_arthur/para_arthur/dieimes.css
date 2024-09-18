@@ -3,32 +3,7 @@
     --laranja_senac: #f7941d;
 }
 
-.navbar {
-    margin: 0;
-    padding: 0;
-}
 
-/* Garante que a navbar e a imagem ocupem toda a largura da página */
-.navbar {
-    width: 100%;
-    background-color: #3a6da1;
-}
-
-/* Ajuste para garantir que a imagem não crie espaços */
-.navbar-brand img {
-    max-width: 100%;
-    height: auto; /* Ajusta a altura da imagem proporcionalmente */
-}
-
-/* Garantindo que o botão hamburger fique à direita */
-.navbar-toggler {
-    margin-left: auto;
-}
-
-/* Mantendo o menu alinhado à direita */
-.navbar-nav {
-    margin-left: auto;
-}
 
 footer {
    
