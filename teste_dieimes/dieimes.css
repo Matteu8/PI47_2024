@@ -1,0 +1,15 @@
+:root{
+    --azul_senac: #3a6da1;
+    --laranja_senac: #f7941d;
+}
+
+footer {
+   
+    background-color: var(--azul_senac); /* Cor personalizada */
+    color: white;
+    padding: 20px 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}

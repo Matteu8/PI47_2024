@@ -13,14 +13,14 @@
         $sql = "INSERT INTO bebidas (nome, tipo, preco, quantidade) VALUES ('$nome', '$tipo', '$preco', '$quantidade')";
     
         // Executando a consulta
-        if ($mysql->query($sql) === TRUE) {
+        if ($mysqli->query($sql) === TRUE) {
             echo "Bebida cadastrada com sucesso!";
         } else {
-            echo "Erro ao cadastrar bebida: " . $mysql->error;
+            echo "Erro ao cadastrar bebida: " . $mysqli->error;
         }
     
         // Fechando a conexão
-        $mysql->close();
+        $mysqli->close();
     }
 ?>
 
@@ -33,24 +33,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Bebidas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="dieimes.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
+    
 </head>
 <body>
-    <h1>Cadastrar Bebidas</h1>
+    <?php include("menu.php");?>
 
-    <form action="cadastrar_bebidas.php" method="POST">
-        <label for="nome">Nome da Bebida:</label>
-        <input type="text" id="nome" name="nome" required><br><br>
+    <div class="container text-center">
+        <h1 class="mt-3">Cadastrar Bebidas</h1>
+        <form action="cadastrar_bebidas.php" method="POST">
 
-        <label for="tipo">Tipo de Bebida:</label>
-        <input type="text" id="tipo" name="tipo" required><br><br>
+            <div class="mb-3">
+                <label class="form-label" for="nome">Nome da Bebida:</label>
+                <input class="form-control" type="text" id="nome" name="nome" required>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label" for="tipo">Tipo de Bebida:</label>
+                <input class="form-control" type="text" id="tipo" name="tipo" required>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label" for="preco">Preço:</label>
+                <input class="form-control" type="number" id="preco" name="preco" step="0.01" required>
+            </div>
 
-        <label for="preco">Preço:</label>
-        <input type="number" id="preco" name="preco" step="0.01" required><br><br>
+            <div class="mb-3">
+                <label class="form-label" for="quantidade">Quantidade em Estoque:</label>
+                <input class="form-control" type="number" id="quantidade" name="quantidade" required>
+            </div>       
 
-        <label for="quantidade">Quantidade em Estoque:</label>
-        <input type="number" id="quantidade" name="quantidade" required><br><br>
+            
 
-        <input type="submit" value="Cadastrar Bebida">
-    </form>
+            <input class="btn btn-success" type="submit" value="Cadastrar Bebida">
+            <a  class="btn btn-secondary" href="#">Cancelar</a>
+        </form>
+    </div>
+   
+
+    <?php include("rodape.php");?>
 </body>
 </html>
