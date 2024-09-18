@@ -3,6 +3,42 @@
     --laranja_senac: #f7941d;
 }
 
+
+/* Define que a imagem ocupe 100% da altura disponível */
+.navbar-brand img {
+    height: 100vh; /* Altura da viewport (tela) */
+    object-fit: cover; /* Garante que a imagem seja cortada proporcionalmente */
+}
+
+/* Alinha o botão de menu hamburger à direita no modo celular */
+.navbar-toggler {
+    margin-left: auto; /* Empurra o botão para a direita */
+}
+
+/* Para garantir que o conteúdo da navbar esteja alinhado ao container */
+.navbar-nav {
+    margin-left: auto; /* Empurra o menu para a direita */
+}
+
+/* Certifique-se de que a imagem e o botão ocupem a altura máxima */
+.navbar {
+    height: 100vh; /* Força a navbar a ocupar toda a altura da viewport */
+    background-color: var(--azul_senac); /* A cor de fundo conforme sua paleta */
+}
+
+/* No modo desktop, força o menu para a direita */
+@media (min-width: 992px) {
+    .navbar-collapse {
+        justify-content: flex-end; /* Mantém o menu alinhado à direita no desktop */
+    }
+}
+
+
+
+
+
+
+
 footer {
    
     background-color: var(--azul_senac); /* Cor personalizada */
