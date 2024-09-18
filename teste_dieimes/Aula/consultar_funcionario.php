@@ -1,7 +1,7 @@
 <?php
 include("conexao.php");
 
-$consultar_banco = "SELECT * FROM altera_sobremesa";
+$consultar_banco = "SELECT * FROM basico_tabela";
 $retorno_consulta = $mysqli->query($consultar_banco) or die($mysqli->error);
 $qntd = $retorno_consulta->num_rows; // retornar quantidade de linhas
 ?>
@@ -108,15 +108,20 @@ $qntd = $retorno_consulta->num_rows; // retornar quantidade de linhas
 
 <div class="container">
     <div class="especialidade">
-        <h1>Lista - Consulta Sobremesa</h1>
+        <h1>Lista - Profissionais</h1>
     </div>
 
     <table class="table table-striped">
         <thead>
             <tr>
+                <th>Id do profissional</th>
                 <th>Nome</th>
-                <th>Preço</th>
-                <th>Quantidade</th>
+                <th>Telefone</th>
+                <th>Especialidade</th>
+                <th>Endereço</th>
+                <th>CPF</th>
+                <th>Data de Nascimento</th>
+                <th>E-mail</th>
                 <th>Foto</th>
                 <th>Alterar</th>
                 <th>Deletar</th>
@@ -125,10 +130,15 @@ $qntd = $retorno_consulta->num_rows; // retornar quantidade de linhas
         <tbody>
             <?php while ($profissional = $retorno_consulta->fetch_assoc()) { ?>
                 <tr>
-                   
+                    <td><?php echo htmlspecialchars($profissional['id_funcionario']); ?></td>
                     <td><?php echo htmlspecialchars($profissional['nome']); ?></td>
-                    <td><?php echo htmlspecialchars($profissional['preco']); ?></td>
-                    <td><?php echo htmlspecialchars($profissional['quantidade']); ?></td>
+                    <td><?php echo htmlspecialchars($profissional['telefone']); ?></td>
+                    <td><?php echo htmlspecialchars($profissional['cargo']); ?></td>
+                    <td><?php echo htmlspecialchars($profissional['endereco']); ?></td>
+                    <td><?php echo htmlspecialchars($profissional['cpf']); ?></td>
+                    
+                    <td><?php echo htmlspecialchars($profissional['datanasc']); ?></td>
+                    <td><?php echo htmlspecialchars($profissional['email']); ?></td>
                     <td>
                         <img src="<?php echo($profissional['caminho_foto']); ?>" alt="Foto do profissional" class="img-thumbnail">
                     </td>
