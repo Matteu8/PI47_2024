@@ -15,8 +15,9 @@ if (isset($_GET['id_alterar'])) {
         $nome = $_POST['nome'];
         $preco = $_POST['preco'] ?? '';
         $quantidade = intval($_POST['quantidade'] ?? 0);
-
         $caminho_banco = $consultar['imagem']; // Preserva o caminho da foto antiga
+
+        
 
         if (isset($_FILES['bt_imagem']) && $_FILES['bt_imagem']['error'] === 0) {
             $arquivo = $_FILES['bt_imagem'];
@@ -44,12 +45,15 @@ if (isset($_GET['id_alterar'])) {
                 die("Falha ao mover o arquivo para o diretório de destino.");
             }
         }
-
+        if (isset($_GET['status']) && $_GET['status'] == 'success') {
+            echo "<p>Sobremesa atualizada com sucesso!</p>";
+        }
+        
         // Atualizando os dados no banco de dados
         $sql_alterar = "UPDATE sobremesa SET nome = '$nome', preco = '$preco', quantidade = '$quantidade', imagem = '$caminho_banco' WHERE id_sobremesa = '$id_sobremesa'";
         $mysqli_alterar = $mysqli->query($sql_alterar) or die($mysqli->error);
        
-        
+        header ("location:consulta_sobremesa.php");
     }
 }else{
 }
