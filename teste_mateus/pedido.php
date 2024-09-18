@@ -56,6 +56,7 @@
                 </div>
             </div>
         </div>
+        <button class="btn btn-warning"><a href="area_cliente.php">Voltar</a></button>
     </div>
 
     </nav>
