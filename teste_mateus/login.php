@@ -1,59 +1,63 @@
 <?php
 include "conexao.php";
 
-if (!isset($_SESSION)) {
-  session_start();
-}
-if (isset($_SESSION["nome"])) {
-  header("Location:area_cliente.php");
+session_start();
+
+if (isset($_SESSION["id_cliente"])) {
+  header("Location: area_cliente.php");
+  exit();
+} elseif (isset($_SESSION["id_funcionario"])) {
+  header("Location: area_funcionarios.php");
+  exit();
 }
 
-if (isset($_POST["senha"])) {
+$erro = "";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $email = $_POST["email"];
   $senha = $_POST["senha"];
   $tipo_usuario = $_POST["tipo_usuario"];
 
   if ($tipo_usuario == 'cliente') {
     $tabela = 'clientes';
-    
   } elseif ($tipo_usuario == 'funcionario') {
     $tabela = 'funcionarios';
-   
   } else {
-    echo ("<script> alert('Tipo de usuário inválido')</script>");
-    exit;
+    $erro = "Tipo de usuário inválido.";
   }
 
-  $stmt = $mysqli->prepare("SELECT * FROM $tabela WHERE email = ?");
-  $stmt->bind_param("s", $email);
-  $stmt->execute();
-  $resultado = $stmt->get_result();
-  $usuario = $resultado->fetch_assoc();
+  if (empty($erro)) {
+    $stmt = $mysqli->prepare("SELECT * FROM $tabela WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    $usuario = $resultado->fetch_assoc();
 
+    if ($usuario && password_verify($senha, $usuario['senha'])) {
+      if ($tipo_usuario == 'cliente') {
+        $_SESSION["id_cliente"] = $usuario['id_clientes'];
+        $_SESSION["nome"] = $usuario['nome'];
+        $_SESSION["curso"] = $usuario['curso'];
+        $_SESSION["periodo"] = $usuario['periodo'];
+        $_SESSION["telefone"] = $usuario['telefone'];
+        $_SESSION["email"] = $usuario['email'];
+        $_SESSION["senha"] = $usuario['senha'];
 
-  if ($usuario && password_verify($senha, $usuario['senha'])) {
-   
+        header("Location: area_cliente.php");
+        exit();
 
-    if ($tipo_usuario == 'cliente') {
-      $_SESSION["id_cliente"] = $usuario['id_clientes'];
-      $_SESSION["nome"] = $usuario['nome'];
-      $_SESSION["curso"] = $usuario['curso'];
-      $_SESSION["periodo"] = $usuario['periodo'];
-      $_SESSION["telefone"] = $usuario['telefone'];
-      $_SESSION["email"] = $usuario['email'];
-      $_SESSION["senha"] = $usuario['senha'];
-      
-      header("Location:area_cliente.php");
-    } elseif ($tipo_usuario == 'funcionario') {
-      $_SESSION["id_funcionario"] = $usuario['id_funcionario'];
-      $_SESSION["nome"] = $usuario['nome'];
-      $_SESSION["email"] = $usuario['email'];
-      $_SESSION["senha"] = $usuario['senha'];
-      header("Location:area_funcionarios.php"); 
+      } elseif ($tipo_usuario == 'funcionario') {
+        $_SESSION["id_funcionario"] = $usuario['id_funcionario'];
+        $_SESSION["nome"] = $usuario['nome'];
+        $_SESSION["email"] = $usuario['email'];
+        $_SESSION["senha"] = $usuario['senha'];
+
+        header("Location: area_funcionarios.php");
+        exit();
+      }
+    } else {
+      $erro = "Email/Senha ou Tipo de Usuário incorreto.";
     }
-  } else {
-    echo ("<script> alert('Erro de senha ou Tipo de Usuário')</script>");
-    
   }
 }
 ?>
@@ -65,44 +69,48 @@ if (isset($_POST["senha"])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="ariella.css">
 </head>
 
 <body>
-  <div class="row visible-md visible-lg" style="background-color:#3a6da1;">
-    <div class="col-md-5" style="background-color:#3a6da1;">
-      <a href="/principal/"><img src="img/topo_site_bl1_2018.png" class="img img-responsive"></a>
+  <div class="row" style="background-color:#3a6da1;">
+    <div class="col-md-12">
+      <a href="">
+        <img src="img/topo_site_bl1_2018.png" class="img-fluid" alt="Logo">
+      </a>
     </div>
   </div>
+
   <div class="container d-flex justify-content-center mt-5">
     <form class="form" method="post">
       <p class="title">Login</p>
       <p class="message">Faça o login agora e tenha acesso total ao nosso aplicativo.</p>
       <label>
-        <input required placeholder="" type="email" class="input" name="email">
+        <input required placeholder="" type="email" class="input form-control" name="email">
         <span>Email:</span>
       </label>
       <label>
-        <input required placeholder="" type="password" class="input" name="senha">
+        <input required placeholder="" type="password" class="input form-control" name="senha">
         <span>Senha:</span>
       </label>
-      <select required class="form-select" name="tipo_usuario" aria-label="Default select example">
-        <option selected>Entrar como</option>
+      <?php if (!empty($erro)): ?>
+        <div class='alert alert-danger mt-2' role='alert'><?php echo htmlspecialchars($erro); ?></div>
+      <?php endif; ?>
+      <select required class="form-select" name="tipo_usuario">
+        <option value="" disabled selected>Entrar como</option>
         <option value="cliente">Cliente</option>
         <option value="funcionario">Funcionário</option>
       </select>
-      <button class="submit" type="submit">Entrar</button>
-      <p class="signin"> Não tem uma conta? <a href="cadastro_cliente.php">Cadastre-se</a></p>
+      <button class="btn btn-primary submit" type="submit">Entrar</button>
+      <p class="signin">Não tem uma conta? <a href="cadastro_cliente.php">Cadastre-se</a></p>
     </form>
   </div>
-  <footer>
-    <div class="social-icons">
-      <a href="Sobre Nós">Sobre Nós</a>
+
+  <footer class="text-center mt-4 d-none d-md-block">
+    <div class="footer-links">
+      <a href="#sobre">Sobre Nós</a>
     </div>
     <p>&copy; 2024 Senac-PR. Todos os direitos reservados.</p>
   </footer>

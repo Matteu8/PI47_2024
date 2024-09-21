@@ -1,10 +1,10 @@
 <?php
 include("conexao.php");
+require("protecao.php");
 
-if(!isset($_SESSION)){
+if (!isset($_SESSION)) {
     session_start();
 }
-
 
 if (isset($_SESSION["id_funcionario"])) {
     $stmt = $mysqli->prepare("SELECT * FROM funcionarios WHERE id_funcionario = ?");
@@ -23,25 +23,32 @@ if (isset($_SESSION["id_funcionario"])) {
         $email = $_POST['email'];
         $senha = $_POST['senha'];
 
-        if (!empty($senha)) {
-            $senha = password_hash($senha, PASSWORD_DEFAULT);
-            $stmt = $mysqli->prepare("UPDATE funcionarios SET nome = ?, email = ?, senha = ? WHERE id_funcionario = ?");
-            $stmt->bind_param("sssi", $nome, $email, $senha, $id_funcionario);
-        } else {
-            $stmt = $mysqli->prepare("UPDATE funcionarios SET nome = ?, email = ? WHERE id_funcionario = ?");
-            $stmt->bind_param("ssi", $nome, $email, $id_funcionario);
-        }
+        $email_check = $mysqli->prepare("SELECT id_funcionario FROM funcionarios WHERE email = ? AND id_funcionario != ?");
+        $email_check->bind_param("si", $email, $id_funcionario);
+        $email_check->execute();
+        $email_result = $email_check->get_result();
 
-        if ($stmt->execute()) {
-            session_destroy();
-            header("Location: login.php");
-            exit();
+        if ($email_result->num_rows > 0) {
         } else {
-            echo "<script>alert('Erro ao atualizar. Tente novamente.');</script>";
+            if (!empty($senha)) {
+                $senha = password_hash($senha, PASSWORD_DEFAULT);
+                $stmt = $mysqli->prepare("UPDATE funcionarios SET nome = ?, email = ?, senha = ? WHERE id_funcionario = ?");
+                $stmt->bind_param("sssi", $nome, $email, $senha, $id_funcionario);
+            } else {
+                $stmt = $mysqli->prepare("UPDATE funcionarios SET nome = ?, email = ? WHERE id_funcionario = ?");
+                $stmt->bind_param("ssi", $nome, $email, $id_funcionario);
+            }
+
+            if ($stmt->execute()) {
+                session_destroy();
+                header("Location: login.php");
+                exit();
+            } else {
+                echo "<script>alert('Erro ao atualizar. Tente novamente.');</script>";
+                header("Location: login.php");
+            }
         }
     }
-} else {
-    
 }
 ?>
 
@@ -61,37 +68,56 @@ if (isset($_SESSION["id_funcionario"])) {
 </head>
 
 <body>
-    <div class="row visible-md visible-lg" style="background-color:#3a6da1;">
-        <div class="col-md-5" style="background-color:#3a6da1;">
-            <a href="/principal/"><img src="img/topo_site_bl1_2018.png" class="img img-responsive" alt="Logo"></a>
+    <div class="row" style="background-color:#3a6da1;">
+        <div class="col-12">
+            <a href="/principal/">
+                <img src="img/topo_site_bl1_2018.png" class="img-fluid" alt="Logo">
+            </a>
         </div>
     </div>
-
+    <h1 class="text-center" style="background-color: orange; color: white;">Alterar Conta</h1>
     <div class="container">
-        <h1 class="text-center">Alterar Conta</h1>
-        <form action="" method="post">
-            <label class="form-label" for="">Nome: </label>
-            <input type="hidden" name="id_funcionario"
-                value="<?php echo htmlspecialchars($consultar['id_funcionario']); ?>">
-            <input class="form-control" type="text" name="nome"
-                value="<?php echo htmlspecialchars($consultar['nome']); ?>">
-            <label class="form-label" for="">Email: </label>
-            <input class="form-control" type="text" name="email"
-                value="<?php echo htmlspecialchars($consultar['email']); ?>">
-            <label class="form-label" for="">Senha: </label>
-            <input placeholder="Deixe vazio se não quiser alterar" class="form-control" type="password" name="senha">
 
-            <button class="btn btn-warning mt-4" type="button" onclick="window.location.href='area_funcionarios.php'">Voltar</button>
-            <input class="btn btn-success mt-4" type="submit" value="Alterar">
+        <form action="" method="post">
+            <input type="hidden" name="id_funcionario" value="<?php echo htmlspecialchars($consultar['id_funcionario']); ?>">
+            
+            <div class="mb-3">
+                <label class="form-label" for="nome">Nome:</label>
+                <input class="form-control" type="text" name="nome" id="nome" 
+                    value="<?php echo htmlspecialchars($consultar['nome']); ?>">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="email">Email:</label>
+                <input class="form-control" type="email" name="email" id="email" 
+                    value="<?php echo htmlspecialchars($consultar['email']); ?>">
+            </div>
+
+            <?php
+            if (isset($_POST["email"]) && $email_result->num_rows > 0) {
+                echo "<div class='alert alert-danger mt-4' role='alert'>Email já está em uso por outro funcionário.</div>";
+            }
+            ?>
+
+            <div class="mb-3">
+                <label class="form-label" for="senha">Senha:</label>
+                <input placeholder="Deixe vazio se não quiser alterar" class="form-control" type="password" name="senha" id="senha">
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-warning" type="button" onclick="window.location.href='area_funcionarios.php'">Voltar</button>
+                <input class="btn btn-success" type="submit" value="Alterar">
+            </div>
         </form>
     </div>
 
-    <footer>
+    <footer class="text-center mt-4">
         <div class="footer-links">
             <a href="#sobre">Sobre Nós</a>
         </div>
-        <p>&copy; 2024 Sua Empresa. Todos os direitos reservados.</p>
+        <p>&copy; 2024 Senac-PR. Todos os direitos reservados.</p>
     </footer>
 </body>
 
 </html>
+

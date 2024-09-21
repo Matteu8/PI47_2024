@@ -10,8 +10,6 @@ if (isset($_POST["bt_nome"])) {
     $email = $_POST["bt_email"];
     $senha = $_POST["bt_senha"];
 
-
-
     $senha = password_hash($_POST['bt_senha'], PASSWORD_DEFAULT);
 
     $sql = "SELECT * FROM clientes WHERE email =  '$email'";
@@ -19,9 +17,7 @@ if (isset($_POST["bt_nome"])) {
 
     if ($sql_exec->num_rows > 0) {
 
-
     } else {
-
         $mysqlierrno = "falha";
 
         $stmt = $mysqli->prepare("INSERT INTO clientes (nome, curso, periodo, telefone, email, senha) values(?, ?, ?, ?, ? ,? )");
@@ -44,58 +40,76 @@ if (isset($_POST["bt_nome"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de cliente</title>
-
+    <title>Cadastro de Cliente</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="test.css">
+    <link rel="stylesheet" href="gabriell.css">
 </head>
 
 <body>
-    <div class="container text-center">
-        <h1>Cadastro de Cliente</h1>
+    <div class="row" style="background-color:#3a6da1;">
+        <div class="col-12">
+            <a href="">
+                <img src="img/topo_site_bl1_2018.png" class="img-fluid" alt="Logo">
+            </a>
+        </div>
     </div>
-    <div class="container">
-        <form action="" method="post">
-
-            <label for="">Nome:</label>
-            <input class="form-control" type="text" name="bt_nome">
-
-            <label for="">Curso:</label>
-            <input class="form-control" type="text" name="bt_curso">
-
-            <label for="">Período:</label>
-            <input class="form-control" type="text" name="bt_periodo">
-
-            <label for="">Telefone:</label>
-            <input class="form-control" type="text" name="bt_telefone">
-
-            <label for="">Email:</label>
-            <input class="form-control" type="text" name="bt_email">
-
+    <div class="text-center">
+        <h1 style="background-color: orange; color: white;">Cadastro de Cliente</h1>
+    </div>
+    <div class="container d-flex justify-content-center">
+        <form method="POST" class="form">
+            <p class="title">Cadastro</p>
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome</label>
+                <input required type="text" pattern="[A-Za-zÀ-ÿ\s]+" class="form-control" name="bt_nome" id="nome">
+            </div>
+            <div class="mb-3">
+                <label for="curso" class="form-label">Curso</label>
+                <input required type="text" class="form-control" name="bt_curso" id="curso">
+            </div>
+            <div class="mb-3">
+                <label for="periodo" class="form-label">Período</label>
+                <input required type="text" class="form-control" name="bt_periodo" id="periodo">
+            </div>
+            <div class="mb-3">
+                <label for="telefone" class="form-label">Telefone</label>
+                <input required type="number" min="1" class="form-control" name="bt_telefone" id="telefone">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input required type="email" class="form-control" name="bt_email" id="email">
+            </div>
             <?php
             if (isset($_POST["bt_email"])) {
-                if ($sql_exec->num_rows > 0)
+                if ($sql_exec->num_rows > 0) {
                     echo "<div class='alert alert-danger mt-4' role='alert'>
-                        Você já tem uma conta!
-                    </div>";
+                                Você já tem uma conta!
+                            </div>";
+                }
             }
             ?>
-
-            <label for="">Senha:</label>
-            <input class="form-control" type="password" name="bt_senha">
-
-            <input class="btn btn-success " type="submit" value="Cadastrar">
-            <input class="btn btn-danger " type="reset" value="Redefinir">
-
-
-            <a href="login.php">Já tem um Conta ?</a>
-
-
+            <div class="mb-3">
+                <label for="senha" class="form-label">Senha</label>
+                <input required type="password" class="form-control" name="bt_senha" id="senha">
+            </div>
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-primary">Cadastrar</button>
+                <input class="btn btn-danger" type="reset" value="Redefinir">
+            </div>
+            <p class="signin mt-3">Já tem uma Conta? <a href="login.php">Entrar</a></p>
         </form>
     </div>
 
+    <footer class="text-center mt-4 d-none d-md-block">
+        <div class="footer-links">
+            <a href="#sobre">Sobre Nós</a>
+        </div>
+        <p>&copy; 2024 Senac-PR. Todos os direitos reservados.</p>
+    </footer>
 </body>
+
+</html>

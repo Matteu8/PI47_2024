@@ -24,7 +24,8 @@ if (isset($_GET['id_funcionarios'])) {
 }
 ?>
 
-<!DOCTYPE html>
+<!DOCTYPE html> 
+ <!-- Página provavelmente não vai ser usada  -->
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">

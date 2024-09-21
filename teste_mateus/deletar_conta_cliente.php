@@ -1,39 +1,39 @@
 <?php
 include("conexao.php");
-require("protecao.php");
 
 if (!isset($_SESSION)) {
     session_start();
 }
 
-if (isset($_SESSION["id_funcionario"])) {
-    $stmt = $mysqli->prepare("SELECT * FROM funcionarios WHERE id_funcionario = ?");
-    $stmt->bind_param("i", $_SESSION['id_funcionario']);
+if (isset($_SESSION["id_cliente"])) {
+    
+    $stmt = $mysqli->prepare("SELECT * FROM clientes WHERE id_clientes = ?");
+    $stmt->bind_param("i", $_SESSION['id_cliente']);
     $stmt->execute();
     $result = $stmt->get_result();
     $consultar = $result->fetch_assoc();
 
     if (!$consultar) {
-        die("Funcionário não encontrado. Verifique o ID.");
+        die("Cliente não encontrado. Verifique o ID.");
     }
 
-    if (isset($_POST['id_funcionario'])) {
-        $id_funcionario = $_POST['id_funcionario'];
+    if (isset($_POST['id_clientes'])) {
+        $id_clientes = $_POST['id_clientes'];
 
-        $stmt = $mysqli->prepare("DELETE FROM funcionarios WHERE id_funcionario = ?");
-        $stmt->bind_param("i", $id_funcionario);
+        $stmt = $mysqli->prepare("DELETE FROM clientes WHERE id_clientes = ?");
+        $stmt->bind_param("i", $id_clientes);
 
         if ($stmt->execute()) {
             session_destroy(); 
-            header("Location: login.php"); 
+            header("Location: login.php");
             exit();
         } else {
             echo "<script>alert('Erro ao remover a conta. Tente novamente.');</script>";
-            header("Location:area_funcionarios.php");
+            header("Location:deletar_conta_cliente.php");
         }
     }
 } else {
-    echo "<script>alert('Nenhum funcionário logado.');</script>";
+    echo "<script>alert('Nenhum cliente logado.');</script>";
     header("Location:login.php");
 }
 ?>
@@ -63,20 +63,20 @@ if (isset($_SESSION["id_funcionario"])) {
     <div class="container">
 
         <form action="" method="post">
-            <input type="hidden" name="id_funcionario" value="<?php echo htmlspecialchars($consultar['id_funcionario']); ?>">
+            <input type="hidden" name="id_clientes" value="<?php echo htmlspecialchars($consultar['id_clientes']); ?>">
             <div class="alert alert-danger text-center" role="alert">
-                Tem certeza de que deseja remover sua conta,
-                <?php echo htmlspecialchars($consultar['nome']); ?>?
+            Tem certeza de que deseja remover sua conta,
+            <?php echo htmlspecialchars($consultar['nome']); ?>?
             </div>
             
             <div class="text-center">
-                <button class="btn btn-warning mt-4 mx-1" type="button" onclick="window.location.href='area_funcionarios.php'">Voltar</button>
+                <button class="btn btn-warning mt-4 mx-1" type="button" onclick="window.location.href='area_cliente.php'">Voltar</button>
                 <input class="btn btn-danger mt-4 mx-1" type="submit" value="Remover Conta">
             </div>
         </form>
     </div>
 
-    <footer class="mt-4 d-none d-md-block">
+    <footer>
         <div class="footer-links">
             <a href="#sobre">Sobre Nós</a>
         </div>
