@@ -37,9 +37,7 @@ if (!isset($_SESSION)) {
 
         <div class="list-group mt-3">
             <a href="pedido.php" class="list-group-item list-group-item-action">Fazer Pedidos</a>
-            <a href="#" class="list-group-item list-group-item-action">Visualizar Pedidos</a>
-            <a href="#" class="list-group-item list-group-item-action">Cancelar Pedidos</a>
-            <a href="#" class="list-group-item list-group-item-action">Alterar Pedidos</a>
+            <a href="pedidos_cliente.php" class="list-group-item list-group-item-action">Visualizar Pedidos</a>
             <a href="alterar_conta_cliente.php" class="list-group-item list-group-item-action">Alterar Conta</a>
             <a href="deletar_conta_cliente.php" class="list-group-item list-group-item-action">Deletar Conta</a>
             <a href="contato_andre.php" class="list-group-item list-group-item-action">Enviar Feedback</a>
