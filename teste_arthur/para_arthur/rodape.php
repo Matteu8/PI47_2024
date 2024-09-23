@@ -1,5 +1,5 @@
 <footer class="text-center">
-    <div class="container">
+    <div class="container" >
         <div class="row">
             <div class="col">
                 <h5>Senac-PR</h5>

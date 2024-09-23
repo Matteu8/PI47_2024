@@ -18,11 +18,6 @@ $mysqli->set_charset("utf8mb4"); /* Acentuação */
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Lista - Bebidas</title>
     <style>
-        body {
-            background-color: #f4f7fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
         .container {
             margin-top: 40px;
             padding: 20px;
@@ -54,7 +49,8 @@ $mysqli->set_charset("utf8mb4"); /* Acentuação */
             text-align: center;
         }
 
-        .table td, .table th {
+        .table td,
+        .table th {
             vertical-align: middle;
             padding: 12px;
             text-align: center;
@@ -104,6 +100,8 @@ $mysqli->set_charset("utf8mb4"); /* Acentuação */
             border-radius: 50%;
         }
     </style>
+    
+    <link rel="stylesheet" href="dieimes.css">
 </head>
 
 <body>
