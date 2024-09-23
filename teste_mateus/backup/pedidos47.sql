@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 21/09/2024 às 18:20
+-- Tempo de geração: 23/09/2024 às 05:02
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -45,7 +45,8 @@ CREATE TABLE `clientes` (
 
 INSERT INTO `clientes` (`id_clientes`, `nome`, `curso`, `periodo`, `telefone`, `email`, `senha`) VALUES
 (1, 'Arthur', 'ProgramaÃ§Ã£o web', 'Tarde', '43 4002-8922', 'arthur@gmail.com', ''),
-(7, 'Mateus Vinicius', 'Programação WEB', 'Tarde', '45416594844', 'mateus.68998@aluno.pr.senac.br', '$2y$10$eS4YwjqLPxXNbdxtArxWD.4uIGgg.azuE2/ZxI/H6KLkdyDoJeWvG');
+(7, 'Mateus Vinicius', 'Programação WEB', 'Tarde', '45416594844', 'mateus.68998@aluno.pr.senac.br', '$2y$10$eS4YwjqLPxXNbdxtArxWD.4uIGgg.azuE2/ZxI/H6KLkdyDoJeWvG'),
+(12, 'sim', '1', '1', '1', '12@12', '$2y$10$tw8JS5bOozdIDP6GxJpO5uNSjYQCA/BLHw0xjQjyuIvv8hWUpK3Wq');
 
 -- --------------------------------------------------------
 
@@ -90,7 +91,8 @@ CREATE TABLE `feedback` (
 
 INSERT INTO `feedback` (`id_feedback`, `nome`, `email`, `telefone`, `assunto`, `msg`) VALUES
 (1, 'a', 'a@a', 'a', 'Reclamação', 'a'),
-(2, 'Robson', 'robson@robson', '43940028922', 'Dúvida', 'Tem pão velho?\r\n');
+(2, 'Robson', 'robson@robson', '43940028922', 'Dúvida', 'Tem pão velho?\r\n'),
+(3, 'Claudio', 'claudio@claudio', '4349845449', 'Elogio', 'Legal');
 
 -- --------------------------------------------------------
 
@@ -136,6 +138,22 @@ INSERT INTO `lanches` (`id_lanches`, `nome`, `ingredientes`, `preco`, `foto`) VA
 (11, 'PÃ£o com ovo', 'pÃ£o e ovo frito', 'R$ 3,99', 'Pao-com-Ovo.jpg'),
 (13, 'PÃ£o com ovo', 'pÃ£o e ovo frito', 'R$ 3,99', 'as-logo-design-template-6cb212472d4c9fdbc0784695e6464e6f_screen.jpg');
 
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `pedidos`
+--
+
+CREATE TABLE `pedidos` (
+  `id_pedido` int(11) NOT NULL,
+  `id_cliente` int(11) NOT NULL,
+  `produto` varchar(100) NOT NULL,
+  `quantidade` int(11) NOT NULL,
+  `data_pedido` date NOT NULL,
+  `total` decimal(10,2) NOT NULL,
+  `status` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
 --
 -- Índices para tabelas despejadas
 --
@@ -171,6 +189,12 @@ ALTER TABLE `lanches`
   ADD PRIMARY KEY (`id_lanches`);
 
 --
+-- Índices de tabela `pedidos`
+--
+ALTER TABLE `pedidos`
+  ADD PRIMARY KEY (`id_pedido`);
+
+--
 -- AUTO_INCREMENT para tabelas despejadas
 --
 
@@ -178,7 +202,7 @@ ALTER TABLE `lanches`
 -- AUTO_INCREMENT de tabela `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id_clientes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_clientes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de tabela `contato`
@@ -190,7 +214,7 @@ ALTER TABLE `contato`
 -- AUTO_INCREMENT de tabela `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `id_feedback` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_feedback` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `funcionarios`
@@ -203,6 +227,12 @@ ALTER TABLE `funcionarios`
 --
 ALTER TABLE `lanches`
   MODIFY `id_lanches` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT de tabela `pedidos`
+--
+ALTER TABLE `pedidos`
+  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
