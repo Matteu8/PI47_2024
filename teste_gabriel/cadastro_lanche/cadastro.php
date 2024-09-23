@@ -79,7 +79,7 @@
         <div class="container mt-5 d-flex justify-content-center">
         
     <form class="form" method="post" enctype="multipart/form-data">
-        <p class="title">Lanches </p>
+        <p class="title">Lanches</p>
             <div class="flex">
             <label>
                 <input required="" placeholder="" type="text" class="input"name="bt_nome">

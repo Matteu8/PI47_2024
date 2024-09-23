@@ -110,7 +110,7 @@ $mysqli->set_charset("utf8mb4"); /* Acentuação */
 
 <div class="container">
     <div class="especialidade">
-        <h1>Lista - Consulta Sobremesa</h1>
+        <h1>Lista - Consulta Lanches</h1>
     </div>
 
     <table class="table table-striped">
