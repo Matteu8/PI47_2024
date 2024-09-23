@@ -103,7 +103,10 @@ if (isset($_POST["bt_nome"])) {
             <p class="signin mt-3">Já tem uma Conta? <a href="login.php">Entrar</a></p>
         </form>
     </div>
-
+            <br>
+            <br>
+            <br>
+            <br>
     <footer class="text-center mt-4 d-none d-md-block">
         <div class="footer-links">
             <a href="#sobre">Sobre Nós</a>

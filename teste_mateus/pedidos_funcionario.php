@@ -6,21 +6,6 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-// Reset à 00:00 //
-date_default_timezone_set('America/Sao_Paulo');
-
-$ultimo_reset = file_get_contents('ultimo_reset.txt');
-$data_atual = date('d-m-Y');
-
-if ($ultimo_reset !== $data_atual) {
-    $stmt = $mysqli->prepare("TRUNCATE TABLE pedidos");
-    $stmt->execute();
-    $stmt->close();
-
-    file_put_contents('ultimo_reset.txt', $data_atual);
-}
-// Reset à 00:00 //
-
 $stmt = $mysqli->prepare("SELECT id_pedido, data_pedido, produto, quantidade, status, total FROM pedidos");
 $stmt->execute();
 $result = $stmt->get_result();

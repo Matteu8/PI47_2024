@@ -53,7 +53,7 @@ if (isset($_POST["bt_nome"])) {
         <form action="" method="post">
             <div class="mb-3">
                 <label for="bt_nome" class="form-label">Nome:</label>
-                <input class="form-control" type="text" name="bt_nome" id="bt_nome" required>
+                <input class="form-control" type="text" name="bt_nome" id="bt_nome">
             </div>
             <div class="mb-3">
                 <label for="bt_email" class="form-label">Email:</label>
