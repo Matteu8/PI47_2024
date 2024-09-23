@@ -6,7 +6,7 @@ if (isset($_GET['id_funcionario'])) {
     $id_nome = $_GET['id_funcionario'];
     
     // Consulta os detalhes do Funcionario selecionado
-    $consultar_banco = "SELECT * FROM altera_sobremesa WHERE id_sobremesa = ?";
+    $consultar_banco = "SELECT * FROM basico_tabela WHERE id_funcionario = ?";
     $stmt = $mysqli->prepare($consultar_banco);
     $stmt->bind_param('i', $id_nome);
     $stmt->execute();
@@ -22,7 +22,7 @@ if (isset($_GET['id_funcionario'])) {
 // Deletar o Funcionario se o botão de deletar for clicado
 if (isset($_POST['delete_id'])) {
     $delete_id = $_POST['delete_id'];
-    $delete_query = "DELETE * FROM altera_sobremesa WHERE id_sobremesa = ?";
+    $delete_query = "DELETE * FROM basico_tabela WHERE id_funcionario = ?";
     $stmt = $mysqli->prepare($delete_query);
     $stmt->bind_param('i', $delete_id);
 
@@ -39,7 +39,7 @@ if (isset($_POST['delete_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deletar Sobremesa</title>
+    <title>Deletar Funcionario</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
             body {
@@ -125,11 +125,11 @@ a.btn-secondary:hover {
 </head>
 <body>
     <div class="container">
-        <h2 class="text-center mb-4">Deletar Sobremesa</h2>
+        <h2 class="text-center mb-4">Deletar Funcionario</h2>
         
         <?php if (isset($Funcionario)): ?>
             <div class="alert alert-warning" role="alert">
-                Você tem certeza que deseja deletar esta sobremesa? <strong><?php echo htmlspecialchars($Funcionario['nome']); ?></strong>?
+                Você tem certeza que deseja deletar o Funcionario <strong><?php echo htmlspecialchars($Funcionario['nome']); ?></strong>?
             </div>
 
             <form method="POST">

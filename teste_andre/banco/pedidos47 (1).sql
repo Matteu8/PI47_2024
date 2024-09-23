@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 04-Set-2024 às 19:20
+-- Tempo de geração: 18-Set-2024 às 18:28
 -- Versão do servidor: 5.7.36
 -- versão do PHP: 7.4.26
 
@@ -95,6 +95,31 @@ INSERT INTO `lanches` (`id_lanches`, `nome`, `ingredientes`, `preco`, `foto`) VA
 (1, 'X-tudo', 'Tem tudo e mais um pouco', 'R$ 19,99', ''),
 (11, 'PÃ£o com ovo', 'pÃ£o e ovo frito', 'R$ 3,99', 'Pao-com-Ovo.jpg'),
 (13, 'PÃ£o com ovo', 'pÃ£o e ovo frito', 'R$ 3,99', 'as-logo-design-template-6cb212472d4c9fdbc0784695e6464e6f_screen.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `sobremesa`
+--
+
+DROP TABLE IF EXISTS `sobremesa`;
+CREATE TABLE IF NOT EXISTS `sobremesa` (
+  `id_sobremesa` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(300) NOT NULL,
+  `preco` varchar(300) NOT NULL,
+  `quantidade` int(11) NOT NULL,
+  `imagem` varchar(300) NOT NULL,
+  PRIMARY KEY (`id_sobremesa`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `sobremesa`
+--
+
+INSERT INTO `sobremesa` (`id_sobremesa`, `nome`, `preco`, `quantidade`, `imagem`) VALUES
+(3, 'bolo ', '85', 1, 'recebidos.img/66e867cb71c88.webp'),
+(4, 'brigadeiro', '5', 1, 'recebidos.img/66e88044bd4a7.webp'),
+(6, 'bolo de cenoura', '5', 1, 'recebidos.img/66e880715d398.jpg');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
