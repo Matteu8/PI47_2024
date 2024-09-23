@@ -4,7 +4,7 @@ require("conexao.php");
 
 if (isset($_GET["id_alterar"])) {  
     $id_alterar = $_GET["id_alterar"];
-    $stmt = $mysqli->prepare("SELECT * FROM lanches WHERE id_lanches = ?");
+    $stmt = $mysqli->prepare("SELECT * FROM bebidas WHERE id = ?");
     $stmt->bind_param("i", $id_alterar);
     $stmt->execute();
     $result = $stmt->get_result(); // Obter o objeto de resultado
