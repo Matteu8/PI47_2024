@@ -7,8 +7,7 @@
         $preco = $_POST["bt_preco"];
        
         $mysqlierrno = "erro";
-        
-        
+           
         /* colocar o name * aqui está como foto */
         
         if (isset($_FILES["foto"]) && $_FILES["foto"]["error"] == 0) {
@@ -30,13 +29,12 @@
             if ($_FILES["foto"]["size"] > 5000000) {
                 die("Arquivo muito grande!! Max: 5MB");
             }
-    
+
             // Defina o local para salvar a imagem
             $diretorioUpload = "Lanches/img/";
             $novoNomeArquivo = uniqid() . "." . $extensaoArquivo;
             $caminhoFinal = $diretorioUpload . $novoNomeArquivo;
 
-         
             
             // Tente mover o arquivo temporário para o diretório final
             if (!move_uploaded_file($_FILES["foto"]["tmp_name"], $caminhoFinal)) {
@@ -48,10 +46,11 @@
            
         } 
         
-                    
+        
     }
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -69,19 +68,15 @@
  <!-- ####################################################################################### -->
  <div class="row visible-md visible-lg" style="background-color:#3a6da1;" >     
             <div class="col-md-5" style="background-color:#3a6da1; margin-right:0px; margin-left:0px">
-                <a href="/principal/"><img src="img/topo_site_bl1_2018.png" class="img img-responsive"></a>
+                <a href="/principal/"><img src="topo_site_bl1_2018.png" class="img img-responsive"></a>
             </div>
         </div>
         
         <header>
             <h1>Cadastro de Lanches</h1>
         </header>
-    
 
         <div class="container mt-5 d-flex justify-content-center">
-     
-
-   
         
     <form class="form" method="post" enctype="multipart/form-data">
         <p class="title">Lanches </p>
@@ -90,9 +85,7 @@
                 <input required="" placeholder="" type="text" class="input"name="bt_nome">
                 <span>Nome Lanche</span>
             </label>
-           
         </div>  
-                
         <label>
             <input required="" placeholder="" type="text" class="input" name="bt_ingredientes">
             <span>Ingredientes</span>
@@ -104,7 +97,7 @@
         </label>
         <label>
             <input required="" placeholder="" type="file" class="input" name="foto">
-            <span>Foto</span>
+            <span></span>
         </label>
 
        <!-- <label for="">Foto:</label>
@@ -116,6 +109,7 @@
         
     </form>
 </div>
+
     </div>
   </nav>
    <h1></h1> 
