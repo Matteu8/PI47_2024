@@ -3,6 +3,22 @@ require("conexao.php");
 
 $erro = ""; 
 $sucesso = ""; 
+$nome_cliente = "";
+$email_cliente = "";
+$telefone_cliente = "";
+
+if (!isset($_SESSION)) {
+    session_start();
+}
+
+if (isset($_SESSION["id_cliente"])) {
+    $stmt = $mysqli->prepare("SELECT nome, email, telefone FROM clientes WHERE id_clientes = ?");
+    $stmt->bind_param("i", $_SESSION['id_cliente']);
+    $stmt->execute();
+    $stmt->bind_result($nome_cliente, $email_cliente, $telefone_cliente);
+    $stmt->fetch();
+    $stmt->close();
+}
 
 if (isset($_POST["bt_nome"])) {
     $nome = $_POST["bt_nome"];
@@ -53,15 +69,15 @@ if (isset($_POST["bt_nome"])) {
         <form action="" method="post">
             <div class="mb-3">
                 <label for="bt_nome" class="form-label">Nome:</label>
-                <input class="form-control" type="text" name="bt_nome" id="bt_nome">
+                <input class="form-control" type="text" name="bt_nome" id="bt_nome" value="<?php echo htmlspecialchars($nome_cliente); ?>" required>
             </div>
             <div class="mb-3">
                 <label for="bt_email" class="form-label">Email:</label>
-                <input class="form-control" type="email" name="bt_email" id="bt_email" required>
+                <input class="form-control" type="email" name="bt_email" id="bt_email" value="<?php echo htmlspecialchars($email_cliente); ?>" required>
             </div>
             <div class="mb-3">
                 <label for="bt_telefone" class="form-label">Telefone:</label>
-                <input class="form-control" type="number" min="1" name="bt_telefone" id="bt_telefone" required>
+                <input class="form-control" type="text" name="bt_telefone" id="bt_telefone" value="<?php echo htmlspecialchars($telefone_cliente); ?>" required>
             </div>
             <div class="mb-3">
                 <label for="bt_assunto" class="form-label">Assunto:</label>
@@ -91,7 +107,7 @@ if (isset($_POST["bt_nome"])) {
             </div>
         </form>
     </div>
-
+                <br><br><br><br><br>
     <footer class="text-center mt-4 d-none d-md-block">
         <div class="social-icons">
             <a href="#sobre">Sobre Nós</a>

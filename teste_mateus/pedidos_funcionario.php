@@ -6,7 +6,19 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-$stmt = $mysqli->prepare("SELECT id_pedido, data_pedido, produto, quantidade, status, total FROM pedidos");
+if (isset($_GET['truncate']) && $_GET['truncate'] == 'true') {
+    $stmt = $mysqli->prepare("TRUNCATE TABLE pedidos");
+
+    if ($stmt->execute()) {
+        echo "<script>alert('Tabela de pedidos esvaziada com sucesso.');</script>";
+        header("Location: pedidos_funcionario.php");
+        exit();
+    } else {
+        echo "<script>alert('Erro ao esvaziar a tabela. Tente novamente.');</script>";
+    }
+}
+
+$stmt = $mysqli->prepare("SELECT id_pedido, id_cliente, data_pedido, produto, quantidade, status, total FROM pedidos");
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -23,6 +35,21 @@ if (isset($_POST['atualizar_status'])) {
         exit();
     } else {
         echo "<script>alert('Erro ao atualizar o status. Tente novamente.');</script>";
+    }
+}
+
+if (isset($_POST['excluir_pedido'])) {
+    $id_pedido = $_POST['id_pedido'];
+
+    $stmt = $mysqli->prepare("DELETE FROM pedidos WHERE id_pedido = ?");
+    $stmt->bind_param("i", $id_pedido);
+
+    if ($stmt->execute()) {
+        echo "<script>alert('Pedido excluído com sucesso.');</script>";
+        header("Location: pedidos_funcionario.php");
+        exit();
+    } else {
+        echo "<script>alert('Erro ao excluir o pedido. Tente novamente.');</script>";
     }
 }
 ?>
@@ -56,6 +83,7 @@ if (isset($_POST['atualizar_status'])) {
                         <thead class="table-dark">
                             <tr>
                                 <th>ID do Pedido</th>
+                                <th>Nome do Cliente</th> 
                                 <th>Data</th>
                                 <th>Produto</th>
                                 <th>Quantidade</th>
@@ -67,12 +95,20 @@ if (isset($_POST['atualizar_status'])) {
                         <tbody>
                             <?php if ($result->num_rows === 0): ?>
                                 <tr>
-                                    <td colspan="7" class="text-center">Nenhum pedido encontrado.</td>
+                                    <td colspan="8" class="text-center">Nenhum pedido encontrado.</td>
                                 </tr>
                             <?php else: ?>
                                 <?php while ($pedido = $result->fetch_assoc()): ?>
+                                    <?php
+                                        $stmt_cliente = $mysqli->prepare("SELECT nome FROM clientes WHERE id_clientes = ?");
+                                        $stmt_cliente->bind_param("i", $pedido['id_cliente']);
+                                        $stmt_cliente->execute();
+                                        $result_cliente = $stmt_cliente->get_result();
+                                        $nome_cliente = $result_cliente->num_rows > 0 ? $result_cliente->fetch_assoc()['nome'] : 'Desconhecido';
+                                    ?>
                                     <tr>
                                         <td><?php echo htmlspecialchars($pedido['id_pedido']); ?></td>
+                                        <td><?php echo htmlspecialchars($nome_cliente); ?></td> 
                                         <td><?php echo date("d/m/Y", strtotime($pedido['data_pedido'])); ?></td>
                                         <td><?php echo htmlspecialchars($pedido['produto']); ?></td>
                                         <td><?php echo htmlspecialchars($pedido['quantidade']); ?></td>
@@ -81,18 +117,27 @@ if (isset($_POST['atualizar_status'])) {
                                         <td>
                                             <?php if ($pedido['status'] == 'Aguardando Pagamento'): ?>
                                                 <form method="post" style="display:inline;">
-                                                    <input type="hidden" name="id_pedido"
-                                                        value="<?php echo $pedido['id_pedido']; ?>">
-                                                    <button type="submit" name="atualizar_status"
-                                                        class="btn btn-success btn-sm">Concluir Pedido</button>
+                                                    <input type="hidden" name="id_pedido" value="<?php echo $pedido['id_pedido']; ?>">
+                                                    <button type="submit" name="atualizar_status" class="btn btn-success btn-sm">Concluir Pedido</button>
                                                 </form>
                                             <?php else: ?>
                                                 <span class="text-muted">Status já atualizado</span>
                                             <?php endif; ?>
+
+                                            <form method="post" style="display:inline;">
+                                                <input type="hidden" name="id_pedido" value="<?php echo $pedido['id_pedido']; ?>">
+                                                <button type="submit" name="excluir_pedido" class="btn btn-danger btn-sm">Excluir Pedido</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 <?php endwhile; ?>
                             <?php endif; ?>
+                            <tr>
+                                <td colspan="6" class="text-end"><strong>Esvaziar a Tabela:</strong></td>
+                                <td>
+                                    <a href="?truncate=true" class="btn btn-warning" onclick="return confirm('Tem certeza que deseja esvaziar todos os pedidos?');">Esvaziar</a>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -103,7 +148,7 @@ if (isset($_POST['atualizar_status'])) {
             <a href="area_funcionarios.php" class="btn btn-warning">Voltar para Área do Funcionário</a>
         </div>
     </div>
-
+    <br><br><br><br>
     <footer class="text-center mt-4 d-none d-md-block">
         <div class="footer-links">
             <a href="#sobre">Sobre Nós</a>

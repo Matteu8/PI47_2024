@@ -54,14 +54,8 @@ if (isset($_POST["nome"])) {
         <h1>Cadastro de funcionarios</h1>
     </header>
 
-
-
-    <div class="container mt-2 d-flex justify-content-center">
-
-
-
-
-        <form class="form" method="post">
+    <div class="container mb-5 d-flex justify-content-center">
+        <form class="form mb-5" method="post">
             <p class="title">Cadastro </p>
             <div class="flex">
                 <label>
@@ -89,17 +83,15 @@ if (isset($_POST["nome"])) {
             </label>
             <button class="submit">Cadastrar</button>
             <input class="btn btn-danger" type="reset" value="Redefinir">
-            <p class="signin"><a href="login.php" style="text-decoration: none;" >Voltar</a></p>
+            <p class="signin"><a href="login.php" style="text-decoration: none;">Voltar</a></p>
         </form>
 
-        <footer class="text-center mt-4">
+        <footer class="text-center mt-5">
             <div class="social-icons">
                 <a href="Sobre Nós">Sobre Nós</a>
             </div>
             <p>&copy; 2024 Senac-PR. Todos os direitos reservados.</p>
         </footer>
-
-
 </body>
 
 </body>

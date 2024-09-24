@@ -1,5 +1,17 @@
 <?php
 include("conexao.php");
+
+if(!isset($_SESSION)){
+    session_start();
+}
+
+if (isset($_SESSION['tipo_usuario'])) {
+    if ($_SESSION['tipo_usuario'] == 'cliente') {
+        $voltar_url = "area_cliente.php";
+    } else if ($_SESSION['tipo_usuario'] == 'funcionario') {
+        $voltar_url = "area_funcionarios.php";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -65,10 +77,10 @@ include("conexao.php");
 
     <div class="container text-center mt-3">
         <button class="btn btn-warning">
-            <a href="login.php" style="text-decoration: none; color: black;">Voltar</a>
+            <a href="<?php echo isset($voltar_url) ? $voltar_url : 'login.php'; ?>" style="text-decoration: none; color: black;">Voltar</a>
         </button>
     </div>
-
+    <br><br><br><br>
     <!-- Rodapé oculto em dispositivos móveis -->
     <footer class="d-none d-md-block">
         <div class="footer-links text-center">
@@ -77,6 +89,5 @@ include("conexao.php");
         <p class="text-center">&copy; 2024 Senac-PR. Todos os direitos reservados.</p>
     </footer>
 </body>
-
 
 </html>

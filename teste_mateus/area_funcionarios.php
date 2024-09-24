@@ -45,7 +45,7 @@ if (!isset($_SESSION)) {
             <a href="sair.php" class="list-group-item list-group-item-action ">Sair</a>
         </div>
     </div>
-
+    <br><br><br><br>
     <footer class="text-center mt-4">
         <div class="social-icons">
             <a href="Sobre Nós">Sobre Nós</a>

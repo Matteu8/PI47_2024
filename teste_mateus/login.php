@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <p class="signin">Não tem uma conta? <a href="cadastro_cliente.php">Cadastre-se</a></p>
     </form>
   </div>
-
+  <br><br><br><br>
   <footer class="text-center mt-4 d-none d-md-block">
     <div class="footer-links">
       <a href="#sobre">Sobre Nós</a>

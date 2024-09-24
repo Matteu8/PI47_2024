@@ -122,7 +122,7 @@ if (isset($_SESSION["id_cliente"])) {
             </div>
         </form>
     </div>
-
+    <br><br><br><br>
     <footer class="text-center mt-4 d-none d-md-block">
         <div class="footer-links">
             <a href="#sobre">Sobre Nós</a>
