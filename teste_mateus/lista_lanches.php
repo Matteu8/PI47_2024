@@ -18,7 +18,14 @@ $mysqli->set_charset("utf8mb4"); /* Acentuação */
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="gabriell.css">
     <title>Lista - Profissionais</title>
-
+<style>
+    .img-thumbnail{
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+</style>
 </head>
 
 <body>

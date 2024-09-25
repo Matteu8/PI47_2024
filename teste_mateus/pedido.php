@@ -46,7 +46,7 @@ if (isset($_SESSION['tipo_usuario'])) {
                     <img src="img/lanche.jfif" class="card-img-top" alt="Lanches" style="height: 200px; object-fit: cover;">
                     <div class="card-body text-center">
                         <h5 class="card-title">Lanches</h5>
-                        <a href="#" class="btn btn-primary">Pedir</a>
+                        <a href="lanches.php" class="btn btn-primary">Pedir</a>
                     </div>
                 </div>
             </div>

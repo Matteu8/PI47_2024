@@ -42,7 +42,7 @@
 
     <body>
         <header>
-            <h1>Menu de lanches</h1>
+            <h1 class="text-center">Menu de lanches</h1>
         </header>
 
         <div class="container">
