@@ -75,8 +75,6 @@ if (isset($_GET["id_alterar"])) {
 <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="gabriell.css">
 
-
-
 </head>
 <body>
 <div class="row visible-md visible-lg" style="background-color:#3a6da1;" >     
@@ -85,11 +83,11 @@ if (isset($_GET["id_alterar"])) {
             </div>
         </div>
     <header>
-        <h1>Cadastro de Lanches</h1>
+        <h1>Alterar Lanches</h1>
     </header>
-    <br><br><br><br>
+    <br><br>
     
-    <div class="container d-flex justify-content-center">
+    <div class=" d-flex justify-content-center">
 
         <form class="form" method="post" enctype="multipart/form-data">
             <p class="title">Alterar Lanche</p>
@@ -119,15 +117,15 @@ if (isset($_GET["id_alterar"])) {
             </label>
 
             <label>
-                <input type="file" name="foto">
-                <span>Nova Foto:</span>
+                <input type="file" class="form-control" name="foto">
+                <span></span>
             </label>
             <button class="submit">Atualizar</button>
         </form>
     </div>
 
     <footer>
-        <p>&copy; 2024 Sua Empresa. Todos os direitos reservados.</p>
+        <p> &copy; 2024 Sua Empresa. Todos os direitos reservados.</p>
     </footer>
 </body>
 </html>

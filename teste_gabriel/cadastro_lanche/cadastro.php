@@ -76,16 +76,18 @@
             <h1>Cadastro de Lanches</h1>
         </header>
 
-        <div class="container mt-5 d-flex justify-content-center">
+        <div class="mt-5 d-flex justify-content-center">
         
     <form class="form" method="post" enctype="multipart/form-data">
         <p class="title">Lanches</p>
-            <div class="flex">
-            <label>
-                <input required="" placeholder="" type="text" class="input"name="bt_nome">
-                <span>Nome Lanche</span>
-            </label>
+            <div class="flex"> 
         </div>  
+        
+        <label>
+            <input required="" placeholder="" type="text" class="input" name="bt_nome">
+            <span>Nome lanches</span>
+        </label> 
+            
         <label>
             <input required="" placeholder="" type="text" class="input" name="bt_ingredientes">
             <span>Ingredientes</span>
@@ -96,11 +98,15 @@
             <span>Preço</span>
         </label>
         <label>
-            <input required="" placeholder="" type="file" class="input" name="foto">
+            <input required="" placeholder="" type="file"   class="form-control" name="foto">
             <span></span>
         </label>
-
-       <!-- <label for="">Foto:</label>
+            <!---- <label>
+                <input required="" placeholder="" type="text" class="input"name="bt_nome">
+                <span>Nome Lanche</span>
+            </label>
+            //
+       <label for="">Foto:</label>
         <input class="form-control" type="file" name="foto" ><!-->
         <label>
           

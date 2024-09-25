@@ -16,94 +16,9 @@ $mysqli->set_charset("utf8mb4"); /* Acentuação */
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../../img/logo2.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="gabriell.css">
     <title>Lista - Profissionais</title>
-    <style>
-        body {
-            background-color: #f4f7fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
 
-        .container {
-            margin-top: 40px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .especialidade h1 {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-align: center;
-            color: #333;
-        }
-
-        .table {
-            margin-top: 20px;
-            border-collapse: separate;
-            border-spacing: 0;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .table th {
-            background-color: #343a40;
-            color: #fff;
-            text-align: center;
-        }
-
-        .table td, .table th {
-            vertical-align: middle;
-            padding: 12px;
-            text-align: center;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            border: none;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
-
-        .btn-danger {
-            background-color: #dc3545;
-            border: none;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-danger:hover {
-            background-color: #c82333;
-        }
-
-        .btn {
-            border-radius: 5px;
-            padding: 6px 12px;
-            font-size: 14px;
-            transition: transform 0.2s;
-        }
-
-        .btn:hover {
-            transform: scale(1.05);
-        }
-
-        .back-button {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .img-thumbnail {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-    </style>
 </head>
 
 <body>
