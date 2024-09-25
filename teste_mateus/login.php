@@ -108,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
   </div>
   <br><br><br><br>
-  <footer class="text-center mt-4 d-none d-md-block">
+  <footer class="text-center mt-4">
     <div class="footer-links">
       <a href="#sobre">Sobre Nós</a>
     </div>
