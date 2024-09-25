@@ -112,7 +112,7 @@ if (isset($_GET["id_alterar"])) {
             <input type="file" class="" name="foto">
                 <span>Foto:</span>
             </label>
-            <!-- <button class="submit">Editar</button> Arrumar botão que não funciona -->
+            <button class="submit">Atualizar</button> 
             
         </form>
     </div>

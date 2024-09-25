@@ -141,7 +141,7 @@
           <span>Foto:</span>
         </label>
 
-        <button class="submit">Entrar</button>
+        <button class="submit">Atualizar</button>
 
       </form>
     </div>
