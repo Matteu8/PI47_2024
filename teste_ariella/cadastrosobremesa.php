@@ -61,7 +61,7 @@ if (isset($_POST["bt_nome"])) {
     <title>Cadastro de sobremesa</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="arriela.css">
+    <link rel="stylesheet" href="ariella.css">
 </head>
 <body>
     <div class="row visible-md visible-lg" style="background-color:#3a6da1;">     
@@ -69,12 +69,13 @@ if (isset($_POST["bt_nome"])) {
             <a href="/principal/"><img src="topo_site_bl1_2018.png" class="img img-responsive"></a>
         </div>
     </div>
-    
+    <hr>
+    <hr>
     <header>
         <h1>Cadastro de Sobremesas</h1>
     </header>
 
-    <div class="container mt-5 d-flex justify-content-center">
+    <div class=" mt-5 d-flex justify-content-center">
         <form class="form" method="post" enctype="multipart/form-data">
             <p class="title">Sobremesas</p>
             <div>
@@ -106,12 +107,16 @@ if (isset($_POST["bt_nome"])) {
         </form>
     </div>
     
+
     <footer>
-        <div class="footer-links">
-            <a href="#sobre">Sobre Nós</a>
-        </div>
-        <div class="social-icons"></div>
-        <p>&copy; 2024 Sua Empresa. Todos os direitos reservados.</p>
-    </footer>
+    <div class="footer-links">
+        <a href="#sobre">Sobre Nós</a>
+        
+    </div>
+    <div class="social-icons">
+  
+    </div>
+    <p>&copy; 2024 Sua Empresa. Todos os direitos reservados.</p>
+</footer>
 </body>
 </html>
