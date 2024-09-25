@@ -35,7 +35,7 @@ if (isset($_GET["id_alterar"])) {
             }
 
             // Define o local para salvar a imagem
-            $diretorioUpload = "recebidos/";
+            $diretorioUpload = "receber/";
             $novoNomeArquivo = uniqid() . "." . $extensaoArquivo;
             $caminhoFinal = $diretorioUpload . $novoNomeArquivo;
 
