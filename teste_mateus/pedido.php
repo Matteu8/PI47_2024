@@ -36,7 +36,7 @@ if (isset($_SESSION['tipo_usuario'])) {
         </div>
     </div>
 
-    <h1 class="text-center" style="background-color: orange; color: white;">Pedidos</h1>
+    <h1 class="text-center">Pedidos</h1>
 
     <div class="container d-flex justify-content-center">
         <div class="row justify-content-center">
