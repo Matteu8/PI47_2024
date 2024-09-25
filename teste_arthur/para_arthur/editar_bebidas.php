@@ -84,23 +84,19 @@ if (isset($_GET["id_alterar"])) {
         <form class="form" method="post" enctype="multipart/form-data">
             <p class="title"> Edite aqui sua bebida </p>
             <p class="message">Edite os valores da sua bebida </p>
-            <div class="flex">
-                <label>
+            
+            <label>
                     <input required type="text" name="nome" class="input" value="<?php echo htmlspecialchars($row['nome']); ?>">
                     <span>Nome:</span>
-                </label>
-
-                <label>
+            </label>
+            <label>
                     <input required type="text" name="tipo" class="input" value="<?php echo htmlspecialchars($row['tipo']); ?>">
                     <span>Tipo:</span>
-                </label>
-            </div>
-
+            </label>
             <label>
                 <input required type="number" name="quantidade" class="input" value="<?php echo htmlspecialchars($row['quantidade']); ?>">
                 <span>Quantidade:</span>
             </label>
-
             <label>
                 <input required type="text" name="preco" class="input" value="<?php echo htmlspecialchars($row['preco']); ?>">
                 <span>Preço:</span>
