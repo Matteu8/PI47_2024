@@ -33,7 +33,7 @@ body {
   }
   
 
-
+  
   body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -113,8 +113,8 @@ body {
   background-color:  #004a8d;
   }
   
-  /**/
-  117.247
+  /* 117.247*/
+ 
   .form {
     display: flex;
     flex-direction: column;
@@ -420,3 +420,4 @@ body {
   object-fit: cover;
   border-radius: 50%;
 }
+/**/

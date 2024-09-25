@@ -125,6 +125,13 @@ if (isset($_GET["id_alterar"])) {
     </div>
 
     <footer>
+        <div class="footer-links">
+        <a href="#sobre">Sobre Nós</a>
+        
+    </div>
+    <div class="social-icons">
+  
+    </div>
         <p> &copy; 2024 Sua Empresa. Todos os direitos reservados.</p>
     </footer>
 </body>
