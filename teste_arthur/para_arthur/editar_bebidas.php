@@ -1,5 +1,4 @@
 <?php
-
 require("conexao.php");
 
 if (isset($_GET["id_alterar"])) {
@@ -19,8 +18,7 @@ if (isset($_GET["id_alterar"])) {
 
         if (isset($_FILES["foto"]) && $_FILES["foto"]["error"] == 0) {
             // Verifica se o arquivo é uma imagem
-            $check = getimagesize($_FILES["foto"]["tmp_name"]);
-            if ($check === false) {
+            if (getimagesize($_FILES["foto"]["tmp_name"]) === false) {
                 die("O arquivo não é uma imagem.");
             }
 
@@ -49,7 +47,7 @@ if (isset($_GET["id_alterar"])) {
 
         // Atualiza os dados no banco de dados
         $stmt = $mysqli->prepare("UPDATE bebidas SET nome = ?, tipo = ?, preco = ?, quantidade = ?, foto = ? WHERE id = ?");
-        $stmt->bind_param("ssdssi", $nome, $tipo, $preco, $quantidade, $caminhoFinal, $id_alterar);
+        $stmt->bind_param("sssssi", $nome, $tipo, $preco, $quantidade, $caminhoFinal, $id_alterar);
         $stmt->execute();
 
         header("Location: consultar_bebidas.php");
@@ -58,7 +56,6 @@ if (isset($_GET["id_alterar"])) {
 } else {
     die("ID não fornecido.");
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -69,55 +66,55 @@ if (isset($_GET["id_alterar"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Bebida</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
     <link rel="stylesheet" href="dieimes.css">
 </head>
 
 <body>
     <div class="row" style="background-color:#3a6da1;">
         <div class="col-md-5">
-            <a href="/principal/"><img src="img/topo_site_bl1_2018.png" class="img-fluid"></a>
+            <a href="/principal/"><img src="img/topo_site_bl1_2018.png" class="img-fluid" alt="Topo do Site"></a>
         </div>
     </div>
-    <h1 class="text-center" style="background-color: #FFA500; color: white;" >Editar Bebida</h1>
+    <h1 class="text-center" style="background-color: #FFA500; color: white;">Editar Bebida</h1>
     <div class="container d-flex justify-content-center mt-5">
-        <form class="form">
+        <form class="form" method="post" enctype="multipart/form-data">
             <p class="title"> Edite aqui sua bebida </p>
             <p class="message">Edite os valores da sua bebida </p>
             <div class="flex">
                 <label>
-                    <input required type="text" class="input" value="<?php echo htmlspecialchars($row['nome']); ?>">
+                    <input required type="text" name="nome" class="input" value="<?php echo htmlspecialchars($row['nome']); ?>">
                     <span>Nome:</span>
                 </label>
 
                 <label>
-                    <input required type="text" class="input" value="<?php echo htmlspecialchars($row['tipo']); ?>">
+                    <input required type="text" name="tipo" class="input" value="<?php echo htmlspecialchars($row['tipo']); ?>">
                     <span>Tipo:</span>
                 </label>
             </div>
 
             <label>
-                <input required type="number" class="input" value="<?php echo htmlspecialchars($row['quantidade']); ?>">
+                <input required type="number" name="quantidade" class="input" value="<?php echo htmlspecialchars($row['quantidade']); ?>">
                 <span>Quantidade:</span>
             </label>
 
             <label>
-                <input required type="text" class="input" value="<?php echo htmlspecialchars($row['preco']); ?>">
+                <input required type="text" name="preco" class="input" value="<?php echo htmlspecialchars($row['preco']); ?>">
                 <span>Preço:</span>
             </label>
             <label>
-            <input type="file" class="" name="foto">
+                <input type="file" class="form-control" name="foto">
                 <span>Foto:</span>
             </label>
-            <button class="submit">Atualizar</button> 
-            
+
+            <button type="submit" class="submit">Atualizar</button>
         </form>
     </div>
 
-    <?php include "rodape.php"  ?>
+    <?php include "rodape.php"; ?>
 </body>
 
 </html>

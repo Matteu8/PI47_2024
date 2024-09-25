@@ -1,6 +1,5 @@
 <?php
 require("conexao.php");
-// require("protecao");
 
 if (isset($_POST['nome'])) {
     // Coletando os dados do formulário
@@ -10,6 +9,12 @@ if (isset($_POST['nome'])) {
     $quantidade = $_POST['quantidade'];
     $foto = $_FILES["foto"];
     $caminhoFinal = '';
+
+    // Converte os dados para UTF-8 antes de inserir no banco
+    $nome = $mysqli->real_escape_string($nome);
+    $tipo = $mysqli->real_escape_string($tipo);
+    $preco = $mysqli->real_escape_string($preco);
+    $quantidade = $mysqli->real_escape_string($quantidade);
 
     if (isset($_FILES["foto"]) && $_FILES["foto"]["error"] == 0) {
         // Verifique se o arquivo é uma imagem
@@ -62,10 +67,10 @@ if (isset($_POST['nome'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Bebidas</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="dieimes.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <?php include("menu.php"); ?>

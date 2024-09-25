@@ -1,17 +1,17 @@
 <?php
 include("conexao.php");
 
-$mysqli->set_charset("utf8mb4"); /* Acentuação */
+$mysqli->set_charset("utf8mb4"); // Configura a codificação para UTF-8
 
-    $consultar_banco = "SELECT * FROM bebidas";
-    $retorno_consulta = $mysqli->query($consultar_banco) or die($mysqli->error);
-    $qntd = $retorno_consulta->num_rows; // retornar quantidade de linhas
+$consultar_banco = "SELECT * FROM bebidas";
+$retorno_consulta = $mysqli->query($consultar_banco) or die($mysqli->error);
+$qntd = $retorno_consulta->num_rows; // Retornar quantidade de linhas
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"> <!-- Certifica-se de que a página HTML usa UTF-8 -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../../img/logo2.png">
@@ -125,10 +125,10 @@ $mysqli->set_charset("utf8mb4"); /* Acentuação */
         <tbody>
             <?php while ($bebidas = $retorno_consulta->fetch_assoc()) { ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($bebidas['nome']); ?></td>
-                    <td><?php echo  htmlspecialchars($bebidas["tipo"]); ?></td>
-                    <td><?php echo htmlspecialchars($bebidas['preco']); ?></td>
-                    <td><img src="<?php echo($bebidas['foto']); ?>" class="img-thumbnail"></td>
+                    <td><?php echo htmlspecialchars($bebidas['nome'], ENT_QUOTES, 'UTF-8'); ?></td>
+                    <td><?php echo htmlspecialchars($bebidas["tipo"], ENT_QUOTES, 'UTF-8'); ?></td>
+                    <td><?php echo htmlspecialchars($bebidas['preco'], ENT_QUOTES, 'UTF-8'); ?></td>
+                    <td><img src="<?php echo htmlspecialchars($bebidas['foto'], ENT_QUOTES, 'UTF-8'); ?>" class="img-thumbnail"></td>
                     <td><a class="btn btn-primary" href="editar_bebidas.php?id_alterar=<?php echo $bebidas['id']; ?>">Alterar</a></td>
                     <td><a class="btn btn-danger" href="deletar_bebidas.php?id_deletar=<?php echo $bebidas['id']; ?>">Deletar</a></td>
                 </tr>
