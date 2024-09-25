@@ -23,7 +23,7 @@ if (isset($_GET["id_alterar"])) {
             }
 
             // Verifica a extensão do arquivo
-            $extensoesPermitidas = ['jpeg', 'jpg', 'png', 'gif'];
+            $extensoesPermitidas = ['jpeg', 'jpg', 'png', 'gif', 'jfif'];
             $extensaoArquivo = strtolower(pathinfo($_FILES["foto"]["name"], PATHINFO_EXTENSION));
             if (!in_array($extensaoArquivo, $extensoesPermitidas)) {
                 die("Tipo de arquivo não suportado.");

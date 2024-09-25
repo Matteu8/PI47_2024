@@ -82,7 +82,7 @@ $sql_exec = $mysqli->query($funcionou) or die($mysqli->error);
 </head>
 
 <body>
-    <?php include("menu.php"); ?>
+    
     
     <h1>Menu de Bebidas</h1>
 
@@ -104,7 +104,6 @@ $sql_exec = $mysqli->query($funcionou) or die($mysqli->error);
         </div>
     </div>
 
-    <?php include("rodape.php"); ?>
 </body>
 
 </html>
