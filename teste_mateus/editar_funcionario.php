@@ -1,44 +1,36 @@
-<?php 
-    require("conexao.php");
+<?php
+include("conexao.php");
 
+// Depois, se um ID foi passado via GET, busque os detalhes desse médico para exibição
+if (isset($_GET['id_funcionarios'])) {
+    $id_funcionarios = $_GET['id_funcionarios'];
+    $sql_consultar = "SELECT * FROM funcionarios WHERE id_funcionarios= '$id_funcionarios'";
+    $mysqli_consultar = $mysqli->query($sql_consultar) or die($mysqli->error);
+    $consultar = $mysqli_consultar->fetch_assoc();
     
-
-    if (isset($_POST["nome"])) {
+    // Primeiro, verifique se o formulário foi enviado e, em caso afirmativo, processe a submissão
+    if (isset($_POST['id_funcionarios'])) {
+        $id_funcionarios = $_POST['id_funcionarios'];
         $nome = $_POST['nome'];
         $email = $_POST['email'];
-        $senha = $_POST["senha"];
-        $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+        $senha = $_POST['senha'];
 
-        $sql = "SELECT * FROM funcionarios WHERE email =  '$email'";
-        $sql_exec = $mysqli->query($sql) or die($mysqli->error);
-
-    if ($sql_exec->num_rows > 0) {
-
-
-    } else {
-
-        $mysqlierrno = "falha";
-
-        $mysqli->query("INSERT INTO funcionarios (nome, email, senha) values('$nome', '$email', '$senha')") or
-                    die($mysqlierrno);
-
-        header("Location:editar_funcionario.php");
-
-        exit();
+        // Atualizando os dados no banco de dados
+        $sql_alterar = "UPDATE funcionarios SET nome = '$nome', email = '$email', senha = '$senha' WHERE id_funcionarios = '$id_funcionarios'";
+        $mysqli_alterar = $mysqli->query($sql_alterar) or die($mysqli->error);
+        header("");
     }
-    }
-
     
-    
-        
-    ?>
+}
+?>
 
-<!DOCTYPE html>
+<!DOCTYPE html> 
+ <!-- Página provavelmente não vai ser usada  -->
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de funcionarios</title>
+    <title>Editar Funcionario</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -54,7 +46,7 @@
         </div>
         
         <header>
-            <h1>Cadastro de funcionarios</h1>
+            <h1>Editar funcionarios</h1>
         </header>
     
 
@@ -65,38 +57,27 @@
     
 
     <form class="form" method="post">
-        <p class="title">Cadastro </p>
-            <div class="flex">
+        <p class="title">Editar Funcionario</p>
+            
             <label>
                 <input required="" placeholder="" type="text" class="input" name="nome">
                 <span>Nome</span>
             </label>
            
-        </div>  
+         
                 
         <label>
             <input required="" placeholder="" type="email" class="input" name="email">
             <span>Email</span>
         </label> 
-        <?php
-            if (isset($_POST["email"])) {
-                if ($sql_exec->num_rows > 0)
-                    echo "<div class='alert alert-danger mt-4' role='alert'>
-                        Você já tem uma conta!
-                    </div>";
-            }
-            ?>
             
         <label>
             <input required="" placeholder="" type="password" class="input" name="senha">
             <span>Senha</span>
         </label>
-        <label>
-            <input required="" placeholder="" type="password" class="input" name="rsenha">
-            <span>Confirme sua Senha</span>
-        </label>
-        <button class="submit">Cadastrar</button>
-        <p class="signin">Já tem uma conta? <a href="#">Entrar</a> </p>
+        
+        <button class="submit">Concluir e Editar</button>
+        
     </form>
 
 </div>
