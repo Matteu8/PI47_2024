@@ -6,7 +6,7 @@ if (!isset($_SESSION)) {
 }
 
 if (isset($_SESSION["id_cliente"])) {
-    $stmt = $mysqli->prepare("SELECT id_pedido, data_pedido, produto, quantidade, status, total FROM pedidos WHERE id_cliente = ?");
+    $stmt = $mysqli->prepare("SELECT id_pedido, data_pedido, produto, quantidade, status, total, id_cliente FROM pedidos WHERE id_cliente = ?");
     $stmt->bind_param("i", $_SESSION['id_cliente']);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -30,21 +30,6 @@ if (isset($_POST['cancelar_pedido'])) {
         exit();
     } else {
         echo "<script>alert('Erro ao cancelar o pedido. Tente novamente.');</script>";
-    }
-}
-
-if (isset($_POST['excluir_pedido'])) {
-    $id_pedido = $_POST['id_pedido'];
-
-    $stmt = $mysqli->prepare("DELETE FROM pedidos WHERE id_pedido = ? AND id_cliente = ?");
-    $stmt->bind_param("ii", $id_pedido, $_SESSION['id_cliente']);
-
-    if ($stmt->execute()) {
-        echo "<script>alert('Pedido excluído com sucesso.');</script>";
-        header("Location: pedidos_cliente.php");
-        exit();
-    } else {
-        echo "<script>alert('Erro ao excluir o pedido. Tente novamente.');</script>";
     }
 }
 ?>
@@ -81,7 +66,7 @@ if (isset($_POST['excluir_pedido'])) {
                             <thead class="table-dark">
                                 <tr>
                                     <th>ID do Pedido</th>
-                                    <th>Nome do Cliente</th> 
+                                    <th>Nome do Cliente</th>
                                     <th>Data</th>
                                     <th>Produto</th>
                                     <th>Quantidade</th>
@@ -95,15 +80,7 @@ if (isset($_POST['excluir_pedido'])) {
                                 <?php while ($pedido = $result->fetch_assoc()): ?>
                                     <tr>
                                         <td><?php echo htmlspecialchars($pedido['id_pedido']); ?></td>
-                                        <?php
-                                            $stmt_nome = $mysqli->prepare("SELECT nome FROM clientes WHERE id_clientes = ?");
-                                            $stmt_nome->bind_param("i", $_SESSION['id_cliente']);
-                                            $stmt_nome->execute();
-                                            $result_nome = $stmt_nome->get_result();
-                                            $cliente = $result_nome->fetch_assoc();
-                                            $nome_cliente = $cliente ? htmlspecialchars($cliente['nome']) : 'Nome não encontrado';
-                                        ?>
-                                        <td><?php echo $nome_cliente; ?></td>
+                                        <td><?php echo htmlspecialchars($_SESSION['nome']); ?></td>
                                         <td><?php echo date("d/m/Y", strtotime($pedido['data_pedido'])); ?></td>
                                         <td><?php echo htmlspecialchars($pedido['produto']); ?></td>
                                         <td><?php echo htmlspecialchars($pedido['quantidade']); ?></td>
@@ -125,11 +102,6 @@ if (isset($_POST['excluir_pedido'])) {
                                             <?php else: ?>
                                                 <button class="btn btn-info btn-sm" disabled>Alterar (indisponível)</button>
                                             <?php endif; ?>
-
-                                            <form method="post" style="display:inline;">
-                                                <input type="hidden" name="id_pedido" value="<?php echo $pedido['id_pedido']; ?>">
-                                                <button type="submit" name="excluir_pedido" class="btn btn-warning btn-sm">Excluir</button>
-                                            </form>
                                         </td>
                                     </tr>
                                 <?php endwhile; ?>
@@ -144,7 +116,7 @@ if (isset($_POST['excluir_pedido'])) {
             <a href="area_cliente.php" class="btn btn-warning">Voltar para Área do Cliente</a>
         </div>
     </div>
-    <br><br><br><br>
+
     <footer class="text-center mt-4 d-none d-md-block">
         <div class="footer-links">
             <a href="#sobre">Sobre Nós</a>
