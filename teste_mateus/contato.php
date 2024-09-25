@@ -69,11 +69,11 @@ if (isset($_POST["bt_nome"])) {
         <form action="" method="post">
             <div class="mb-3">
                 <label for="bt_nome" class="form-label">Nome:</label>
-                <input class="form-control" type="text" name="bt_nome" id="bt_nome" value="<?php echo htmlspecialchars($nome_cliente); ?>" required>
+                <input class="form-control" readonly type="text" name="bt_nome" id="bt_nome" value="<?php echo htmlspecialchars($nome_cliente); ?>" required>
             </div>
             <div class="mb-3">
                 <label for="bt_email" class="form-label">Email:</label>
-                <input class="form-control" type="email" name="bt_email" id="bt_email" value="<?php echo htmlspecialchars($email_cliente); ?>" required>
+                <input class="form-control" readonly type="email" name="bt_email" id="bt_email" value="<?php echo htmlspecialchars($email_cliente); ?>" required>
             </div>
             <div class="mb-3">
                 <label for="bt_telefone" class="form-label">Telefone:</label>

@@ -40,7 +40,7 @@ if (!isset($_SESSION)) {
             <a href="pedidos_cliente.php" class="list-group-item list-group-item-action">Visualizar Pedidos</a>
             <a href="alterar_conta_cliente.php" class="list-group-item list-group-item-action">Alterar Conta</a>
             <a href="deletar_conta_cliente.php" class="list-group-item list-group-item-action">Deletar Conta</a>
-            <a href="contato_andre.php" class="list-group-item list-group-item-action">Enviar Feedback</a>
+            <a href="contato.php" class="list-group-item list-group-item-action">Enviar Feedback</a>
             <a href="sair.php" class="list-group-item list-group-item-action ">Sair</a>
         </div>
     </div>

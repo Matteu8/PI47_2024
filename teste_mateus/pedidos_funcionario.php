@@ -56,7 +56,6 @@ if (isset($_POST['excluir_pedido'])) {
 
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -65,7 +64,6 @@ if (isset($_POST['excluir_pedido'])) {
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="gabriell.css">
 </head>
-
 <body>
     <div class="row" style="background-color:#3a6da1;">
         <div class="col-md-12">
@@ -74,12 +72,13 @@ if (isset($_POST['excluir_pedido'])) {
             </a>
         </div>
     </div>
+    
     <div class="container mt-4">
         <h1 class="text-center" style="background-color: orange; color: white;">Todos os Pedidos</h1>
-        <div class="row">
-            <div class="col-12">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10"> 
                 <div class="table-responsive">
-                    <table class="table table-striped mt-4">
+                    <table class="table table-striped mt-4 text-center">
                         <thead class="table-dark">
                             <tr>
                                 <th>ID do Pedido</th>
@@ -132,23 +131,21 @@ if (isset($_POST['excluir_pedido'])) {
                                     </tr>
                                 <?php endwhile; ?>
                             <?php endif; ?>
-                            <tr>
-                                <td colspan="6" class="text-end"><strong>Esvaziar a Tabela:</strong></td>
-                                <td>
-                                    <a href="?truncate=true" class="btn btn-warning" onclick="return confirm('Tem certeza que deseja esvaziar todos os pedidos?');">Esvaziar</a>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
+                    <div class="text-center mt-3">
+                        <strong>Esvaziar a Tabela:</strong>
+                        <a href="?truncate=true" class="btn btn-warning" onclick="return confirm('Tem certeza que deseja esvaziar todos os pedidos?');">Esvaziar</a>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="mt-4">
+        <div class="mt-4 text-center">
             <a href="area_funcionarios.php" class="btn btn-warning">Voltar para Área do Funcionário</a>
         </div>
     </div>
-    <br><br><br><br>
+
     <footer class="text-center mt-4 d-none d-md-block">
         <div class="footer-links">
             <a href="#sobre">Sobre Nós</a>
@@ -156,5 +153,4 @@ if (isset($_POST['excluir_pedido'])) {
         <p>&copy; 2024 Senac-PR. Todos os direitos reservados.</p>
     </footer>
 </body>
-
 </html>
