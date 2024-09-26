@@ -7,8 +7,6 @@ if ($mysqli->connect_error) {
 
 if (isset($_GET["id_alterar"])) {
     $id_alterar = $_GET["id_alterar"];
-    var_dump($id_alterar); // Adicione para verificar o ID
-
     $stmt = $mysqli->prepare("SELECT * FROM lanches WHERE id_lanches = ?");
     $stmt->bind_param("i", $id_alterar);
     
@@ -18,7 +16,7 @@ if (isset($_GET["id_alterar"])) {
 
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
-    
+
     if (!$row) {
         die("Nenhum lanche encontrado com o ID: " . $id_alterar);
     }
@@ -26,7 +24,7 @@ if (isset($_GET["id_alterar"])) {
     if (isset($_POST["nome"])) {
         $nome = $_POST["nome"];
         $ingredientes = $_POST["ingredientes"];
-        $preco = floatval($_POST["preco"]); // Garantir que o preço é um número
+        $preco = floatval($_POST["preco"]);
         $caminhoFinal = $row["foto"];
 
         if (isset($_FILES["foto"]) && $_FILES["foto"]["error"] == 0) {
@@ -87,11 +85,6 @@ if (isset($_GET["id_alterar"])) {
 </head>
 
 <body>
-    <div class="row visible-md visible-lg" style="background-color:#3a6da1;">
-        <div class="col-md-5" style="background-color:#3a6da1; margin-right:0px; margin-left:0px">
-            <a href="/principal/"><img src="topo_site_bl1_2018.png" class="img img-responsive"></a>
-        </div>
-    </div>
     <header>
         <h1>Alterar Lanches</h1>
     </header>
@@ -127,12 +120,6 @@ if (isset($_GET["id_alterar"])) {
         </form>
     </div>
 
-    <footer>
-        <div class="footer-links">
-            <a href="#sobre">Sobre Nós</a>
-        </div>
-        <p>&copy; 2024 Sua Empresa. Todos os direitos reservados.</p>
-    </footer>
 </body>
 
 </html>

@@ -1,7 +1,9 @@
 <?php
 include "conexao.php";
 
-session_start();
+if(!isset($_SESSION)){
+  session_start();
+}
 
 if (isset($_SESSION["id_cliente"])) {
   header("Location: area_cliente.php");
@@ -36,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($usuario && password_verify($senha, $usuario['senha'])) {
       if ($tipo_usuario == 'cliente') {
         $_SESSION["id_cliente"] = $usuario['id_clientes'];
+        $_SESSION["tipo_usuario"] = 'cliente';
         $_SESSION["nome"] = $usuario['nome'];
         $_SESSION["curso"] = $usuario['curso'];
         $_SESSION["periodo"] = $usuario['periodo'];
@@ -48,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       } elseif ($tipo_usuario == 'funcionario') {
         $_SESSION["id_funcionario"] = $usuario['id_funcionario'];
+        $_SESSION["tipo_usuario"] = 'funcionario'; 
         $_SESSION["nome"] = $usuario['nome'];
         $_SESSION["email"] = $usuario['email'];
         $_SESSION["senha"] = $usuario['senha'];

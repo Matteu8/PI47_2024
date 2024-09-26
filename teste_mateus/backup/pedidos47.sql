@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Tempo de geração: 25-Set-2024 às 17:17
--- Versão do servidor: 5.7.36
--- versão do PHP: 7.4.26
+-- Host: 127.0.0.1
+-- Tempo de geração: 26/09/2024 às 07:49
+-- Versão do servidor: 10.4.32-MariaDB
+-- Versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -26,23 +26,21 @@ USE `pedidos47`;
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `clientes`
+-- Estrutura para tabela `clientes`
 --
 
-DROP TABLE IF EXISTS `clientes`;
-CREATE TABLE IF NOT EXISTS `clientes` (
-  `id_clientes` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `clientes` (
+  `id_clientes` int(11) NOT NULL,
   `nome` varchar(200) NOT NULL,
   `curso` varchar(100) NOT NULL,
   `periodo` varchar(10) NOT NULL,
   `telefone` varchar(20) NOT NULL,
   `email` varchar(300) NOT NULL,
-  `senha` varchar(300) NOT NULL,
-  PRIMARY KEY (`id_clientes`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+  `senha` varchar(300) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Extraindo dados da tabela `clientes`
+-- Despejando dados para a tabela `clientes`
 --
 
 INSERT INTO `clientes` (`id_clientes`, `nome`, `curso`, `periodo`, `telefone`, `email`, `senha`) VALUES
@@ -53,37 +51,33 @@ INSERT INTO `clientes` (`id_clientes`, `nome`, `curso`, `periodo`, `telefone`, `
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `feedback`
+-- Estrutura para tabela `feedback`
 --
 
-DROP TABLE IF EXISTS `feedback`;
-CREATE TABLE IF NOT EXISTS `feedback` (
-  `id_feedback` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `feedback` (
+  `id_feedback` int(11) NOT NULL,
   `nome` varchar(300) NOT NULL,
   `email` varchar(300) NOT NULL,
   `telefone` varchar(50) NOT NULL,
   `assunto` varchar(100) NOT NULL,
-  `msg` varchar(300) NOT NULL,
-  PRIMARY KEY (`id_feedback`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `msg` varchar(300) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `funcionarios`
+-- Estrutura para tabela `funcionarios`
 --
 
-DROP TABLE IF EXISTS `funcionarios`;
-CREATE TABLE IF NOT EXISTS `funcionarios` (
-  `id_funcionario` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `funcionarios` (
+  `id_funcionario` int(11) NOT NULL,
   `nome` varchar(300) NOT NULL,
   `email` varchar(300) NOT NULL,
-  `senha` varchar(300) NOT NULL,
-  PRIMARY KEY (`id_funcionario`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+  `senha` varchar(300) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Extraindo dados da tabela `funcionarios`
+-- Despejando dados para a tabela `funcionarios`
 --
 
 INSERT INTO `funcionarios` (`id_funcionario`, `nome`, `email`, `senha`) VALUES
@@ -93,52 +87,117 @@ INSERT INTO `funcionarios` (`id_funcionario`, `nome`, `email`, `senha`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `lanches`
+-- Estrutura para tabela `lanches`
 --
 
-DROP TABLE IF EXISTS `lanches`;
-CREATE TABLE IF NOT EXISTS `lanches` (
-  `id_lanches` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `lanches` (
+  `id_lanches` int(11) NOT NULL,
   `nome` varchar(50) NOT NULL,
   `ingredientes` varchar(300) NOT NULL,
-  `preco` varchar(20) NOT NULL,
-  `foto` varchar(300) NOT NULL,
-  PRIMARY KEY (`id_lanches`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+  `preco` decimal(10,2) NOT NULL,
+  `foto` varchar(300) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Extraindo dados da tabela `lanches`
+-- Despejando dados para a tabela `lanches`
 --
 
 INSERT INTO `lanches` (`id_lanches`, `nome`, `ingredientes`, `preco`, `foto`) VALUES
-(1, 'X-tudo', 'Tem tudo e mais um pouco', 'R$ 19,99', ''),
-(11, 'PÃ£o com ovo', 'pÃ£o e ovo frito', 'R$ 3,99', 'Pao-com-Ovo.jpg'),
-(13, 'PÃ£o com ovo', 'pÃ£o e ovo frito', 'R$ 3,99', 'as-logo-design-template-6cb212472d4c9fdbc0784695e6464e6f_screen.jpg');
+(1, 'X-tudo', 'Tem tudo e mais um pouco', 0.00, ''),
+(11, 'PÃ£o com ovo', 'pÃ£o e ovo frito', 0.00, 'Pao-com-Ovo.jpg'),
+(13, 'PÃ£o com ovo', 'pÃ£o e ovo frito', 0.00, 'as-logo-design-template-6cb212472d4c9fdbc0784695e6464e6f_screen.jpg'),
+(17, 'Hamburguer', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis odio repellendus mollitia, maiores eum nesciunt molestias ducimus natus hic sed aperiam cum blanditiis tenetur repudiandae harum fuga, quia quaerat voluptate.', 20.99, 'Lanches/img/66f4f3248acec.jpg');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `pedidos`
+-- Estrutura para tabela `pedidos`
 --
 
-DROP TABLE IF EXISTS `pedidos`;
-CREATE TABLE IF NOT EXISTS `pedidos` (
-  `id_pedido` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `pedidos` (
+  `id_pedido` int(11) NOT NULL,
   `id_cliente` int(11) NOT NULL,
   `produto` varchar(100) NOT NULL,
   `quantidade` int(11) NOT NULL,
   `data_pedido` date NOT NULL,
   `total` decimal(10,2) NOT NULL,
-  `status` varchar(50) NOT NULL,
-  PRIMARY KEY (`id_pedido`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `status` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Extraindo dados da tabela `pedidos`
+-- Despejando dados para a tabela `pedidos`
 --
 
 INSERT INTO `pedidos` (`id_pedido`, `id_cliente`, `produto`, `quantidade`, `data_pedido`, `total`, `status`) VALUES
-(1, 7, 'lanche', 1, '2024-09-25', '10.00', 'Aguardando Pagamento');
+(1, 7, 'lanche', 1, '2024-09-25', 10.00, 'Aguardando Pagamento');
+
+--
+-- Índices para tabelas despejadas
+--
+
+--
+-- Índices de tabela `clientes`
+--
+ALTER TABLE `clientes`
+  ADD PRIMARY KEY (`id_clientes`);
+
+--
+-- Índices de tabela `feedback`
+--
+ALTER TABLE `feedback`
+  ADD PRIMARY KEY (`id_feedback`);
+
+--
+-- Índices de tabela `funcionarios`
+--
+ALTER TABLE `funcionarios`
+  ADD PRIMARY KEY (`id_funcionario`);
+
+--
+-- Índices de tabela `lanches`
+--
+ALTER TABLE `lanches`
+  ADD PRIMARY KEY (`id_lanches`);
+
+--
+-- Índices de tabela `pedidos`
+--
+ALTER TABLE `pedidos`
+  ADD PRIMARY KEY (`id_pedido`);
+
+--
+-- AUTO_INCREMENT para tabelas despejadas
+--
+
+--
+-- AUTO_INCREMENT de tabela `clientes`
+--
+ALTER TABLE `clientes`
+  MODIFY `id_clientes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT de tabela `feedback`
+--
+ALTER TABLE `feedback`
+  MODIFY `id_feedback` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `funcionarios`
+--
+ALTER TABLE `funcionarios`
+  MODIFY `id_funcionario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de tabela `lanches`
+--
+ALTER TABLE `lanches`
+  MODIFY `id_lanches` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT de tabela `pedidos`
+--
+ALTER TABLE `pedidos`
+  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

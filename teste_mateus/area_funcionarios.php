@@ -42,6 +42,7 @@ if (!isset($_SESSION)) {
             <a href="deletar_conta_funcionario.php" class="list-group-item list-group-item-action">Deletar Conta</a>
             <a href="cadastro_do_funcionario.php" class="list-group-item list-group-item-action ">Cadastrar Funcionário</a>
             <a href="cadastro_lanche.php" class="list-group-item list-group-item-action">Cadastrar Lanches</a>
+            <a href="lista_lanches.php" class="list-group-item list-group-item-action">Lista Lanches</a>
             <a href="feedback_funcionario.php" class="list-group-item list-group-item-action">Visualizar Feedback</a>
             <a href="sair.php" class="list-group-item list-group-item-action ">Sair</a>
         </div>
