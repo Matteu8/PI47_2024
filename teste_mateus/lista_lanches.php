@@ -14,6 +14,13 @@ $retorno_consulta = $mysqli->query($consultar_banco) or die($mysqli->error);
 $consulta_total = $mysqli->query("SELECT COUNT(*) as total FROM lanches");
 $total_lanches = $consulta_total->fetch_assoc()['total'];
 $total_paginas = ceil($total_lanches / $limite);
+
+// Lógica para truncar a tabela lanches
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['truncate_lanches'])) {
+    $mysqli->query("TRUNCATE TABLE lanches") or die($mysqli->error);
+    header("Location: " . $_SERVER['PHP_SELF']); // Redireciona após esvaziar
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -101,7 +108,12 @@ $total_paginas = ceil($total_lanches / $limite);
             </ul>
         </nav>
 
-        <div class="back-button">
+        <!-- Botão para esvaziar a tabela de lanches -->
+        <form method="post" class="text-center">
+            <button type="submit" name="truncate_lanches" class="btn btn-warning">Esvaziar Tabela Lanches</button>
+        </form>
+
+        <div class="back-button mt-3">
             <a class="btn btn-primary" href="area_funcionarios.php">Voltar</a>
         </div>
     </div>

@@ -38,13 +38,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['id_lanche'])) {
     $id_lanche = intval($_POST['id_lanche']);
     $nome_lanche = htmlspecialchars($_POST['nome_lanche']);
     $preco_lanche = htmlspecialchars($_POST['preco_lanche']);
+    $quantidade = intval($_POST['quantidade']); // Obtém a quantidade do formulário
     
     // Adiciona o lanche ao carrinho
-    $_SESSION['carrinho'][$id_lanche] = [
-        'nome' => $nome_lanche,
-        'preco' => $preco_lanche,
-        'quantidade' => isset($_SESSION['carrinho'][$id_lanche]) ? $_SESSION['carrinho'][$id_lanche]['quantidade'] + 1 : 1
-    ];
+    if (isset($_SESSION['carrinho'][$id_lanche])) {
+        // Se o lanche já estiver no carrinho, aumenta a quantidade
+        $_SESSION['carrinho'][$id_lanche]['quantidade'] += $quantidade;
+    } else {
+        // Caso contrário, adiciona o lanche com a quantidade selecionada
+        $_SESSION['carrinho'][$id_lanche] = [
+            'nome' => $nome_lanche,
+            'preco' => $preco_lanche,
+            'quantidade' => $quantidade
+        ];
+    }
     
     // Redireciona para evitar reenvio do formulário
     header("Location: " . $_SERVER['PHP_SELF']);
@@ -72,50 +79,13 @@ $resultado = $mysqli->query("SELECT * FROM lanches");
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .img-lanche {
-            height: 150px; /* Ajuste a altura como preferir */
-            object-fit: cover; /* Mantém a proporção da imagem */
-            border-radius: 20%;
+            height: 200px;
+            object-fit: cover;
         }
     </style>
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center">Lista de Lanches</h1>
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Ingredientes</th>
-                        <th>Preço</th>
-                        <th>Foto</th>
-                        <th>Ação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php while ($lanche = $resultado->fetch_assoc()): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($lanche['id_lanches']); ?></td>
-                            <td><?php echo htmlspecialchars($lanche['nome']); ?></td>
-                            <td><?php echo htmlspecialchars($lanche['ingredientes']); ?></td>
-                            <td>R$ <?php echo number_format((float)$lanche['preco'], 2, ',', '.'); ?></td>
-                            <td>
-                                <img src="<?php echo htmlspecialchars($lanche['foto']); ?>" alt="<?php echo htmlspecialchars($lanche['nome']); ?>" class="img-lanche">
-                            </td>
-                            <td>
-                                <form method="post" class="d-inline">
-                                    <input type="hidden" name="id_lanche" value="<?php echo $lanche['id_lanches']; ?>">
-                                    <input type="hidden" name="nome_lanche" value="<?php echo $lanche['nome']; ?>">
-                                    <input type="hidden" name="preco_lanche" value="<?php echo $lanche['preco']; ?>">
-                                    <button type="submit" class="btn btn-success">Adicionar ao Carrinho</button>
-                                </form>
-                            </td>
-                        </tr>
-                    <?php endwhile; ?>
-                </tbody>
-            </table>
-        </div>
 
         <!-- Exibir o conteúdo do carrinho -->
         <h2>Carrinho</h2>
@@ -158,7 +128,33 @@ $resultado = $mysqli->query("SELECT * FROM lanches");
             <p>Carrinho vazio.</p>
         <?php endif; ?>
 
-        <div class="container text-center mt-3">
+        <h1 class="text-center mt-5">Lista de Lanches</h1>
+        <div class="row">
+            <?php while ($lanche = $resultado->fetch_assoc()): ?>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="<?php echo htmlspecialchars($lanche['foto']); ?>" class="card-img-top img-lanche" alt="<?php echo htmlspecialchars($lanche['nome']); ?>">
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo htmlspecialchars($lanche['nome']); ?></h5>
+                            <p class="card-text">Ingredientes: <?php echo htmlspecialchars($lanche['ingredientes']); ?></p>
+                            <p class="card-text">Preço: R$ <?php echo number_format((float)$lanche['preco'], 2, ',', '.'); ?></p>
+                            <form method="post">
+                                <input type="hidden" name="id_lanche" value="<?php echo $lanche['id_lanches']; ?>">
+                                <input type="hidden" name="nome_lanche" value="<?php echo $lanche['nome']; ?>">
+                                <input type="hidden" name="preco_lanche" value="<?php echo $lanche['preco']; ?>">
+                                <div class="mb-3">
+                                    <label for="quantidade_<?php echo $lanche['id_lanches']; ?>" class="form-label">Quantidade:</label>
+                                    <input type="number" name="quantidade" id="quantidade_<?php echo $lanche['id_lanches']; ?>" value="1" min="1" class="form-control" style="width: 80px;">
+                                </div>
+                                <button type="submit" class="btn btn-success">Adicionar ao Carrinho</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <?php endwhile; ?>
+        </div>
+
+        <div class="container text-center mb-5 mt-3">
             <button class="btn btn-primary">
                 <a href="<?php echo isset($voltar_url) ? $voltar_url : 'login.php'; ?>" style="text-decoration: none; color: white;">Voltar</a>
             </button>

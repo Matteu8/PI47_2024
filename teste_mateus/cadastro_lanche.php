@@ -2,6 +2,10 @@
 include("conexao.php");
 require("protecao.php");
 
+if ($_SESSION['tipo_usuario'] == 'funcionario') {
+    $voltar_url = "area_funcionarios.php";
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nome = $mysqli->real_escape_string($_POST["bt_nome"]);
     $ingredientes = $mysqli->real_escape_string($_POST["bt_ingredientes"]);
@@ -88,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </label>
 
             <label>
-                <span>Foto</span>
+                <span>Foto: </span>
                 <input required type="file" class="form-control" name="foto">
 
             </label>
@@ -96,8 +100,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <img id="imagePreview" src="#" alt="Sua imagem" style="display:none; width: 200px;" />
 
             <button class="submit btn btn-primary mt-3">Cadastrar</button>
-            <input class="btn btn-danger mt-3" type="reset" value="Redefinir">
-            <p class="signin mb-5"><a href="login.php" style="text-decoration: none;">Voltar</a></p>
+            <input class="btn btn-danger" type="reset" value="Redefinir">
+            <div class="container text-center mb-5">
+                <button class="btn btn-primary">
+                    <a href="<?php echo isset($voltar_url) ? $voltar_url : 'login.php'; ?>"
+                        style="text-decoration: none; color: white;">Voltar</a>
+                </button>
+            </div>
         </form>
     </div>
 
