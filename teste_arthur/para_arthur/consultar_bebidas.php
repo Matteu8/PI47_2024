@@ -109,7 +109,10 @@ $qntd = $retorno_consulta->num_rows; // Retornar quantidade de linhas
 <div class="container">
     <div class="especialidade">
         <?php ?>
-        <h1>Lista - Bebidas</h1>
+        
+        <h1>Lista - Bebidas<div class="back-button">
+        <a class="btn btn-primary" href="cadastrar_funcionario.php">Voltar</a>
+    </div></h1>
     </div>
 
     <table class="table table-striped">
@@ -137,9 +140,7 @@ $qntd = $retorno_consulta->num_rows; // Retornar quantidade de linhas
         </tbody>    
     </table>
 
-    <div class="back-button">
-        <a class="btn btn-primary" href="cadastrar_funcionario.php">Voltar</a>
-    </div>
+    
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>

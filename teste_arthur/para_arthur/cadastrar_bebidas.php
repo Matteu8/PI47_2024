@@ -56,6 +56,7 @@ if (isset($_POST['nome'])) {
     // Executando a consulta
     if ($mysqli->query($sql) === TRUE) {
         $mensagem = "<div class='alert alert-success' role='alert'> Bebida cadastrada com sucesso!</div>";
+        header("Location: consultar_bebidas.php");
     } else {
         $mensagem = "<div class='alert alert-danger' role='alert'> Erro ao cadastrar bebida " . $mysqli->error . "</div>";
     }
@@ -78,40 +79,38 @@ if (isset($_POST['nome'])) {
 </head>
 <body>
     <?php include("menu.php"); ?>
-
-    <div class="container text-center">
-        <h1 class="mt-3">Cadastrar Bebidas</h1>
-        <form action="cadastrar_bebidas.php" method="POST" enctype="multipart/form-data">
-            <div class="mb-3">
-                <label class="form-label" for="nome">Nome da Bebida:</label>
-                <input class="form-control" type="text" id="nome" name="nome" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label" for="tipo">Tipo de Bebida:</label>
-                <input class="form-control" type="text" id="tipo" name="tipo" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label" for="preco">Preço:</label>
-                <input class="form-control" type="number" id="preco" name="preco" step="0.01" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label" for="quantidade">Quantidade em Estoque:</label>
-                <input class="form-control" type="number" id="quantidade" name="quantidade" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label" for="foto">Foto:</label>
-                <input class="form-control" type="file" id="foto" name="foto" required>
-            </div>
-
+    <h1 class="text-center" style="background-color: #FFA500; color: white;">Cadastrar Bebidas</h1>
+    <div class="container d-flex justify-content-center mt-5"></div>
+    
+    <div class="container d-flex justify-content-center">    
+        <form class="form" method="post" enctype="multipart/form-data">
+            
+        <p class="title">Cadastre sua bebida</p>
+            <p class="message">Preencha abaixo as informação da bebida</p>
+            <label>
+                    <input required type="text" name="nome" class="input" id="nome" name="nome" >
+                    <span>Nome:</span>
+            </label>
+            <label>
+                    <input required type="text" name="tipo" class="input" id="tipo" name="tipo">
+                    <span>Tipo:</span>
+            </label>
+            <label>
+                <input required name="quantidade" class="input" type="number" id="quantidade">
+                <span>Quantidade:</span>
+            </label>
+            <label>
+                <input  type="number" name="preco" class="input" id="preco" name="preco" step="0.01">
+                <span>Preço:</span>
+            </label>
+            <label>
+                <input type="file" class="form-control" name="foto">
+            </label>
             <?php if (isset($mensagem)) { echo $mensagem; } ?>
-            <br>
-            <input class="btn btn-success" type="submit" value="Cadastrar Bebida">
-            <a class="btn btn-secondary" href="#">Cancelar</a>
+            <button type="submit" class="submit">Atualizar</button>
         </form>
+        </div>
+    </div>
     </div>
 
     <?php include("rodape.php"); ?>
