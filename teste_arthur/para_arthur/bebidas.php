@@ -1,5 +1,8 @@
 <?php
     include("conexao.php");
+
+    
+
     $funcionou = "SELECT * FROM bebidas";
     $sql_exec = $mysqli->query($funcionou) or die($mysqli->error);
     

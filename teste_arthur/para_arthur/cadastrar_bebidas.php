@@ -1,6 +1,10 @@
 <?php
 require("conexao.php");
 
+
+
+
+
 if (isset($_POST['nome'])) {
     // Coletando os dados do formulário
     $nome = $_POST['nome'];
