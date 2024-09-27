@@ -103,7 +103,6 @@ if (isset($_GET["id_alterar"])) {
             </label>
             <label>
                 <input type="file" class="form-control" name="foto">
-                <span>Foto:</span>
             </label>
 
             <button type="submit" class="submit">Atualizar</button>

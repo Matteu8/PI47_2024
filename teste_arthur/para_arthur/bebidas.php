@@ -1,7 +1,8 @@
 <?php
-include("conexao.php");
-$funcionou = "SELECT * FROM bebidas";
-$sql_exec = $mysqli->query($funcionou) or die($mysqli->error);
+    include("conexao.php");
+    $funcionou = "SELECT * FROM bebidas";
+    $sql_exec = $mysqli->query($funcionou) or die($mysqli->error);
+    
 ?>
 
 <!DOCTYPE html>
@@ -96,7 +97,6 @@ $sql_exec = $mysqli->query($funcionou) or die($mysqli->error);
                             <h5 class="card-title"><?php echo htmlspecialchars($bebida['nome']); ?></h5>
                             <p class="card-text"><?php echo htmlspecialchars($bebida['tipo']); ?></p>
                             <p class="card-text">R$ <?php echo number_format($bebida['preco'], 2, ',', '.'); ?></p>
-                            <p></p>
                             <a href="#" class="btn btn-primary">Ver mais</a>
                         </div>
                     </div>
