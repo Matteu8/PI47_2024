@@ -3,36 +3,6 @@ body {
   margin: 0;
   padding: 0;
 }
-footer {
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  padding: 20px;
-  position: relative;
-  bottom: 0;
-  width: 100%;
-}
-footer a {
-  color: #fff;
-  text-decoration: none;
-}
-footer a:hover {
-  text-decoration: underline;
-}
-.footer-links {
-  margin: 10px 0;
-}
-.footer-links a {
-  margin: 0 10px;
-}
-.social-icons {
-  margin: 10px 0;
-}
-.social-icons a {
-  margin: 0 5px;
-}
-
-
 
 body {
 font-family: Arial, sans-serif;
@@ -40,11 +10,7 @@ margin: 0;
 padding: 0;
 background-color: #f4f4f4;
 }
-.container {
-max-width: 1200px;
-margin: 0 auto;
-padding: 20px;
-}
+
 header {
 background-color: #f7941d;
 color: #fff;
@@ -54,39 +20,7 @@ text-align: center;
 h1 {
 margin: 0;
 }
-.product-list {
-display: flex;
-flex-wrap: wrap;
-gap: 20px;
-}
-.product {
-background-color: #fff;
-border: 1px solid #ddd;
-border-radius: 5px;
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-padding: 15px;
-flex: 1 1 calc(33.333% - 20px);
-box-sizing: border-box;
-text-align: center;
-}
-.product img {
-max-width: 100%;
-height: auto;
-border-radius: 5px;
-}
-.product h2 {
-margin: 10px 0;
-font-size: 1.5em;
-}
-.product p {
-font-size: 1em;
-color: #666;
-}
-.product .price {
-font-size: 1.2em;
-color: #333;
-margin-top: 10px;
-}
+
 footer {
 background-color: #004A8D;
 color: #fff;
@@ -97,14 +31,6 @@ bottom: 0;
 width: 100%;
 }
 
-footer {
-background-color: #004a8d;
-color: #fff;
-text-align: center;
-padding: 10px 0;
-bottom: 0;
-width: 100%;
-}
 header{
 color: #fff;
 }
@@ -124,39 +50,6 @@ background-color:  #004a8d;
   padding: 20px;
   border-radius: 20px;
   position: relative;
-}
-
-.title {
-  font-size: 28px;
-  color: royalblue;
-  font-weight: 600;
-  letter-spacing: -1px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding-left: 30px;
-}
-
-.title::before,.title::after {
-  position: absolute;
-  content: "";
-  height: 16px;
-  width: 16px;
-  border-radius: 50%;
-  left: 0px;
-  background-color: royalblue;
-}
-
-.title::before {
-  width: 18px;
-  height: 18px;
-  background-color: royalblue;
-}
-
-.title::after {
-  width: 18px;
-  height: 18px;
-  animation: pulse 1s linear infinite;
 }
 
 .message, .signin {
@@ -180,43 +73,6 @@ background-color:  #004a8d;
   display: flex;
   width: 100%;
   gap: 6px;
-}
-
-.form label {
-  position: relative;
-}
-
-.form label .input {
-  width: 100%;
-  padding: 10px 10px 20px 10px;
-  outline: 0;
-  border: 1px solid rgba(105, 105, 105, 0.397);
-  border-radius: 10px;
-}
-
-.form label .input + span {
-  position: absolute;
-  left: 10px;
-  top: 15px;
-  color: grey;
-  font-size: 0.9em;
-  cursor: text;
-  transition: 0.3s ease;
-}
-
-.form label .input:placeholder-shown + span {
-  top: 15px;
-  font-size: 0.9em;
-}
-
-.form label .input:focus + span,.form label .input:valid + span {
-  top: 30px;
-  font-size: 0.7em;
-  font-weight: 600;
-}
-
-.form label .input:valid + span {
-  color: green;
 }
 
 .submit {
@@ -251,44 +107,13 @@ body {
   background-color: #f4f7fa;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
-
-
-.container {
-  margin-top: 40px;
-  padding: 20px;
- /* background-color: #fff;*/
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
+                                 
 .especialidade h1 {
   font-size: 28px;
   font-weight: bold;
   margin-bottom: 20px;
   text-align: center;
   color: #333;
-}
-
-.table {
-  margin-top: 20px;
-  border-collapse: separate;
-  border-spacing: 0;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.table th {
-  background-color: #343a40;
-  color: #fff;
-  text-align: center;
-}
-
-.table td, .table th {
-  vertical-align: middle;
-  padding: 12px;
-  text-align: center;
 }
 
 .btn-primary {
@@ -301,7 +126,7 @@ body {
   background-color: #0056b3;
 }
 
-.btn-danger {
+.btn-danger {                                                    
   background-color: #dc3545;
   border: none;
   transition: background-color 0.3s ease;
@@ -356,27 +181,6 @@ text-align: center;
 color: #333;
 }
 
-.table {
-margin-top: 20px;
-border-collapse: separate;
-border-spacing: 0;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-border-radius: 8px;
-overflow: hidden;
-}
-
-.table th {
-background-color: #343a40;
-color: #fff;
-text-align: center;
-}
-
-.table td, .table th {
-vertical-align: middle;
-padding: 12px;
-text-align: center;
-}
-
 .btn-primary {
 background-color: #007bff;
 border: none;
@@ -419,4 +223,23 @@ width: 60px;
 height: 60px;
 object-fit: cover;
 border-radius: 50%;
+}
+/*coloca todos os códigos no meio do celular*/
+
+body, html, h1 {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+}
+
+code {
+  padding: 15px; /* Espaçamento interno */
+  border-radius: 5px; /* Bordas arredondadas */
+  font-family: monospace; /* Fonte monoespaçada para código */
+  overflow: auto; /* Permite rolagem se necessário */
+  max-width: 90%; /* Limita a largura em telas pequenas */
+ 
 }
