@@ -6,7 +6,8 @@
         </a>
 
         <!-- Botão de "hamburger" para dispositivos móveis -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -14,26 +15,38 @@
         <div class="collapse navbar-collapse me-5" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Página Inicial</a>
+                    <a class="nav-link text-white" href="index.php">Página Inicial</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Lanches</a>
+                    <a class="nav-link text-white" href="deslog_lanches.php">Lanches</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Bebidas</a>
+                    <a class="nav-link text-white" href="deslog_bebidas">Bebidas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Sobremesas</a>
+                    <a class="nav-link text-white" href="deslog_sobremesas">Sobremesas</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Pedidos</a>
-                </li>
+                <?php if (isset($_SESSION['tipo_usuario'])): ?>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="pedido.php">Pedidos</a>
+                    </li>
+                <?php else: ?>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="login.php">Pedidos</a>
+                    </li>
+                <?php endif; ?>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="#">Sobre Nós</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Sair</a>
-                </li>
+                <?php if (isset($_SESSION['tipo_usuario'])): ?>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="sair.php">Sair</a>
+                    </li>
+                <?php else: ?>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="login.php">Login</a>
+                    </li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>
