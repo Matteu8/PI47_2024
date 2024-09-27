@@ -1,7 +1,7 @@
 <?php
 include("conexao.php");
 
-$mysqli->set_charset("utf8mb4"); // Configura a codificação para UTF-8
+
 
 $consultar_banco = "SELECT * FROM bebidas";
 $retorno_consulta = $mysqli->query($consultar_banco) or die($mysqli->error);
@@ -141,7 +141,7 @@ $qntd = $retorno_consulta->num_rows; // Retornar quantidade de linhas
         <a class="btn btn-primary" href="cadastrar_funcionario.php">Voltar</a>
     </div>
 </div>
-                
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
