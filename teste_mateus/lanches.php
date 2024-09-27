@@ -1,13 +1,18 @@
 <?php
 include("conexao.php");
-if(!isset($_SESSION)){}
-session_start();
+if (!isset($_SESSION)) {
+    session_start();
+}
+
 
 // Verifica se o usuário está logado
+/*
 if (!isset($_SESSION['tipo_usuario'])) {
     header("Location: login.php");
     exit();
 }
+*/
+
 
 // Redireciona para login se o id do cliente ou funcionário não estiver na sessão
 if ($_SESSION['tipo_usuario'] == 'cliente' && !isset($_SESSION['id_cliente'])) {
@@ -106,6 +111,7 @@ $resultado = $mysqli->query("SELECT * FROM lanches");
 </head>
 
 <body>
+    <?php include("menu.php"); ?> 
     <div class="container mt-5">
         <h2>Carrinho</h2>
         <?php if (!empty($_SESSION['carrinho'])): ?>
@@ -127,7 +133,7 @@ $resultado = $mysqli->query("SELECT * FROM lanches");
                         ?>
                         <tr>
                             <td><?php echo htmlspecialchars($item['nome']); ?></td>
-                            <td>R$ <?php echo number_format((float)$item['preco'], 2, ',', '.'); ?></td>
+                            <td>R$ <?php echo number_format((float) $item['preco'], 2, ',', '.'); ?></td>
                             <td><?php echo $item['quantidade']; ?></td>
                             <td>R$ <?php echo number_format($totalItem, 2, ',', '.'); ?></td>
                         </tr>
@@ -152,32 +158,43 @@ $resultado = $mysqli->query("SELECT * FROM lanches");
             <?php while ($lanche = $resultado->fetch_assoc()): ?>
                 <div class="col-md-4 mb-4">
                     <div class="card h-100">
-                        <img src="<?php echo htmlspecialchars($lanche['foto']); ?>" class="card-img-top img-lanche" alt="<?php echo htmlspecialchars($lanche['nome']); ?>">
+                        <img src="<?php echo htmlspecialchars($lanche['foto']); ?>" class="card-img-top img-lanche"
+                            alt="<?php echo htmlspecialchars($lanche['nome']); ?>">
                         <div class="card-body">
                             <h5 class="card-title"><?php echo htmlspecialchars($lanche['nome']); ?></h5>
                             <p class="card-text">Ingredientes: <?php echo htmlspecialchars($lanche['ingredientes']); ?></p>
-                            <p class="card-text">Preço: R$ <?php echo number_format((float)$lanche['preco'], 2, ',', '.'); ?></p>
+                            <p class="card-text">Preço: R$
+                                <?php echo number_format((float) $lanche['preco'], 2, ',', '.'); ?>
+                            </p>
                             <form method="post">
                                 <input type="hidden" name="id_lanche" value="<?php echo $lanche['id_lanches']; ?>">
                                 <input type="hidden" name="nome_lanche" value="<?php echo $lanche['nome']; ?>">
                                 <input type="hidden" name="preco_lanche" value="<?php echo $lanche['preco']; ?>">
-                                <div class="mb-3">
-                                    <label for="quantidade_<?php echo $lanche['id_lanches']; ?>" class="form-label">Quantidade:</label>
-                                    <input type="number" name="quantidade" id="quantidade_<?php echo $lanche['id_lanches']; ?>" value="1" min="1" class="form-control" style="width: 80px;">
-                                </div>
-                                <button type="submit" class="btn btn-success">Adicionar ao Carrinho</button>
+
+                                <?php
+                                if (isset($_SESSION['tipo_usuario']) && ($_SESSION['tipo_usuario'] === 'cliente' || $_SESSION['tipo_usuario'] === 'funcionario')) {
+                                    ?>
+                                    <div class="container text-center mb-5 mt-3">
+                                        <button class="btn btn-primary">
+                                            <a href="<?php echo isset($voltar_url) ? $voltar_url : 'login.php'; ?>"
+                                                style="text-decoration: none; color: white;">Voltar</a>
+                                        </button>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
+
+
                             </form>
                         </div>
                     </div>
                 </div>
             <?php endwhile; ?>
         </div>
+        <button class="btn btn-primary">
+            <a href="login.php" style="text-decoration: none; color: white;">Voltar</a>
+        </button>
 
-        <div class="container text-center mb-5 mt-3">
-            <button class="btn btn-primary">
-                <a href="<?php echo isset($voltar_url) ? $voltar_url : 'login.php'; ?>" style="text-decoration: none; color: white;">Voltar</a>
-            </button>
-        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

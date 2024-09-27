@@ -9,7 +9,8 @@ if ($_SESSION['tipo_usuario'] == 'funcionario') {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nome = $mysqli->real_escape_string($_POST["bt_nome"]);
     $ingredientes = $mysqli->real_escape_string($_POST["bt_ingredientes"]);
-    $preco = $mysqli->real_escape_string($_POST["bt_preco"]);
+    $preco = $mysqli->real_escape_string($_POST["bt_preco"]); 
+    $quantidade = $mysqli->real_escape_string($_POST["bt_quantidade"]);
 
     if (empty($nome) || empty($ingredientes) || empty($preco)) {
         $erro = "Por favor, preencha todos os campos.";
@@ -31,8 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $caminhoFinal = $diretorioUpload . $novoNomeArquivo;
 
                     if (move_uploaded_file($_FILES["foto"]["tmp_name"], $caminhoFinal)) {
-                        $stmt = $mysqli->prepare("INSERT INTO lanches (nome, ingredientes, preco, foto) VALUES (?, ?, ?, ?)");
-                        $stmt->bind_param("ssss", $nome, $ingredientes, $preco, $caminhoFinal);
+                        $stmt = $mysqli->prepare("INSERT INTO lanches (nome, ingredientes, preco, foto, quantidade) VALUES (?, ?, ?,?, ?)");
+                        $stmt->bind_param("sssss", $nome, $ingredientes, $preco, $caminhoFinal, $quantidade);
                         if ($stmt->execute()) {
                             $sucesso = "Lanche cadastrado com sucesso!";
                         } else {
@@ -89,6 +90,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <label>
                 <input required type="number" step="0.01" class="input" name="bt_preco">
                 <span>Preço</span>
+            </label>
+
+            <label>
+                <input required type="text" class="input" name="bt_quantidade">
+                <span>Quantidade</span>
             </label>
 
             <label>

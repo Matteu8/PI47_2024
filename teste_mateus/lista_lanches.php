@@ -73,6 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['truncate_lanches'])) 
                         <th>Nome</th>
                         <th>Ingredientes</th>
                         <th>Preço</th>
+                        <th>Quantidade</th>
                         <th>Foto</th>
                         <th>Alterar</th>
                         <th>Deletar</th>
@@ -83,7 +84,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['truncate_lanches'])) 
                         <tr>
                             <td><?php echo htmlspecialchars($lanches['nome'], ENT_QUOTES, 'UTF-8'); ?></td>
                             <td><?php echo htmlspecialchars($lanches["ingredientes"], ENT_QUOTES, 'UTF-8'); ?></td>
-                            <td>R$ <?php echo number_format($lanches['preco'], 2, ',', '.'); ?></td>
+                            <td><?php echo $lanches['preco']; ?></td>
+                            <td><?php echo number_format($lanches['quantidade'], 2,); ?></td>
                             <td><img src="<?php echo htmlspecialchars($lanches['foto'], ENT_QUOTES, 'UTF-8'); ?>" class="img-thumbnail" alt="<?php echo htmlspecialchars($lanches['nome'], ENT_QUOTES, 'UTF-8'); ?>"></td>
                             <td>
                                 <a class="btn btn-primary" href="alterar_lanches.php?id_alterar=<?php echo $lanches['id_lanches']; ?>">Alterar</a>

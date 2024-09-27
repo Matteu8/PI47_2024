@@ -26,15 +26,9 @@
                 <li class="nav-item">
                     <a class="nav-link text-white" href="deslog_sobremesas">Sobremesas</a>
                 </li>
-                <?php if (isset($_SESSION['tipo_usuario'])): ?>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="pedido.php">Pedidos</a>
-                    </li>
-                <?php else: ?>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="login.php">Pedidos</a>
-                    </li>
-                <?php endif; ?>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="lanches.php">Pedidos</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="#">Sobre Nós</a>
                 </li>
