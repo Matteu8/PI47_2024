@@ -2,7 +2,7 @@
 include("conexao.php");
 require("protecao.php");
 
-$mysqli->set_charset("utf8mb4"); // Acentuação
+
 
 $limite = 10; // Número de lanches por página
 $pagina = (isset($_GET['pagina'])) ? (int)$_GET['pagina'] : 1;
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['truncate_lanches'])) 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../../img/logo2.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Funcionario - Lista Lanches</title>
+    <title>Funcionário - Lista Lanches</title>
     <link rel="stylesheet" href="gabriell.css">
     <style>
         .img-thumbnail {
@@ -81,10 +81,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['truncate_lanches'])) 
                 <tbody>
                     <?php while ($lanches = $retorno_consulta->fetch_assoc()) { ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($lanches['nome']); ?></td>
-                            <td><?php echo htmlspecialchars($lanches["ingredientes"]); ?></td>
-                            <td>R$ <?php echo number_format($lanches['preco'], 2, ',', '.'); ?></td> <!-- Adicionando o símbolo R$ -->
-                            <td><img src="<?php echo($lanches['foto']); ?>" class="img-thumbnail"></td>
+                            <td><?php echo htmlspecialchars($lanches['nome'], ENT_QUOTES, 'UTF-8'); ?></td>
+                            <td><?php echo htmlspecialchars($lanches["ingredientes"], ENT_QUOTES, 'UTF-8'); ?></td>
+                            <td>R$ <?php echo number_format($lanches['preco'], 2, ',', '.'); ?></td>
+                            <td><img src="<?php echo htmlspecialchars($lanches['foto'], ENT_QUOTES, 'UTF-8'); ?>" class="img-thumbnail" alt="<?php echo htmlspecialchars($lanches['nome'], ENT_QUOTES, 'UTF-8'); ?>"></td>
                             <td>
                                 <a class="btn btn-primary" href="alterar_lanches.php?id_alterar=<?php echo $lanches['id_lanches']; ?>">Alterar</a>
                             </td>

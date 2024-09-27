@@ -18,7 +18,7 @@ if (isset($_GET['truncate']) && $_GET['truncate'] == 'true') {
     }
 }
 
-$stmt = $mysqli->prepare("SELECT id_pedido, id_cliente, data_pedido, produto, quantidade, status, total FROM pedidos");
+$stmt = $mysqli->prepare("SELECT id_pedido, data_pedido, produto, quantidade, status, total FROM pedidos");
 $stmt->execute();
 $result = $stmt->get_result();
 

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Tempo de geração: 27/09/2024 às 18:13
--- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.2.12
+-- Host: 127.0.0.1:3306
+-- Tempo de geração: 27-Set-2024 às 18:25
+-- Versão do servidor: 5.7.36
+-- versão do PHP: 7.4.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -26,21 +26,23 @@ USE `pedidos47`;
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `clientes`
+-- Estrutura da tabela `clientes`
 --
 
-CREATE TABLE `clientes` (
-  `id_clientes` int(11) NOT NULL,
+DROP TABLE IF EXISTS `clientes`;
+CREATE TABLE IF NOT EXISTS `clientes` (
+  `id_clientes` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(200) NOT NULL,
   `curso` varchar(100) NOT NULL,
   `periodo` varchar(10) NOT NULL,
   `telefone` varchar(20) NOT NULL,
   `email` varchar(300) NOT NULL,
-  `senha` varchar(300) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `senha` varchar(300) NOT NULL,
+  PRIMARY KEY (`id_clientes`)
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 --
--- Despejando dados para a tabela `clientes`
+-- Extraindo dados da tabela `clientes`
 --
 
 INSERT INTO `clientes` (`id_clientes`, `nome`, `curso`, `periodo`, `telefone`, `email`, `senha`) VALUES
@@ -51,33 +53,37 @@ INSERT INTO `clientes` (`id_clientes`, `nome`, `curso`, `periodo`, `telefone`, `
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `feedback`
+-- Estrutura da tabela `feedback`
 --
 
-CREATE TABLE `feedback` (
-  `id_feedback` int(11) NOT NULL,
+DROP TABLE IF EXISTS `feedback`;
+CREATE TABLE IF NOT EXISTS `feedback` (
+  `id_feedback` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(300) NOT NULL,
   `email` varchar(300) NOT NULL,
   `telefone` varchar(50) NOT NULL,
   `assunto` varchar(100) NOT NULL,
-  `msg` varchar(300) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `msg` varchar(300) NOT NULL,
+  PRIMARY KEY (`id_feedback`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `funcionarios`
+-- Estrutura da tabela `funcionarios`
 --
 
-CREATE TABLE `funcionarios` (
-  `id_funcionario` int(11) NOT NULL,
+DROP TABLE IF EXISTS `funcionarios`;
+CREATE TABLE IF NOT EXISTS `funcionarios` (
+  `id_funcionario` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(300) NOT NULL,
   `email` varchar(300) NOT NULL,
-  `senha` varchar(300) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `senha` varchar(300) NOT NULL,
+  PRIMARY KEY (`id_funcionario`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
--- Despejando dados para a tabela `funcionarios`
+-- Extraindo dados da tabela `funcionarios`
 --
 
 INSERT INTO `funcionarios` (`id_funcionario`, `nome`, `email`, `senha`) VALUES
@@ -87,108 +93,44 @@ INSERT INTO `funcionarios` (`id_funcionario`, `nome`, `email`, `senha`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `lanches`
+-- Estrutura da tabela `lanches`
 --
 
-CREATE TABLE `lanches` (
-  `id_lanches` int(11) NOT NULL,
+DROP TABLE IF EXISTS `lanches`;
+CREATE TABLE IF NOT EXISTS `lanches` (
+  `id_lanches` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(50) NOT NULL,
   `ingredientes` varchar(300) NOT NULL,
   `preco` decimal(10,2) NOT NULL,
-  `foto` varchar(300) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `foto` varchar(300) NOT NULL,
+  PRIMARY KEY (`id_lanches`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
--- Despejando dados para a tabela `lanches`
+-- Extraindo dados da tabela `lanches`
 --
 
 INSERT INTO `lanches` (`id_lanches`, `nome`, `ingredientes`, `preco`, `foto`) VALUES
-(1, 'Hamburguer', 'Pão, Alface, Presunto, Tomate', 15.00, 'Lanches/img/66f6d51dd3a44.jpg'),
-(2, 'Sanduíche', 'Pão, Alface, Presunto, Tomate', 12.00, 'Lanches/img/66f6d53567917.jpg');
+(4, 'Ã§Ã§Ã§Ã§Ã§Ã§Ã§Ã§', 'Ã§Ã§Ã§Ã§', '1.00', 'Lanches/img/66f6e53bdf2ad.jpg'),
+(3, 'HÃ¢mburguer', 'PÃ£o', '4.00', 'Lanches/img/66f6e42370805.jpg');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `pedidos`
+-- Estrutura da tabela `pedidos`
 --
 
-CREATE TABLE `pedidos` (
-  `id_pedido` int(11) NOT NULL,
+DROP TABLE IF EXISTS `pedidos`;
+CREATE TABLE IF NOT EXISTS `pedidos` (
   `id_cliente` int(11) NOT NULL,
+  `id_pedido` int(11) NOT NULL AUTO_INCREMENT,
   `produto` varchar(100) NOT NULL,
   `quantidade` int(11) NOT NULL,
   `data_pedido` date NOT NULL,
   `total` decimal(10,2) NOT NULL,
-  `status` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Índices para tabelas despejadas
---
-
---
--- Índices de tabela `clientes`
---
-ALTER TABLE `clientes`
-  ADD PRIMARY KEY (`id_clientes`);
-
---
--- Índices de tabela `feedback`
---
-ALTER TABLE `feedback`
-  ADD PRIMARY KEY (`id_feedback`);
-
---
--- Índices de tabela `funcionarios`
---
-ALTER TABLE `funcionarios`
-  ADD PRIMARY KEY (`id_funcionario`);
-
---
--- Índices de tabela `lanches`
---
-ALTER TABLE `lanches`
-  ADD PRIMARY KEY (`id_lanches`);
-
---
--- Índices de tabela `pedidos`
---
-ALTER TABLE `pedidos`
-  ADD PRIMARY KEY (`id_pedido`);
-
---
--- AUTO_INCREMENT para tabelas despejadas
---
-
---
--- AUTO_INCREMENT de tabela `clientes`
---
-ALTER TABLE `clientes`
-  MODIFY `id_clientes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- AUTO_INCREMENT de tabela `feedback`
---
-ALTER TABLE `feedback`
-  MODIFY `id_feedback` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `funcionarios`
---
-ALTER TABLE `funcionarios`
-  MODIFY `id_funcionario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT de tabela `lanches`
---
-ALTER TABLE `lanches`
-  MODIFY `id_lanches` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de tabela `pedidos`
---
-ALTER TABLE `pedidos`
-  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT;
+  `status` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_pedido`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

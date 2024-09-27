@@ -1,16 +1,15 @@
 <?php
 include("conexao.php");
+if(!isset($_SESSION)){}
+session_start();
 
-if (!isset($_SESSION)) {
-    session_start();
-}
-
-// Verifica se o usuário está logado e se o tipo de usuário está na sessão
+// Verifica se o usuário está logado
 if (!isset($_SESSION['tipo_usuario'])) {
     header("Location: login.php");
     exit();
 }
 
+// Redireciona para login se o id do cliente ou funcionário não estiver na sessão
 if ($_SESSION['tipo_usuario'] == 'cliente' && !isset($_SESSION['id_cliente'])) {
     header("Location: login.php");
     exit();
@@ -21,49 +20,69 @@ if ($_SESSION['tipo_usuario'] == 'funcionario' && !isset($_SESSION['id_funcionar
     exit();
 }
 
-// Define a URL de redirecionamento para o botão "Voltar" com base no tipo de usuário
-if ($_SESSION['tipo_usuario'] == 'cliente') {
-    $voltar_url = "area_cliente.php";
-} else if ($_SESSION['tipo_usuario'] == 'funcionario') {
-    $voltar_url = "area_funcionarios.php";
-}
+// Define a URL de redirecionamento para o botão "Voltar"
+$voltar_url = $_SESSION['tipo_usuario'] == 'cliente' ? "area_cliente.php" : "area_funcionarios.php";
 
 // Inicializa o carrinho na sessão, se não existir
 if (!isset($_SESSION['carrinho'])) {
     $_SESSION['carrinho'] = [];
 }
 
-// Verifica se o formulário foi enviado para adicionar ao carrinho
+// Processa o formulário para adicionar ao carrinho
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['id_lanche'])) {
     $id_lanche = intval($_POST['id_lanche']);
     $nome_lanche = htmlspecialchars($_POST['nome_lanche']);
     $preco_lanche = htmlspecialchars($_POST['preco_lanche']);
-    $quantidade = intval($_POST['quantidade']); // Obtém a quantidade do formulário
-    
-    // Adiciona o lanche ao carrinho
+    $quantidade = intval($_POST['quantidade']);
+
+    // Adiciona ou atualiza o lanche no carrinho
     if (isset($_SESSION['carrinho'][$id_lanche])) {
-        // Se o lanche já estiver no carrinho, aumenta a quantidade
         $_SESSION['carrinho'][$id_lanche]['quantidade'] += $quantidade;
     } else {
-        // Caso contrário, adiciona o lanche com a quantidade selecionada
         $_SESSION['carrinho'][$id_lanche] = [
             'nome' => $nome_lanche,
             'preco' => $preco_lanche,
             'quantidade' => $quantidade
         ];
     }
-    
-    // Redireciona para evitar reenvio do formulário
+
     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
 }
 
-// Verifica se o formulário foi enviado para esvaziar o carrinho
+// Processa o formulário para esvaziar o carrinho
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['esvaziar_carrinho'])) {
-    // Esvazia o carrinho
     $_SESSION['carrinho'] = [];
     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
+}
+
+// Processa o pedido finalizado
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['finalizar_pedido'])) {
+    // Insere cada item do carrinho como um novo pedido
+    $id_cliente = $_SESSION['id_cliente']; // Captura o id do cliente
+    foreach ($_SESSION['carrinho'] as $item) {
+        $produto = $item['nome'];
+        $quantidade = $item['quantidade'];
+        $totalItem = $quantidade * floatval(str_replace(['R$', ','], ['', '.'], $item['preco']));
+
+        // Insere o pedido no banco de dados
+        $stmt = $mysqli->prepare("INSERT INTO pedidos (id_cliente, produto, quantidade, data_pedido, total, status) VALUES (?, ?, ?, NOW(), ?, 'Aguardando Pagamento')");
+        if ($stmt) {
+            $stmt->bind_param("isid", $id_cliente, $produto, $quantidade, $totalItem);
+            $stmt->execute();
+            $stmt->close();
+        } else {
+            // Trate o erro de preparação da declaração
+            echo "<script>alert('Erro ao finalizar o pedido.');</script>";
+            exit();
+        }
+    }
+
+    // Esvazia o carrinho após finalizar o pedido
+    $_SESSION['carrinho'] = [];
+    echo "<script>alert('Pedido finalizado com sucesso!');</script>";
+    header("Refresh:0");
 }
 
 // Consulta os lanches da tabela lanches
@@ -72,6 +91,7 @@ $resultado = $mysqli->query("SELECT * FROM lanches");
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -84,10 +104,9 @@ $resultado = $mysqli->query("SELECT * FROM lanches");
         }
     </style>
 </head>
+
 <body>
     <div class="container mt-5">
-
-        <!-- Exibir o conteúdo do carrinho -->
         <h2>Carrinho</h2>
         <?php if (!empty($_SESSION['carrinho'])): ?>
             <table class="table table-bordered">
@@ -105,7 +124,7 @@ $resultado = $mysqli->query("SELECT * FROM lanches");
                     foreach ($_SESSION['carrinho'] as $item) {
                         $totalItem = $item['quantidade'] * floatval(str_replace(['R$', ','], ['', '.'], $item['preco']));
                         $totalCarrinho += $totalItem;
-                    ?>
+                        ?>
                         <tr>
                             <td><?php echo htmlspecialchars($item['nome']); ?></td>
                             <td>R$ <?php echo number_format((float)$item['preco'], 2, ',', '.'); ?></td>
@@ -120,9 +139,9 @@ $resultado = $mysqli->query("SELECT * FROM lanches");
                 </tbody>
             </table>
 
-            <!-- Botão para esvaziar o carrinho -->
             <form method="post">
                 <button type="submit" name="esvaziar_carrinho" class="btn btn-danger">Esvaziar Carrinho</button>
+                <button type="submit" name="finalizar_pedido" class="btn btn-success">Finalizar Pedido</button>
             </form>
         <?php else: ?>
             <p>Carrinho vazio.</p>
@@ -163,4 +182,5 @@ $resultado = $mysqli->query("SELECT * FROM lanches");
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
