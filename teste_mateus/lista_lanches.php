@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['truncate_lanches'])) 
         </nav>
 
         <!-- Botão para esvaziar a tabela de lanches -->
-        <form method="post" class="text-center">
+        <form method="post" class="text-center" onsubmit="return confirm('Você tem certeza que deseja esvaziar a tabela de lanches?');">
             <button type="submit" name="truncate_lanches" class="btn btn-warning">Esvaziar Tabela Lanches</button>
         </form>
 

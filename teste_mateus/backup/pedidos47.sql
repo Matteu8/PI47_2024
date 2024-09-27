@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 26/09/2024 às 07:49
+-- Tempo de geração: 27/09/2024 às 18:13
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -103,10 +103,8 @@ CREATE TABLE `lanches` (
 --
 
 INSERT INTO `lanches` (`id_lanches`, `nome`, `ingredientes`, `preco`, `foto`) VALUES
-(1, 'X-tudo', 'Tem tudo e mais um pouco', 0.00, ''),
-(11, 'PÃ£o com ovo', 'pÃ£o e ovo frito', 0.00, 'Pao-com-Ovo.jpg'),
-(13, 'PÃ£o com ovo', 'pÃ£o e ovo frito', 0.00, 'as-logo-design-template-6cb212472d4c9fdbc0784695e6464e6f_screen.jpg'),
-(17, 'Hamburguer', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis odio repellendus mollitia, maiores eum nesciunt molestias ducimus natus hic sed aperiam cum blanditiis tenetur repudiandae harum fuga, quia quaerat voluptate.', 20.99, 'Lanches/img/66f4f3248acec.jpg');
+(1, 'Hamburguer', 'Pão, Alface, Presunto, Tomate', 15.00, 'Lanches/img/66f6d51dd3a44.jpg'),
+(2, 'Sanduíche', 'Pão, Alface, Presunto, Tomate', 12.00, 'Lanches/img/66f6d53567917.jpg');
 
 -- --------------------------------------------------------
 
@@ -123,13 +121,6 @@ CREATE TABLE `pedidos` (
   `total` decimal(10,2) NOT NULL,
   `status` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Despejando dados para a tabela `pedidos`
---
-
-INSERT INTO `pedidos` (`id_pedido`, `id_cliente`, `produto`, `quantidade`, `data_pedido`, `total`, `status`) VALUES
-(1, 7, 'lanche', 1, '2024-09-25', 10.00, 'Aguardando Pagamento');
 
 --
 -- Índices para tabelas despejadas
@@ -191,13 +182,13 @@ ALTER TABLE `funcionarios`
 -- AUTO_INCREMENT de tabela `lanches`
 --
 ALTER TABLE `lanches`
-  MODIFY `id_lanches` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_lanches` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
