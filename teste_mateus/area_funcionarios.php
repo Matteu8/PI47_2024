@@ -23,14 +23,8 @@ if (!isset($_SESSION)) {
 </head>
 
 <body>
-    <div class="row" style="background-color:#3a6da1;">
-        <div class="col-md-12">
-            <a href="">
-                <img src="img/topo_site_bl1_2018.png" class="img-fluid" alt="Logo">
-            </a>
-        </div>
-    </div>
-
+    <?php include("menu.php"); ?>
+    
     <div class="container mt-4">
         <h1>Área do Funcionário</h1>
         <p>Nome: <?php echo $_SESSION["nome"]; ?></p>
@@ -40,7 +34,8 @@ if (!isset($_SESSION)) {
             <a href="pedidos_funcionario.php" class="list-group-item list-group-item-action">Lista de Pedidos</a>
             <a href="alterar_conta_funcionario.php" class="list-group-item list-group-item-action">Alterar Conta</a>
             <a href="deletar_conta_funcionario.php" class="list-group-item list-group-item-action">Deletar Conta</a>
-            <a href="cadastro_do_funcionario.php" class="list-group-item list-group-item-action ">Cadastrar Funcionário</a>
+            <a href="cadastro_do_funcionario.php" class="list-group-item list-group-item-action ">Cadastrar
+                Funcionário</a>
             <a href="cadastro_lanche.php" class="list-group-item list-group-item-action">Cadastrar Lanches</a>
             <a href="lista_lanches.php" class="list-group-item list-group-item-action">Lista Lanches</a>
             <a href="feedback_funcionario.php" class="list-group-item list-group-item-action">Visualizar Feedback</a>

@@ -9,7 +9,7 @@ if ($_SESSION['tipo_usuario'] == 'funcionario') {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nome = $mysqli->real_escape_string($_POST["bt_nome"]);
     $ingredientes = $mysqli->real_escape_string($_POST["bt_ingredientes"]);
-    $preco = $mysqli->real_escape_string($_POST["bt_preco"]); 
+    $preco = $mysqli->real_escape_string($_POST["bt_preco"]);
     $quantidade = $mysqli->real_escape_string($_POST["bt_quantidade"]);
 
     if (empty($nome) || empty($ingredientes) || empty($preco)) {
@@ -63,6 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
+    <?php include("menu.php"); ?>
     <header>
         <h1>Cadastro de Lanches</h1>
     </header>

@@ -2,15 +2,15 @@
 include("conexao.php");
 require("protecao.php");
 
-
-
 $limite = 10; // Número de lanches por página
-$pagina = (isset($_GET['pagina'])) ? (int)$_GET['pagina'] : 1;
+$pagina = (isset($_GET['pagina'])) ? (int) $_GET['pagina'] : 1;
 $inicio = ($pagina - 1) * $limite;
 
-$consultar_banco = "SELECT * FROM lanches LIMIT $inicio, $limite";
+// Consulta para obter lanches com limite
+$consultar_banco = "SELECT id_lanches, nome, ingredientes, preco, quantidade, foto FROM lanches LIMIT $inicio, $limite";
 $retorno_consulta = $mysqli->query($consultar_banco) or die($mysqli->error);
 
+// Contagem total de lanches
 $consulta_total = $mysqli->query("SELECT COUNT(*) as total FROM lanches");
 $total_lanches = $consulta_total->fetch_assoc()['total'];
 $total_paginas = ceil($total_lanches / $limite);
@@ -40,21 +40,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['truncate_lanches'])) 
             object-fit: cover;
             border-radius: 50%;
         }
+
         @media (max-width: 576px) {
             .img-thumbnail {
                 width: 3rem;
                 height: 3rem;
             }
+
             .table td {
                 font-size: 14px;
             }
+
             .table thead {
                 font-size: 16px;
             }
         }
+
         .btn {
             margin-bottom: 5px;
         }
+
         .table-responsive {
             overflow-x: auto;
         }
@@ -62,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['truncate_lanches'])) 
 </head>
 
 <body>
-
+    <?php include("menu.php"); ?>
     <div class="container">
         <h1 class="my-4 text-center">Lista de Lanches</h1>
 
@@ -70,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['truncate_lanches'])) 
             <table class="table table-striped">
                 <thead class="table-dark">
                     <tr>
+                        <th>ID</th>
                         <th>Nome</th>
                         <th>Ingredientes</th>
                         <th>Preço</th>
@@ -82,11 +88,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['truncate_lanches'])) 
                 <tbody>
                     <?php while ($lanches = $retorno_consulta->fetch_assoc()) { ?>
                         <tr>
+                            <td><?php echo htmlspecialchars($lanches['id_lanches'], ENT_QUOTES, 'UTF-8'); ?></td>
                             <td><?php echo htmlspecialchars($lanches['nome'], ENT_QUOTES, 'UTF-8'); ?></td>
-                            <td><?php echo htmlspecialchars($lanches["ingredientes"], ENT_QUOTES, 'UTF-8'); ?></td>
-                            <td><?php echo $lanches['preco']; ?></td>
-                            <td><?php echo number_format($lanches['quantidade'], 2,); ?></td>
-                            <td><img src="<?php echo htmlspecialchars($lanches['foto'], ENT_QUOTES, 'UTF-8'); ?>" class="img-thumbnail" alt="<?php echo htmlspecialchars($lanches['nome'], ENT_QUOTES, 'UTF-8'); ?>"></td>
+                            <td><?php echo htmlspecialchars($lanches['ingredientes'], ENT_QUOTES, 'UTF-8'); ?></td>
+                            <td><?php echo 'R$ ' . number_format($lanches['preco'], 2, ',', '.'); ?></td>
+                            <td><?php echo number_format($lanches['quantidade'], 0); ?></td>
+                            <td>
+                                <img src="<?php echo htmlspecialchars($lanches['foto'], ENT_QUOTES, 'UTF-8'); ?>"
+                                     class="img-thumbnail"
+                                     alt="<?php echo htmlspecialchars($lanches['nome'], ENT_QUOTES, 'UTF-8'); ?>">
+                            </td>
                             <td>
                                 <a class="btn btn-primary" href="alterar_lanches.php?id_alterar=<?php echo $lanches['id_lanches']; ?>">Alterar</a>
                             </td>
@@ -111,7 +122,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['truncate_lanches'])) 
         </nav>
 
         <!-- Botão para esvaziar a tabela de lanches -->
-        <form method="post" class="text-center" onsubmit="return confirm('Você tem certeza que deseja esvaziar a tabela de lanches?');">
+        <form method="post" class="text-center"
+              onsubmit="return confirm('Você tem certeza que deseja esvaziar a tabela de lanches?');">
             <button type="submit" name="truncate_lanches" class="btn btn-warning">Esvaziar Tabela Lanches</button>
         </form>
 

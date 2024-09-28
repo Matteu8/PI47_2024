@@ -49,6 +49,7 @@ if ($_SESSION['tipo_usuario'] == 'cliente') {
 </head>
 
 <body>
+    <?php include("menu.php") ?>
     <h1 class="text-center">Pedidos</h1>
 
     <div class="container d-flex justify-content-center">
@@ -93,6 +94,7 @@ if ($_SESSION['tipo_usuario'] == 'cliente') {
             <a href="<?php echo isset($voltar_url) ? $voltar_url : 'login.php'; ?>" style="text-decoration: none; color: white;">Voltar</a>
         </button>
     </div>
+    
 </body>
 
 </html>

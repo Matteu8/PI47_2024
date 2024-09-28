@@ -92,6 +92,10 @@ include("conexao.php");
                             <h3><?php echo htmlspecialchars($lanche['nome']); ?></h3>
                             <p><?php echo htmlspecialchars($lanche['ingredientes']); ?></p>
                             <span>R$ <?php echo number_format((float) $lanche['preco'], 2, ',', '.'); ?></span>
+                            <div class="mt-2">
+                                <a href="lanches.php?id=<?php echo $lanche['id_lanches']; ?>" class="btn btn-info">Saiba
+                                    Mais</a>
+                            </div>
                         </div>
                         <?php
                     }
@@ -100,6 +104,7 @@ include("conexao.php");
                 }
                 ?>
             </div>
+
         </section>
 
 

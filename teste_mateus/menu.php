@@ -17,18 +17,33 @@
                 <li class="nav-item">
                     <a class="nav-link text-white" href="index.php">Página Inicial</a>
                 </li>
+                <?php if (isset($_SESSION['id_cliente'])): ?>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="area_cliente.php">Area Cliente</a>
+                    </li>
+                <?php elseif (isset($_SESSION['id_funcionario'])): ?>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="area_funcionarios.php">Area Funcionario</a>
+                    </li>
+                <?php endif; ?>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="deslog_lanches.php">Lanches</a>
+                    <a class="nav-link text-white" href="lanches.php">Lanches</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="deslog_bebidas">Bebidas</a>
+                    <a class="nav-link text-white" href="">Bebidas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="deslog_sobremesas">Sobremesas</a>
+                    <a class="nav-link text-white" href="">Sobremesas</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="lanches.php">Pedidos</a>
-                </li>
+                <?php if (isset($_SESSION['id_cliente'])): ?>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="pedidos_cliente.php">Pedidos</a>
+                    </li>
+                <?php elseif (isset($_SESSION['id_funcionario'])): ?>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="pedidos_funcionario.php">Pedidos</a>
+                    </li>
+                <?php endif; ?>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="#">Sobre Nós</a>
                 </li>

@@ -25,6 +25,7 @@ if (isset($_GET["id_alterar"])) {
         $nome = $_POST["nome"];
         $ingredientes = $_POST["ingredientes"];
         $preco = floatval($_POST["preco"]);
+        $quantidade = intval($_POST["quantidade"]); // Nova linha para quantidade
         $caminhoFinal = $row["foto"];
 
         if (isset($_FILES["foto"]) && $_FILES["foto"]["error"] == 0) {
@@ -52,8 +53,9 @@ if (isset($_GET["id_alterar"])) {
             }
         }
 
-        $stmt = $mysqli->prepare("UPDATE lanches SET nome = ?, ingredientes = ?, preco = ?, foto = ? WHERE id_lanches = ?");
-        $stmt->bind_param("ssssi", $nome, $ingredientes, $preco, $caminhoFinal, $id_alterar);
+        // Atualiza também a quantidade na tabela
+        $stmt = $mysqli->prepare("UPDATE lanches SET nome = ?, ingredientes = ?, preco = ?, quantidade = ?, foto = ? WHERE id_lanches = ?");
+        $stmt->bind_param("sssisi", $nome, $ingredientes, $preco, $quantidade, $caminhoFinal, $id_alterar);
 
         if ($stmt->execute()) {
             $stmt->close();
@@ -67,7 +69,6 @@ if (isset($_GET["id_alterar"])) {
     die("ID não encontrado na URL.");
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -110,6 +111,11 @@ if (isset($_GET["id_alterar"])) {
             <label>
                 <input required="" value="<?php echo $row["preco"] ?>" class="input" name="preco">
                 <span>Preço:</span>
+            </label>
+            
+            <label>
+                <input required="" value="<?php echo $row["quantidade"] ?>" class="input" name="quantidade" type="number" min="0">
+                <span>Quantidade:</span>
             </label>
 
             <label>
