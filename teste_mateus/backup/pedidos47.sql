@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 30-Set-2024 às 17:38
+-- Tempo de geração: 30-Set-2024 às 20:21
 -- Versão do servidor: 5.7.36
 -- versão do PHP: 7.4.26
 
@@ -38,19 +38,14 @@ CREATE TABLE IF NOT EXISTS `bebidas` (
   `quantidade` int(11) NOT NULL,
   `foto` varchar(300) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `bebidas`
 --
 
 INSERT INTO `bebidas` (`id`, `nome`, `tipo`, `preco`, `quantidade`, `foto`) VALUES
-(1, 'Suco de Laranja', 'Suco no copo', '2.99', 20, 'receber/66f46256722a0.png'),
-(2, 'Guarana Jesus', 'Lata', '5.00', 30, 'receber/66f1aec1a37c9.jpg'),
-(3, 'Del vale', 'Garafinha de suco ', '5.00', 20, 'receber/66f1b0ee41751.jpg'),
-(4, 'CafÃ©', 'Copo descartavel ', '1.00', 50, 'receber/66f1b15815108.png'),
-(5, 'Pepsi', 'Lata', '5.00', 20, 'receber/66f1b1bdb6fa7.png'),
-(6, 'Coca Cola', 'Lata', '5.00', 20, 'receber/66f1b1e03b8dd.png');
+(1, 'roberto', 'asd', '12.00', 1, 'Lanches/bebidas/66fb07001bf43.jpg');
 
 -- --------------------------------------------------------
 
@@ -162,7 +157,7 @@ CREATE TABLE IF NOT EXISTS `itens_pedido` (
   KEY `fk_lanches` (`id_lanches`),
   KEY `fk_bebidas` (`id`),
   KEY `fk_sobremesa` (`id_sobremesa`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `itens_pedido`
@@ -170,7 +165,8 @@ CREATE TABLE IF NOT EXISTS `itens_pedido` (
 
 INSERT INTO `itens_pedido` (`id_item_pedido`, `id_pedido`, `id_lanches`, `id`, `id_sobremesa`, `quantidade`) VALUES
 (1, 1, 1, NULL, NULL, 1),
-(2, 2, 1, NULL, NULL, 8);
+(2, 2, 1, NULL, NULL, 8),
+(3, 3, 1, NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -194,7 +190,7 @@ CREATE TABLE IF NOT EXISTS `lanches` (
 --
 
 INSERT INTO `lanches` (`id_lanches`, `nome`, `ingredientes`, `preco`, `quantidade`, `foto`) VALUES
-(1, 'SanduÃ­che', 'PÃ£o, Alface, Presunto, Tomate', '123', 10, 'Lanches/img/66f8426e0dd7b.jpg'),
+(1, 'SanduÃ­che', 'PÃ£o, Alface, Presunto, Tomate', '123', 9, 'Lanches/img/66f8426e0dd7b.jpg'),
 (2, 'Claudio', 'Ã“leo', '2', 10, 'Lanches/img/66f84302cbdf3.jpg'),
 (3, 'Hamburguer', '6', '20', 10, 'Lanches/img/66f8435124fce.jpg');
 
@@ -213,14 +209,15 @@ CREATE TABLE IF NOT EXISTS `pedidos` (
   `status` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_pedido`),
   KEY `fk_clientes` (`id_clientes`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `pedidos`
 --
 
 INSERT INTO `pedidos` (`id_pedido`, `id_clientes`, `nome_funcionario`, `data_pedido`, `status`) VALUES
-(1, 7, 'Mateus Vinicius', '2024-09-30', 'Pedido ConcluÃ­do');
+(1, 7, 'Mateus Vinicius', '2024-09-30', 'Pedido ConcluÃ­do'),
+(3, NULL, 'Mateus', '2024-09-30', 'Aguardando Pagamento');
 
 -- --------------------------------------------------------
 
