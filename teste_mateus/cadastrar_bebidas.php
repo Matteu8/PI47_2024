@@ -25,7 +25,7 @@ if (isset($_POST['nome'])) {
         }
 
         // Verifique a extensão do arquivo
-        $extensoesPermitidas = array('jpeg', 'jpg', 'png', 'gif','jfif');
+        $extensoesPermitidas = array('jpeg', 'jpg', 'png', 'gif', 'jfif');
         $extensaoArquivo = strtolower(pathinfo($_FILES["foto"]["name"], PATHINFO_EXTENSION));
         if (!in_array($extensaoArquivo, $extensoesPermitidas)) {
             die("Tipo de arquivo não suportado.");
@@ -54,6 +54,7 @@ if (isset($_POST['nome'])) {
     if ($mysqli->query($sql) === TRUE) {
         $mensagem = "<div class='alert alert-success' role='alert'> Bebida cadastrada com sucesso!</div>";
         header("Location: consultar_bebidas.php");
+        exit(); // Adicionando exit após o redirecionamento
     } else {
         $mensagem = "<div class='alert alert-danger' role='alert'> Erro ao cadastrar bebida " . $mysqli->error . "</div>";
     }
@@ -83,13 +84,13 @@ if (isset($_POST['nome'])) {
         <form class="form" method="post" enctype="multipart/form-data">
 
             <p class="title">Cadastre sua bebida</p>
-            <p class="message">Preencha abaixo as informação da bebida</p>
+            <p class="message">Preencha abaixo as informações da bebida</p>
             <label>
-                <input required type="text" name="nome" class="input" id="nome" name="nome">
+                <input required type="text" name="nome" class="input" id="nome">
                 <span>Nome:</span>
             </label>
             <label>
-                <input required type="text" name="tipo" class="input" id="tipo" name="tipo">
+                <input required type="text" name="tipo" class="input" id="tipo">
                 <span>Tipo:</span>
             </label>
             <label>
@@ -97,17 +98,17 @@ if (isset($_POST['nome'])) {
                 <span>Quantidade:</span>
             </label>
             <label>
-                <input type="number" name="preco" class="input" id="preco" name="preco">
+                <input required type="number" name="preco" class="input" id="preco">
                 <span>Preço:</span>
             </label>
             <label>
                 <span>Foto: </span>
-                <input type="file" class="form-control" name="foto">
+                <input type="file" class="form-control" name="foto" required>
             </label>
             <?php if (isset($mensagem)) {
                 echo $mensagem;
             } ?>
-            <button type="submit" class="submit">Atualizar</button>
+            <button type="submit" class="submit">Cadastrar</button>
             <a class="btn btn-primary d-flex justify-content-center" href="area_funcionarios.php">Voltar</a>
         </form>
     </div>
