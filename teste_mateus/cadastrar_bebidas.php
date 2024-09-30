@@ -1,9 +1,6 @@
 <?php
-require("conexao.php");
-
-
-
-
+include("conexao.php");
+require("protecao.php");
 
 if (isset($_POST['nome'])) {
     // Coletando os dados do formulário
@@ -28,7 +25,7 @@ if (isset($_POST['nome'])) {
         }
 
         // Verifique a extensão do arquivo
-        $extensoesPermitidas = array('jpeg', 'jpg', 'png', 'gif');
+        $extensoesPermitidas = array('jpeg', 'jpg', 'png', 'gif','jfif');
         $extensaoArquivo = strtolower(pathinfo($_FILES["foto"]["name"], PATHINFO_EXTENSION));
         if (!in_array($extensaoArquivo, $extensoesPermitidas)) {
             die("Tipo de arquivo não suportado.");
@@ -40,7 +37,7 @@ if (isset($_POST['nome'])) {
         }
 
         // Defina o local para salvar a imagem
-        $diretorioUpload = "receber/";
+        $diretorioUpload = "Lanches/bebidas/";
         $novoNomeArquivo = uniqid() . "." . $extensaoArquivo;
         $caminhoFinal = $diretorioUpload . $novoNomeArquivo;
 
@@ -68,51 +65,54 @@ if (isset($_POST['nome'])) {
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Bebidas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="dieimes.css">
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="gabriell.css">
 </head>
+
 <body>
     <?php include("menu.php"); ?>
     <h1 class="text-center" style="background-color: #FFA500; color: white;">Cadastrar Bebidas</h1>
-    <div class="container d-flex justify-content-center mt-5"></div>
-    
-    <div class="container d-flex justify-content-center">    
+    <div class="container d-flex justify-content-center">
         <form class="form" method="post" enctype="multipart/form-data">
-            
-        <p class="title">Cadastre sua bebida</p>
+
+            <p class="title">Cadastre sua bebida</p>
             <p class="message">Preencha abaixo as informação da bebida</p>
             <label>
-                    <input required type="text" name="nome" class="input" id="nome" name="nome" >
-                    <span>Nome:</span>
+                <input required type="text" name="nome" class="input" id="nome" name="nome">
+                <span>Nome:</span>
             </label>
             <label>
-                    <input required type="text" name="tipo" class="input" id="tipo" name="tipo">
-                    <span>Tipo:</span>
+                <input required type="text" name="tipo" class="input" id="tipo" name="tipo">
+                <span>Tipo:</span>
             </label>
             <label>
                 <input required name="quantidade" class="input" type="number" id="quantidade">
                 <span>Quantidade:</span>
             </label>
             <label>
-                <input  type="number" name="preco" class="input" id="preco" name="preco" step="0.01">
+                <input type="number" name="preco" class="input" id="preco" name="preco">
                 <span>Preço:</span>
             </label>
             <label>
+                <span>Foto: </span>
                 <input type="file" class="form-control" name="foto">
             </label>
-            <?php if (isset($mensagem)) { echo $mensagem; } ?>
+            <?php if (isset($mensagem)) {
+                echo $mensagem;
+            } ?>
             <button type="submit" class="submit">Atualizar</button>
+            <a class="btn btn-primary d-flex justify-content-center" href="area_funcionarios.php">Voltar</a>
         </form>
-        </div>
-    </div>
     </div>
 
     <?php include("rodape.php"); ?>
 </body>
+
 </html>

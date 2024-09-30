@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <h1>Cadastro de Lanches</h1>
     </header>
 
-    <div class="mt-5 d-flex justify-content-center">
+    <div class="mt-3 d-flex justify-content-center">
         <form class="form" method="post" enctype="multipart/form-data">
             <p class="title">Lanches</p>
 
@@ -106,14 +106,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <img id="imagePreview" src="#" alt="Sua imagem" style="display:none; width: 200px;" />
 
-            <button class="submit btn btn-primary mt-3">Cadastrar</button>
-            <input class="btn btn-danger" type="reset" value="Redefinir">
-            <div class="container text-center mb-5">
-                <button class="btn btn-primary">
-                    <a href="<?php echo isset($voltar_url) ? $voltar_url : 'login.php'; ?>"
-                        style="text-decoration: none; color: white;">Voltar</a>
-                </button>
-            </div>
+            <button class="submit btn btn-primary">Cadastrar</button>
+            <a class="btn btn-primary d-flex justify-content-center" href="area_funcionarios.php">Voltar</a>
         </form>
     </div>
 
@@ -131,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         });
     </script>
-
+<?php include("rodape.php") ?>
 </body>
 
 </html>

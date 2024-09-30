@@ -1,7 +1,11 @@
 <?php
 include("conexao.php");
 
-
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['truncate_bebidas'])) {
+    $mysqli->query("TRUNCATE TABLE bebidas") or die($mysqli->error);
+    header("Location: " . $_SERVER['PHP_SELF']); // Redireciona após esvaziar
+    exit();
+}
 
 $consultar_banco = "SELECT * FROM bebidas";
 $retorno_consulta = $mysqli->query($consultar_banco) or die($mysqli->error);
@@ -10,8 +14,9 @@ $qntd = $retorno_consulta->num_rows; // Retornar quantidade de linhas
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-    <meta charset="UTF-8"> <!-- Certifica-se de que a página HTML usa UTF-8 -->
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../../img/logo2.png">
@@ -100,50 +105,53 @@ $qntd = $retorno_consulta->num_rows; // Retornar quantidade de linhas
             border-radius: 50%;
         }
     </style>
-    
     <link rel="stylesheet" href="dieimes.css">
 </head>
 
 <body>
-<?php include "menu.php"; ?>
-<div class="container">
-    <div class="especialidade">
-        <?php ?>
-        
-        <h1>Lista - Bebidas<div class="back-button">
-        <a class="btn btn-primary" href="cadastrar_funcionario.php">Voltar</a>
-    </div></h1>
+    <?php include "menu.php"; ?>
+    <div class="container">
+        <div class="especialidade">
+            <h1>Lista - Bebidas</h1>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Tipos</th>
+                    <th>Preço</th>
+                    <th>Foto</th>
+                    <th>Alterar</th>
+                    <th>Deletar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($bebidas = $retorno_consulta->fetch_assoc()) { ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($bebidas['nome'], ENT_QUOTES, 'UTF-8'); ?></td>
+                        <td><?php echo htmlspecialchars($bebidas["tipo"], ENT_QUOTES, 'UTF-8'); ?></td>
+                        <td><?php echo htmlspecialchars($bebidas['preco'], ENT_QUOTES, 'UTF-8'); ?></td>
+                        <td><img src="<?php echo htmlspecialchars($bebidas['foto'], ENT_QUOTES, 'UTF-8'); ?>" class="img-thumbnail"></td>
+                        <td><a class="btn btn-primary" href="editar_bebidas.php?id_alterar=<?php echo $bebidas['id']; ?>">Alterar</a></td>
+                        <td><a class="btn btn-danger" href="deletar_bebidas.php?id_deletar=<?php echo $bebidas['id']; ?>">Deletar</a></td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+
+        <!-- Botão para esvaziar a tabela de bebidas -->
+        <form method="post" class="text-center mt-3"
+              onsubmit="return confirm('Você tem certeza que deseja esvaziar a tabela de bebidas?');">
+            <button type="submit" name="truncate_bebidas" class="btn btn-warning">Esvaziar Tabela Bebidas</button>
+        </form>
+
+        <div class="back-button">
+            <a class="btn btn-primary" href="area_funcionarios.php">Voltar</a>
+        </div>
     </div>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Tipos</th>
-                <th>Preço</th>
-                <th>Foto</th>
-                <th>Alterar</th>
-                <th>Deletar</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php while ($bebidas = $retorno_consulta->fetch_assoc()) { ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($bebidas['nome'], ENT_QUOTES, 'UTF-8'); ?></td>
-                    <td><?php echo htmlspecialchars($bebidas["tipo"], ENT_QUOTES, 'UTF-8'); ?></td>
-                    <td><?php echo htmlspecialchars($bebidas['preco'], ENT_QUOTES, 'UTF-8'); ?></td>
-                    <td><img src="<?php echo htmlspecialchars($bebidas['foto'], ENT_QUOTES, 'UTF-8'); ?>" class="img-thumbnail"></td>
-                    <td><a class="btn btn-primary" href="editar_bebidas.php?id_alterar=<?php echo $bebidas['id']; ?>">Alterar</a></td>
-                    <td><a class="btn btn-danger" href="deletar_bebidas.php?id_deletar=<?php echo $bebidas['id']; ?>">Deletar</a></td>
-                </tr>
-            <?php } ?>
-        </tbody>    
-    </table>
-
-    
-</div>
-
-    
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

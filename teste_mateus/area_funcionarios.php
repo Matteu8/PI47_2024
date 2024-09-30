@@ -37,18 +37,17 @@ if (!isset($_SESSION)) {
             <a href="cadastro_do_funcionario.php" class="list-group-item list-group-item-action ">Cadastrar
                 Funcionário</a>
             <a href="cadastro_lanche.php" class="list-group-item list-group-item-action">Cadastrar Lanches</a>
+            <a href="cadastrar_bebidas.php" class="list-group-item list-group-item-action">Cadastrar Bebidas</a>
+            <a href="cadastro_lanche.php" class="list-group-item list-group-item-action">Cadastrar Sobremesas</a>
             <a href="lista_lanches.php" class="list-group-item list-group-item-action">Lista Lanches</a>
+            <a href="consultar_bebidas.php" class="list-group-item list-group-item-action">Lista Bebidas</a>
+            <a href="lista_lanches.php" class="list-group-item list-group-item-action">Lista Sobremesas</a>
             <a href="feedback_funcionario.php" class="list-group-item list-group-item-action">Visualizar Feedback</a>
             <a href="sair.php" class="list-group-item list-group-item-action ">Sair</a>
         </div>
     </div>
-    <br><br><br><br>
-    <footer class="text-center mt-4">
-        <div class="social-icons">
-            <a href="Sobre Nós">Sobre Nós</a>
-        </div>
-        <p>&copy; 2024 Senac-PR. Todos os direitos reservados.</p>
-    </footer>
+    <br><br><br><br><br><br><br>
+    <?php include("rodape.php") ?>
 </body>
 
 </html>
