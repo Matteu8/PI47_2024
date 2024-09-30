@@ -5,97 +5,126 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-if (isset($_SESSION["id_cliente"]) && isset($_GET['id_pedido'])) {
-    $id_pedido = $_GET['id_pedido'];
+if (!isset($_SESSION["id_cliente"])) {
+    die("Acesso negado. Você precisa estar logado para visualizar seus pedidos.");
+}
 
-    $stmt = $mysqli->prepare("SELECT * FROM pedidos WHERE id_pedido = ? AND id_cliente = ?");
-    $stmt->bind_param("ii", $id_pedido, $_SESSION['id_cliente']);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows === 0) {
-        die("Pedido não encontrado.");
+if (isset($_GET["id_pedido"])) {
+    $id_pedido = $_GET["id_pedido"];
+    
+    $stmt = $mysqli->prepare("SELECT id_pedido, data_pedido, status FROM pedidos WHERE id_pedido = ? AND id_clientes = ?");
+    $stmt->bind_param("ii", $id_pedido, $_SESSION["id_cliente"]);
+    
+    if (!$stmt->execute()) {
+        die("Erro ao executar consulta: " . $stmt->error);
     }
 
+    $result = $stmt->get_result();
     $pedido = $result->fetch_assoc();
 
-    if (isset($_POST['atualizar_pedido'])) {
-        $quantidade = (int) $_POST['quantidade'];
-        $valor_unitario = (float) str_replace(',', '.', $_POST['valor_unitario']);
+    if (!$pedido) {
+        die("Nenhum pedido encontrado com o ID: " . $id_pedido);
+    }
 
-        $total = $valor_unitario * $quantidade;
+    // Obter itens do pedido
+    $stmt_itens = $mysqli->prepare("SELECT id_item_pedido, id_lanches, quantidade FROM itens_pedido WHERE id_pedido = ?");
+    $stmt_itens->bind_param("i", $id_pedido);
+    $stmt_itens->execute();
+    $result_itens = $stmt_itens->get_result();
+    $itens = $result_itens->fetch_all(MYSQLI_ASSOC);
+} else {
+    die("ID do pedido não encontrado na URL.");
+}
 
-        $stmt = $mysqli->prepare("UPDATE pedidos SET quantidade = ?, total = ? WHERE id_pedido = ? AND id_cliente = ?");
-        $stmt->bind_param("idii", $quantidade, $total, $id_pedido, $_SESSION['id_cliente']);
+// Processar a atualização do pedido
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nova_quantidade = intval($_POST['quantidade']); // Pegamos a quantidade total
 
-        if ($stmt->execute()) {
-            echo "<script>alert('Pedido atualizado com sucesso.');</script>";
-            header("Location: pedidos_cliente.php");
-            exit();
-        } else {
-            echo "<script>alert('Erro ao atualizar o pedido. Tente novamente.');</script>";
+    foreach ($itens as $item) {
+        $quantidade_atual = intval($item['quantidade']);
+        $id_lanches = $item['id_lanches'];
+
+        // Atualizar a quantidade no itens_pedido
+        $stmt_update = $mysqli->prepare("UPDATE itens_pedido SET quantidade = ? WHERE id_item_pedido = ?");
+        $stmt_update->bind_param("ii", $nova_quantidade, $item['id_item_pedido']);
+        $stmt_update->execute();
+
+        // Calcular a diferença e atualizar a tabela lanches
+        $diferenca = $nova_quantidade - $quantidade_atual;
+
+        if ($diferenca > 0) {
+            // Se a quantidade aumentou, subtrair da tabela lanches
+            $stmt_lanches = $mysqli->prepare("UPDATE lanches SET quantidade = quantidade - ? WHERE id_lanches = ?");
+            $stmt_lanches->bind_param("ii", $diferenca, $id_lanches);
+            $stmt_lanches->execute();
+        } elseif ($diferenca < 0) {
+            // Se a quantidade diminuiu, somar na tabela lanches
+            $diferenca_abs = abs($diferenca);
+            $stmt_lanches = $mysqli->prepare("UPDATE lanches SET quantidade = quantidade + ? WHERE id_lanches = ?");
+            $stmt_lanches->bind_param("ii", $diferenca_abs, $id_lanches);
+            $stmt_lanches->execute();
         }
     }
-} else {
-    die("Acesso negado. Você precisa estar logado.");
+
+    // Redirecionar ou exibir mensagem de sucesso
+    echo "<script>alert('Pedido atualizado com sucesso.'); window.location.href='pedidos_cliente.php';</script>";
+    exit();
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alterar Pedido</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="gabriell.css">
 </head>
-
 <body>
-    <div class="row" style="background-color:#3a6da1;">
-        <div class="col-md-12">
-            <a href="">
-                <img src="img/topo_site_bl1_2018.png" class="img-fluid" alt="Logo">
-            </a>
-        </div>
-    </div>
+    <?php include("menu.php") ?>
     <div class="container mt-4">
-        <h1 class="text-center" style="background-color: orange; color: white;">Alterar Pedido</h1>
+        <h1 class="text-center">Alterar Pedido</h1>
         <form method="post">
+            <input type="hidden" name="id_pedido" value="<?php echo htmlspecialchars($pedido['id_pedido']); ?>">
             <div class="mb-3">
-                <label class="form-label" for="produto">Produto</label>
-                <input type="text" class="form-control" id="produto" name="produto"
-                    value="<?php echo htmlspecialchars($pedido['produto']); ?>" readonly>
+                <label for="data_pedido" class="form-label">Data do Pedido</label>
+                <input type="text" class="form-control" id="data_pedido" value="<?php echo date("d/m/Y", strtotime($pedido['data_pedido'])); ?>" readonly>
             </div>
             <div class="mb-3">
-                <label class="form-label" for="valor_unitario">Valor Unitário</label>
-                <input type="text" class="form-control" id="valor_unitario" name="valor_unitario"
-                    value="<?php echo number_format($pedido['total'] / $pedido['quantidade'], 2, ',', '.'); ?>"
-                    readonly>
+                <label for="status" class="form-label">Status</label>
+                <input type="text" class="form-control" id="status" value="<?php echo htmlspecialchars($pedido['status']); ?>" readonly>
             </div>
+            
+            <!-- Campo para quantidade total -->
             <div class="mb-3">
-                <label class="form-label" for="quantidade">Quantidade</label>
-                <input type="number" class="form-control" id="quantidade" name="quantidade"
-                    value="<?php echo htmlspecialchars($pedido['quantidade']); ?>" required>
+                <label class="form-label">Quantidade Total</label>
+                <input type="number" class="form-control" name="quantidade" value="<?php echo htmlspecialchars($itens[0]['quantidade']); ?>" min="1" required>
             </div>
-            <div class="mb-3">
-                <label class="form-label" for="total">Valor Total</label>
-                <input type="text" class="form-control" id="total" name="total"
-                    value="<?php echo number_format($pedido['total'], 2, ',', '.'); ?>" readonly>
-            </div>
-            <button type="submit" name="atualizar_pedido" class="btn btn-primary">Atualizar Pedido</button>
-            <a href="pedidos_cliente.php" class="btn btn-warning">Voltar</a>
+
+            <?php foreach ($itens as $item): ?>
+                <?php
+                $stmt_produto = $mysqli->prepare("SELECT nome, preco FROM lanches WHERE id_lanches = ?");
+                $stmt_produto->bind_param("i", $item['id_lanches']);
+                $stmt_produto->execute();
+                $resultado_produto = $stmt_produto->get_result();
+                $produto = $resultado_produto->fetch_assoc();
+                ?>
+                <div class="mb-3">
+                    <label class="form-label">Produto</label>
+                    <input type="text" class="form-control" value="<?php echo htmlspecialchars($produto['nome']); ?>" readonly>
+                </div>
+                <div class="mb-3">
+                    <label hidden class="form-label">Preço</label>
+                    <input hidden type="text" class="form-control" value="R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?>" readonly>
+                </div>
+                <div class="mb-3">
+                    <label hidden class="form-label">Valor Total</label>
+                    <input type="text" class="form-control" value="R$ <?php echo number_format($produto['preco'] * $item['quantidade'], 2, ',', '.'); ?>" hidden readonly>
+                </div>
+            <?php endforeach; ?>
+            <button type="submit" class="btn btn-primary">Alterar</button>
+            <a href="pedidos_cliente.php" class="btn btn-secondary">Voltar</a>
         </form>
     </div>
-
-    <footer class="text-center mt-4 d-none d-md-block">
-        <div class="footer-links">
-            <a href="#sobre">Sobre Nós</a>
-        </div>
-        <p>&copy; 2024 Senac-PR. Todos os direitos reservados.</p>
-    </footer>
 </body>
-
 </html>

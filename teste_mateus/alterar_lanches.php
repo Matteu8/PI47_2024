@@ -1,65 +1,70 @@
 <?php
-require("conexao.php");
+include("conexao.php");
+require("protecao.php");
+
+if ($mysqli->connect_error) {
+    die("Conexão falhou: " . $mysqli->connect_error);
+}
 
 if (isset($_GET["id_alterar"])) {
     $id_alterar = $_GET["id_alterar"];
-
-    // Busca os dados atuais
     $stmt = $mysqli->prepare("SELECT * FROM lanches WHERE id_lanches = ?");
     $stmt->bind_param("i", $id_alterar);
-    $stmt->execute();
+    
+    if (!$stmt->execute()) {
+        die("Erro ao executar consulta: " . $stmt->error);
+    }
+
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
+
+    if (!$row) {
+        die("Nenhum lanche encontrado com o ID: " . $id_alterar);
+    }
 
     if (isset($_POST["nome"])) {
         $nome = $_POST["nome"];
         $ingredientes = $_POST["ingredientes"];
-        $preco = $_POST["preco"];
-        $caminhoFinal = $row["foto"]; // Mantém o valor atual da foto
+        $preco = floatval($_POST["preco"]);
+        $quantidade = intval($_POST["quantidade"]); // Nova linha para quantidade
+        $caminhoFinal = $row["foto"];
 
         if (isset($_FILES["foto"]) && $_FILES["foto"]["error"] == 0) {
-            // Verifica se o arquivo é uma imagem
             $check = getimagesize($_FILES["foto"]["tmp_name"]);
             if ($check === false) {
                 die("O arquivo não é uma imagem.");
             }
 
-            // Verifica a extensão do arquivo
             $extensoesPermitidas = ['jpeg', 'jpg', 'png', 'gif', 'jfif'];
             $extensaoArquivo = strtolower(pathinfo($_FILES["foto"]["name"], PATHINFO_EXTENSION));
             if (!in_array($extensaoArquivo, $extensoesPermitidas)) {
                 die("Tipo de arquivo não suportado.");
             }
 
-            // Verifica o tamanho do arquivo
             if ($_FILES["foto"]["size"] > 5000000) {
                 die("Arquivo muito grande! Max: 5MB");
             }
 
-            // Define o local para salvar a imagem
             $diretorioUpload = "Lanches/img";
             $novoNomeArquivo = uniqid() . "." . $extensaoArquivo;
-            $caminhoFinal = $diretorioUpload . "/" . $novoNomeArquivo; // Corrigido
+            $caminhoFinal = $diretorioUpload . "/" . $novoNomeArquivo;
 
-            // Move o arquivo temporário para o diretório final
             if (!move_uploaded_file($_FILES["foto"]["tmp_name"], $caminhoFinal)) {
-                die("Ocorreu um erro ao fazer o upload da imagem.");
+                die("Ocorreu um erro ao fazer o upload da imagem: " . $_FILES["foto"]["error"]);
             }
         }
 
-        // Atualiza os dados no banco de dados
-        $stmt = $mysqli->prepare("UPDATE lanches SET nome = ?, ingredientes = ?, preco = ?, foto = ? WHERE id_lanches = ?");
-        $stmt->bind_param("ssssi", $nome, $ingredientes, $preco, $caminhoFinal, $id_alterar); // Corrigido
+        // Atualiza também a quantidade na tabela
+        $stmt = $mysqli->prepare("UPDATE lanches SET nome = ?, ingredientes = ?, preco = ?, quantidade = ?, foto = ? WHERE id_lanches = ?");
+        $stmt->bind_param("sssisi", $nome, $ingredientes, $preco, $quantidade, $caminhoFinal, $id_alterar);
 
         if ($stmt->execute()) {
+            $stmt->close();
             header("Location: lista_lanches.php");
             exit();
         } else {
             die("Erro ao atualizar: " . $stmt->error);
         }
-
-        $stmt->close();
-
     }
 } else {
     die("ID não encontrado na URL.");
@@ -82,11 +87,7 @@ if (isset($_GET["id_alterar"])) {
 </head>
 
 <body>
-    <div class="row visible-md visible-lg" style="background-color:#3a6da1;">
-        <div class="col-md-5" style="background-color:#3a6da1; margin-right:0px; margin-left:0px">
-            <a href="/principal/"><img src="topo_site_bl1_2018.png" class="img img-responsive"></a>
-        </div>
-    </div>
+    <?php include("menu.php") ?>
     <header>
         <h1>Alterar Lanches</h1>
     </header>
@@ -113,6 +114,11 @@ if (isset($_GET["id_alterar"])) {
                 <input required="" value="<?php echo $row["preco"] ?>" class="input" name="preco">
                 <span>Preço:</span>
             </label>
+            
+            <label>
+                <input required="" value="<?php echo $row["quantidade"] ?>" class="input" name="quantidade" type="number" min="0">
+                <span>Quantidade:</span>
+            </label>
 
             <label>
                 <input type="file" class="form-control" name="foto">
@@ -122,12 +128,6 @@ if (isset($_GET["id_alterar"])) {
         </form>
     </div>
 
-    <footer>
-        <div class="footer-links">
-            <a href="#sobre">Sobre Nós</a>
-        </div>
-        <p>&copy; 2024 Sua Empresa. Todos os direitos reservados.</p>
-    </footer>
 </body>
 
 </html>

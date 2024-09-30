@@ -1,3 +1,8 @@
+<?php
+include("conexao.php");
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -5,12 +10,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página - Inicial</title>
-    
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="gabriell.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -68,23 +74,39 @@
 </head>
 
 <body>
-    
+    <?php
+    include("menu.php");
+    ?>
     <main>
         <section id="lanches">
             <h2>Lanches</h2>
-            <div class="card">
-                <img src="img/lanche.jfif" alt="Lanche 1">
-                <h3>Hambúrguer Clássico</h3>
-                <p>Delicioso hambúrguer com queijo, alface e tomate.</p>
-                <span>R$ 15,00</span>
+            <div class="row">
+                <?php
+                $resultado = $mysqli->query("SELECT * FROM lanches");
+                if ($resultado && $resultado->num_rows > 0) {
+                    while ($lanche = $resultado->fetch_assoc()) {
+                        ?>
+                        <div class="card col-md-4 mb-4">
+                            <img src="<?php echo htmlspecialchars($lanche['foto']); ?>"
+                                alt="<?php echo htmlspecialchars($lanche['nome']); ?>" class="img-fluid">
+                            <h3><?php echo htmlspecialchars($lanche['nome']); ?></h3>
+                            <p><?php echo htmlspecialchars($lanche['ingredientes']); ?></p>
+                            <span>R$ <?php echo number_format((float) $lanche['preco'], 2, ',', '.'); ?></span>
+                            <div class="mt-2">
+                                <a href="lanches.php?id=<?php echo $lanche['id_lanches']; ?>" class="btn btn-info">Saiba
+                                    Mais</a>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                } else {
+                    echo "<p>Nenhum lanche disponível no momento.</p>";
+                }
+                ?>
             </div>
-            <div class="card">
-                <img src="img/lanche.jfif" alt="Lanche 2">
-                <h3>Sanduíche Natural</h3>
-                <p>Sanduíche saudável com peito de frango e verduras.</p>
-                <span>R$ 12,00</span>
-            </div>
+
         </section>
+
 
         <section id="bebidas">
             <h2>Bebidas</h2>
@@ -118,13 +140,7 @@
             </div>
         </section>
     </main>
-
-    <footer class="text-center mt-4">
-        <div class="footer-links">
-            <a href="#sobre">Sobre Nós</a>
-        </div>
-        <p>&copy; 2024 Senac-PR. Todos os direitos reservados.</p>
-    </footer>
+    <?php include("rodape.php"); ?>
 </body>
 
 </html>
