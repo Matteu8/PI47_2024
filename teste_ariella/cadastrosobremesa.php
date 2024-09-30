@@ -4,7 +4,7 @@ require("conexao.php");
 if (isset($_POST["bt_nome"])) {
     $nome = $_POST["bt_nome"];
     $ingredientes = $_POST["bt_ingredientes"];
-    $quantidades = $_POST["bt_quantidades"];
+    $quantidade = $_POST["bt_quantidade"];
     $preco = $_POST["bt_preco"];
     
     if (isset($_FILES["foto"]) && $_FILES["foto"]["error"] == 0) {
@@ -23,7 +23,7 @@ if (isset($_POST["bt_nome"])) {
 
         // Verifique o tamanho do arquivo (por exemplo, limite de 5MB)
         if ($_FILES["foto"]["size"] > 5000000) {
-            die("Arquivo muito grande!! Max: 5MB");
+            die("Arquivo muito grande! Max: 5MB");
         }
 
         // Defina o local para salvar a imagem
@@ -44,7 +44,7 @@ if (isset($_POST["bt_nome"])) {
 
         // Prepare e execute a inserção no banco de dados
         $stmt = $mysqli->prepare("INSERT INTO sobremesa (nome, ingredientes, preco, quantidade, foto) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssss", $nome, $ingredientes, $preco, $quantidades, $caminhoFinal);
+        $stmt->bind_param("sssss", $nome, $ingredientes, $preco, $quantidade, $caminhoFinal);
 
         if (!$stmt->execute()) {
             die("Erro ao inserir: " . $stmt->error);
@@ -55,47 +55,44 @@ if (isset($_POST["bt_nome"])) {
 
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Bebidas</title>
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="ariella.css">
-
 </head>
 <body>
     <header>
-        <h1>Cadastrar Sobrimesas</h1>
+        <h1>Cadastrar Sobremesas</h1>
     </header>
-    <div class=" mt-5 d-flex justify-content-center">
+    <div class="mt-5 d-flex justify-content-center">
         <form class="form" method="post" enctype="multipart/form-data">
-            <p class="title">Cadastrar Sobrimesas </p>
+            <p class="title">Cadastrar Sobremesas</p>
             <div class="flex">
                 <label>
-                    <input required="" placeholder="" type="text" class="input" name="bt_nome">
-                    <span>Nome </span>
+                    <input required placeholder="" type="text" class="input" name="bt_nome">
+                    <span>Nome</span>
                 </label>
             </div>
             <label>
-                <input required="" placeholder="" type="text" class="input" name="bt_ingredientes">
+                <input required placeholder="" type="text" class="input" name="bt_ingredientes">
                 <span>Ingredientes</span>
             </label>
             <label>
-                <input required="" placeholder="" type="text" class="input" name="bt_ingredientes">
+                <input required placeholder="" type="text" class="input" name="bt_quantidade">
                 <span>Quantidades</span>
             </label>
             <label>
-                <input required="" placeholder="" type="text" class="input" name="bt_preco">
+                <input required placeholder="" type="text" class="input" name="bt_preco">
                 <span>Preço</span>
             </label>
             <label>
-                <input required="" placeholder="" type="file" name="foto">
+                <input required placeholder="" type="file" name="foto">
                 <span>Foto</span>
             </label>     
             <button class="submit">Cadastrar</button>

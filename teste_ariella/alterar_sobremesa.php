@@ -53,12 +53,13 @@ if (isset($_GET["id_alterar"])) {
         
         if ($stmt->execute()) {
             header("Location: consulta_sobremesa.php");
+            $stmt->close();
             exit();
         } else {
             die("Erro ao atualizar: " . $stmt->error);
         }
 
-        $stmt->close();
+       
     }
 } else {
     die("ID não encontrado na URL.");
@@ -106,7 +107,7 @@ if (isset($_GET["id_alterar"])) {
         </label> 
         
         <label>
-            <input required="" placeholder="" type="text" class="input" name="bt_ingredientes">
+            <input required="" placeholder="" type="text" class="input" name="bt_quantidade">
             <span>Quantidades</span>
         </label> 
        
