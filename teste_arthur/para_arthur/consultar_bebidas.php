@@ -105,7 +105,7 @@ $qntd = $retorno_consulta->num_rows; // Retornar quantidade de linhas
 </head>
 
 <body>
-
+<?php include "menu.php"; ?>
 <div class="container">
     <div class="especialidade">
         <?php ?>
@@ -143,6 +143,7 @@ $qntd = $retorno_consulta->num_rows; // Retornar quantidade de linhas
     
 </div>
 
+    
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

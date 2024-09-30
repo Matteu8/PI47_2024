@@ -20,76 +20,76 @@
     <link rel="stylesheet" href="dieimes.css">
 
     <style>
-        body {
-            background-color: #f8f9fa; /* Cor de fundo leve */
-        }
+    body {
+        background-color: #f8f9fa; /* Cor de fundo leve */
+    }
 
-        .container {
-            margin-top: 40px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+    .container {
+        margin-top: 40px;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-        h1 {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-align: center;
-            color: #333;
-        }
+    h1 {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-align: center;
+        color: #333;
+    }
 
-        .row {
-            margin-bottom: 20px;
-        }
+    .row {
+        margin-bottom: 20px;
+    }
 
-        .card {
-            border: none;
-            transition: transform 0.3s;
-        }
+    .card {
+        border: ;
+        transition: transform 0.3s;
+    }
 
-        .card:hover {
-            transform: scale(1.05); /* Efeito de zoom ao passar o mouse */
-        }
+    .card:hover {
+        transform: scale(1.05); /* Efeito de zoom ao passar o mouse */
+    }
 
-        .card-img-top {
-            border-radius: 8px 8px 0 0; /* Bordas arredondadas para a imagem */
-            height: 200px; /* Altura fixa para as imagens */
-            object-fit: cover; /* Cobre o espaço da imagem */
-        }
+    .card-img-top {
+        border-radius: 8px 8px 0 0; /* Bordas arredondadas para a imagem */
+        height: 300px; /* Ajuste a altura conforme desejado */
+        object-fit: cover; /* Cobre o espaço da imagem */
+    }
 
-        .btn-primary {
-            background-color: #007bff;
-            border: none;
-            transition: background-color 0.3s ease;
-        }
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        transition: background-color 0.3s ease;
+    }
 
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
 
-        .btn {
-            border-radius: 5px;
-            padding: 10px 15px;
-            font-size: 14px;
-        }
+    .btn {
+        border-radius: 5px;
+        padding: 10px 15px;
+        font-size: 14px;
+    }
 
-        .img-thumbnail {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-    </style>
+    .img-thumbnail {
+        width: 100px;
+        height: 100px; /* Ajuste a altura se necessário */
+        object-fit: cover;
+        border-radius: 50%;
+    }
+</style>
+
     
 </head>
 
 <body>
+    <?php include "menu.php" ?>
     
+    <h1 class="mt-5">Menu de Bebidas</h1>
     
-    <h1>Menu de Bebidas</h1>
-
     <div class="container">
         <div class="row">
             <?php while ($bebida = $sql_exec->fetch_assoc()) { ?>
@@ -98,7 +98,7 @@
                         <img src="<?php echo htmlspecialchars($bebida['foto']); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($bebida['nome']); ?>">
                         <div class="card-body">
                             <h5 class="card-title"><?php echo htmlspecialchars($bebida['nome']); ?></h5>
-                            <p class="card-text"><?php echo htmlspecialchars($bebida['tipo']); ?></p>
+                            <p class="card-text">Tipo: <?php echo htmlspecialchars($bebida['tipo']); ?></p>
                             <p class="card-text">R$ <?php echo number_format($bebida['preco'], 2, ',', '.'); ?></p>
                             <a href="#" class="btn btn-primary">Ver mais</a>
                         </div>
