@@ -25,13 +25,7 @@ header("Location:login.php");
 </head>
 
 <body>
-    <div class="row" style="background-color:#3a6da1;">
-        <div class="col-md-12">
-            <a href="">
-                <img src="img/topo_site_bl1_2018.png" class="img-fluid" alt="Logo">
-            </a>
-        </div>
-    </div>
+    <?php include("menu.php");?>
 
     <div class="container mt-4">
         <h1>Área do Cliente</h1>
@@ -46,15 +40,7 @@ header("Location:login.php");
             <a href="sair.php" class="list-group-item list-group-item-action ">Sair</a>
         </div>
     </div>
-
-    <footer class="text-center mt-4">
-        <div class="social-icons">
-            <a href="Sobre Nós">Sobre Nós</a>
-        </div>
-        <p>&copy; 2024 Senac-PR. Todos os direitos reservados.</p>
-    </footer>
-
-
+    <?php include("rodape.php"); ?>
 </body>
 
 </html>
