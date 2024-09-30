@@ -1,1 +1,0 @@
-$voltar_url = $_SESSION['tipo_usuario'] == 'cliente' ? "area_cliente.php" : "area_funcionarios.php";

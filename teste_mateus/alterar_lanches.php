@@ -1,5 +1,6 @@
 <?php
-require("conexao.php");
+include("conexao.php");
+require("protecao.php");
 
 if ($mysqli->connect_error) {
     die("Conexão falhou: " . $mysqli->connect_error);
@@ -86,6 +87,7 @@ if (isset($_GET["id_alterar"])) {
 </head>
 
 <body>
+    <?php include("menu.php") ?>
     <header>
         <h1>Alterar Lanches</h1>
     </header>

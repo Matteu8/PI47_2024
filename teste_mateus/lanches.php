@@ -133,6 +133,7 @@ $resultado = $mysqli->query("SELECT * FROM lanches");
             height: 200px;
             object-fit: cover;
         }
+        
     </style>
 </head>
 

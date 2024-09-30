@@ -38,11 +38,11 @@ if (isset($_GET["id_pedido"])) {
 
 // Processar a atualização do pedido
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $quantidades = $_POST['quantidade'];
+    $nova_quantidade = intval($_POST['quantidade']); // Pegamos a quantidade total
 
-    foreach ($itens as $index => $item) {
-        $nova_quantidade = intval($quantidades[$index]);
+    foreach ($itens as $item) {
         $quantidade_atual = intval($item['quantidade']);
+        $id_lanches = $item['id_lanches'];
 
         // Atualizar a quantidade no itens_pedido
         $stmt_update = $mysqli->prepare("UPDATE itens_pedido SET quantidade = ? WHERE id_item_pedido = ?");
@@ -51,7 +51,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Calcular a diferença e atualizar a tabela lanches
         $diferenca = $nova_quantidade - $quantidade_atual;
-        $id_lanches = $item['id_lanches'];
 
         if ($diferenca > 0) {
             // Se a quantidade aumentou, subtrair da tabela lanches
@@ -95,6 +94,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="status" class="form-label">Status</label>
                 <input type="text" class="form-control" id="status" value="<?php echo htmlspecialchars($pedido['status']); ?>" readonly>
             </div>
+            
+            <!-- Campo para quantidade total -->
+            <div class="mb-3">
+                <label class="form-label">Quantidade Total</label>
+                <input type="number" class="form-control" name="quantidade" value="<?php echo htmlspecialchars($itens[0]['quantidade']); ?>" min="1" required>
+            </div>
+
             <?php foreach ($itens as $item): ?>
                 <?php
                 $stmt_produto = $mysqli->prepare("SELECT nome, preco FROM lanches WHERE id_lanches = ?");
@@ -108,16 +114,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="text" class="form-control" value="<?php echo htmlspecialchars($produto['nome']); ?>" readonly>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Quantidade</label>
-                    <input type="number" class="form-control" name="quantidade[]" value="<?php echo htmlspecialchars($item['quantidade']); ?>" min="1" required>
+                    <label hidden class="form-label">Preço</label>
+                    <input hidden type="text" class="form-control" value="R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?>" readonly>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Preço</label>
-                    <input type="text" class="form-control" value="R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?>" readonly>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Valor Total</label>
-                    <input type="text" class="form-control" value="R$ <?php echo number_format($produto['preco'] * $item['quantidade'], 2, ',', '.'); ?>" readonly>
+                    <label hidden class="form-label">Valor Total</label>
+                    <input type="text" class="form-control" value="R$ <?php echo number_format($produto['preco'] * $item['quantidade'], 2, ',', '.'); ?>" hidden readonly>
                 </div>
             <?php endforeach; ?>
             <button type="submit" class="btn btn-primary">Alterar</button>
