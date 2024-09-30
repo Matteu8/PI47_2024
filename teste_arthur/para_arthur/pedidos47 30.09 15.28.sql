@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 23-Set-2024 às 19:06
+-- Tempo de geração: 30-Set-2024 às 18:28
 -- Versão do servidor: 5.7.36
 -- versão do PHP: 7.4.26
 
@@ -38,19 +38,18 @@ CREATE TABLE IF NOT EXISTS `bebidas` (
   `quantidade` int(11) NOT NULL,
   `foto` varchar(300) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `bebidas`
 --
 
 INSERT INTO `bebidas` (`id`, `nome`, `tipo`, `preco`, `quantidade`, `foto`) VALUES
-(1, 'Suco de Laranja', 'Suco no copo', '2.99', 20, 'receber/66f1acf834685.jpg'),
-(2, 'Guarana Jesus', 'Lata', '5.00', 30, 'receber/66f1aec1a37c9.jpg'),
-(3, 'Del vale', 'Garafinha de suco ', '5.00', 20, 'receber/66f1b0ee41751.jpg'),
-(4, 'CafÃ©', 'Copo descartavel ', '1.00', 50, 'receber/66f1b15815108.png'),
-(5, 'Pepsi', 'Lata', '5.00', 20, 'receber/66f1b1bdb6fa7.png'),
-(6, 'Coca Cola', 'Lata', '5.00', 20, 'receber/66f1b1e03b8dd.png');
+(6, 'Suco de Laranja', 'Suco no copo', '2.00', 2, 'receber/66f70ef6e6e79.jpg'),
+(7, 'Coca Cola', 'Latinha', '20.00', 5, 'receber/66f70fd2f331b.png'),
+(8, 'Pepsi', 'Latinha', '30.00', 5, 'receber/66f7100b8f538.png'),
+(9, 'Guarana Jesus', 'Latinha', '10.00', 20, 'receber/66f710b826328.png'),
+(10, 'CafÃ© com Leite', 'Copo descartavel ', '1.50', 15, 'receber/66f71273cd23c.png');
 
 -- --------------------------------------------------------
 
