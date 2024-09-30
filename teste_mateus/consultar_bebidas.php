@@ -22,7 +22,6 @@ $qntd = $retorno_consulta->num_rows; // Retornar quantidade de linhas
     <link rel="icon" href="../../img/logo2.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Lista - Bebidas</title>
-    <link rel="stylesheet" href="gabriell.css">
     <style>
         .container {
             margin-top: 40px;
@@ -151,7 +150,7 @@ $qntd = $retorno_consulta->num_rows; // Retornar quantidade de linhas
             <a class="btn btn-primary" href="area_funcionarios.php">Voltar</a>
         </div>
     </div>
-<?php include("rodape.php") ?>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
