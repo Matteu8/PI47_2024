@@ -43,12 +43,7 @@ if (isset($_POST["nome"])) {
 </head>
 
 <body>
-    <!-- ####################################################################################### -->
-    <div class="row visible-md visible-lg" style="background-color:#3a6da1;">
-        <div class="col-md-5" style="background-color:#3a6da1; margin-right:0px; margin-left:0px">
-            <a href="/principal/"><img src="img/topo_site_bl1_2018.png" class="img img-responsive"></a>
-        </div>
-    </div>
+    <?php include("menu.php") ?>
 
     <header>
         <h1>Cadastro de funcionarios</h1>
@@ -86,12 +81,7 @@ if (isset($_POST["nome"])) {
             <p class="signin"><a href="login.php" style="text-decoration: none;">Voltar</a></p>
         </form>
 
-        <footer class="text-center mt-5">
-            <div class="social-icons">
-                <a href="Sobre Nós">Sobre Nós</a>
-            </div>
-            <p>&copy; 2024 Senac-PR. Todos os direitos reservados.</p>
-        </footer>
+        <?php include("rodape.php") ?>
 </body>
 
 </body>
