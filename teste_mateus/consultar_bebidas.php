@@ -133,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['truncate_bebidas'])) 
             <a class="btn btn-primary" href="area_funcionarios.php">Voltar</a>
         </div>
     </div>
-    <br><br><br><br><br><br><br>
-    <?php include("rodape.php") ?>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
