@@ -30,7 +30,7 @@
                     <a class="nav-link text-white" href="lanches.php">Lanches</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="">Bebidas</a>
+                    <a class="nav-link text-white" href="bebidas.php">Bebidas</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="">Sobremesas</a>

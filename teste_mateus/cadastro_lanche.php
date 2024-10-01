@@ -125,6 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         });
     </script>
+    <br><br><br><br><br><br>
 <?php include("rodape.php") ?>
 </body>
 

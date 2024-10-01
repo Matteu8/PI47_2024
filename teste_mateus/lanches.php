@@ -9,6 +9,18 @@ if (!isset($_SESSION['carrinho'])) {
     $_SESSION['carrinho'] = [];
 }
 
+// Inicializa a variável voltar_url
+$voltar_url = 'login.php'; // URL padrão caso nenhuma condição seja atendida
+
+// Verifica se existe a sessão 'id_cliente'
+if (isset($_SESSION['id_cliente'])) {
+    $voltar_url = 'area_cliente.php'; // Altera para a URL desejada
+}
+// Verifica se existe a sessão 'id_funcionario'
+elseif (isset($_SESSION['id_funcionario'])) {
+    $voltar_url = 'area_funcionarios.php'; // Altera para a URL desejada
+}
+
 // Processa o formulário para adicionar ao carrinho
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['id_lanche'])) {
     $id_lanche = intval($_POST['id_lanche']);
@@ -128,18 +140,18 @@ $resultado = $mysqli->query("SELECT * FROM lanches");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Senac-PR - Lanches</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="gabriell.css">
     <style>
         .img-lanche {
             height: 200px;
             object-fit: cover;
         }
-        
     </style>
 </head>
 
 <body>
     <?php include("menu.php"); ?>
-    <div class="container mt-5">
+    <div class="container mt-3">
 
         <?php if (isset($_SESSION['tipo_usuario'])): ?>
             <h2>Carrinho</h2>
@@ -183,7 +195,7 @@ $resultado = $mysqli->query("SELECT * FROM lanches");
             <?php endif; ?>
         <?php endif; ?>
 
-        <h1 class="text-center mt-5">Lista de Lanches</h1>
+        <h1 class="text-center mt-3">Lista de Lanches</h1>
         <div class="row">
             <?php while ($lanche = $resultado->fetch_assoc()): ?>
                 <div class="col-md-4 mb-4">
@@ -204,8 +216,8 @@ $resultado = $mysqli->query("SELECT * FROM lanches");
                                     <input type="hidden" name="id_lanche" value="<?php echo $lanche['id_lanches']; ?>">
                                     <input type="hidden" name="nome_lanche" value="<?php echo $lanche['nome']; ?>">
                                     <input type="hidden" name="preco_lanche" value="<?php echo $lanche['preco']; ?>">
-                                    <input type="number" name="quantidade" min="1" max="<?php echo $lanche['quantidade']; ?>"
-                                        required value="1"><br>
+                                    <input class="form-control" type="number" name="quantidade" min="1"
+                                        max="<?php echo $lanche['quantidade']; ?>" required value="1"><br>
                                     <button type="submit" class="btn btn-primary mt-2">Adicionar ao Carrinho</button>
                                 </form>
                             <?php else: ?>
@@ -222,8 +234,13 @@ $resultado = $mysqli->query("SELECT * FROM lanches");
                 <a href="<?php echo isset($voltar_url) ? $voltar_url : 'login.php'; ?>"
                     style="text-decoration: none; color: white;">Voltar</a>
             </button>
+            <button class="btn btn-primary ms-3">
+                <a href="bebidas.php" style="text-decoration: none; color: white;">Página de Bebidas</a>
+            </button>
         </div>
     </div>
+    <br><br><br><br><br><br><br>
+    <?php include("rodape.php") ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

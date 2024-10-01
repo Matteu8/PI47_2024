@@ -77,20 +77,55 @@ if (isset($_POST['alterar_pedido'])) {
                                 <?php while ($pedido = $result->fetch_assoc()): ?>
                                     <?php
                                     // Obtenha itens do pedido
-                                    $stmt_itens = $mysqli->prepare("SELECT id_lanches, quantidade FROM itens_pedido WHERE id_pedido = ?");
+                                    $stmt_itens = $mysqli->prepare("SELECT id_lanches, id, id_sobremesa, quantidade FROM itens_pedido WHERE id_pedido = ?");
                                     $stmt_itens->bind_param("i", $pedido['id_pedido']);
                                     $stmt_itens->execute();
                                     $result_itens = $stmt_itens->get_result();
 
                                     while ($item = $result_itens->fetch_assoc()) {
-                                        $stmt_produto = $mysqli->prepare("SELECT nome, preco FROM lanches WHERE id_lanches = ?");
-                                        $stmt_produto->bind_param("i", $item['id_lanches']);
-                                        $stmt_produto->execute();
-                                        $resultado_produto = $stmt_produto->get_result();
-                                        $produto = $resultado_produto->fetch_assoc();
-                                        
-                                        $nome_produto = $produto ? $produto['nome'] : 'Desconhecido';
-                                        $preco_unitario = $produto ? $produto['preco'] : 0;
+                                        // Inicializa variáveis
+                                        $nome_produto = '';
+                                        $preco_unitario = 0;
+
+                                        // Verifica se é um lanche
+                                        if (!empty($item['id_lanches'])) {
+                                            $stmt_produto = $mysqli->prepare("SELECT nome, preco FROM lanches WHERE id_lanches = ?");
+                                            $stmt_produto->bind_param("i", $item['id_lanches']);
+                                            $stmt_produto->execute();
+                                            $resultado_produto = $stmt_produto->get_result();
+                                            $produto = $resultado_produto->fetch_assoc();
+                                            if ($produto) {
+                                                $nome_produto = $produto['nome'];
+                                                $preco_unitario = $produto['preco'];
+                                            }
+                                        }
+
+                                        // Verifica se é uma bebida
+                                        if (!empty($item['id_bebidas'])) {
+                                            $stmt_produto = $mysqli->prepare("SELECT nome, preco FROM bebidas WHERE id_bebidas = ?");
+                                            $stmt_produto->bind_param("i", $item['id_bebidas']);
+                                            $stmt_produto->execute();
+                                            $resultado_produto = $stmt_produto->get_result();
+                                            $produto = $resultado_produto->fetch_assoc();
+                                            if ($produto) {
+                                                $nome_produto = $produto['nome'];
+                                                $preco_unitario = $produto['preco'];
+                                            }
+                                        }
+
+                                        // Verifica se é uma sobremesa
+                                        if (!empty($item['id_sobremesa'])) {
+                                            $stmt_produto = $mysqli->prepare("SELECT nome, preco FROM sobremesa WHERE id_sobremesa = ?");
+                                            $stmt_produto->bind_param("i", $item['id_sobremesa']);
+                                            $stmt_produto->execute();
+                                            $resultado_produto = $stmt_produto->get_result();
+                                            $produto = $resultado_produto->fetch_assoc();
+                                            if ($produto) {
+                                                $nome_produto = $produto['nome'];
+                                                $preco_unitario = $produto['preco'];
+                                            }
+                                        }
+
                                         $valor_total = $preco_unitario * $item['quantidade'];
                                         ?>
                                         <tr>

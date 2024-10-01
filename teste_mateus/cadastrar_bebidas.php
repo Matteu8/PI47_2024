@@ -2,65 +2,51 @@
 include("conexao.php");
 require("protecao.php");
 
-if (isset($_POST['nome'])) {
-    // Coletando os dados do formulário
-    $nome = $_POST['nome'];
-    $tipo = $_POST['tipo'];
-    $preco = $_POST['preco'];
-    $quantidade = $_POST['quantidade'];
-    $foto = $_FILES["foto"];
-    $caminhoFinal = '';
+if ($_SESSION['tipo_usuario'] == 'funcionario') {
+    $voltar_url = "area_funcionarios.php";
+}
 
-    // Converte os dados para UTF-8 antes de inserir no banco
-    $nome = $mysqli->real_escape_string($nome);
-    $tipo = $mysqli->real_escape_string($tipo);
-    $preco = $mysqli->real_escape_string($preco);
-    $quantidade = $mysqli->real_escape_string($quantidade);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $nome = $mysqli->real_escape_string($_POST["nome"]);
+    $tipo = $mysqli->real_escape_string($_POST["tipo"]);
+    $preco = $mysqli->real_escape_string($_POST["preco"]);
+    $quantidade = $mysqli->real_escape_string($_POST["quantidade"]);
 
-    if (isset($_FILES["foto"]) && $_FILES["foto"]["error"] == 0) {
-        // Verifique se o arquivo é uma imagem
-        $check = getimagesize($_FILES["foto"]["tmp_name"]);
-        if ($check === false) {
-            die("O arquivo não é uma imagem.");
-        }
-
-        // Verifique a extensão do arquivo
-        $extensoesPermitidas = array('jpeg', 'jpg', 'png', 'gif', 'jfif');
-        $extensaoArquivo = strtolower(pathinfo($_FILES["foto"]["name"], PATHINFO_EXTENSION));
-        if (!in_array($extensaoArquivo, $extensoesPermitidas)) {
-            die("Tipo de arquivo não suportado.");
-        }
-
-        // Verifique o tamanho do arquivo (limite de 5MB)
-        if ($_FILES["foto"]["size"] > 5000000) {
-            die("Arquivo muito grande! Max: 5MB");
-        }
-
-        // Defina o local para salvar a imagem
-        $diretorioUpload = "Lanches/bebidas/";
-        $novoNomeArquivo = uniqid() . "." . $extensaoArquivo;
-        $caminhoFinal = $diretorioUpload . $novoNomeArquivo;
-
-        // Tente mover o arquivo temporário para o diretório final
-        if (!move_uploaded_file($_FILES["foto"]["tmp_name"], $caminhoFinal)) {
-            die("Ocorreu um erro ao fazer o upload da imagem.");
-        }
-    }
-
-    // Preparando a consulta SQL para inserir os dados
-    $sql = "INSERT INTO bebidas (nome, tipo, preco, quantidade, foto) VALUES ('$nome', '$tipo', '$preco', '$quantidade', '$caminhoFinal')";
-
-    // Executando a consulta
-    if ($mysqli->query($sql) === TRUE) {
-        $mensagem = "<div class='alert alert-success' role='alert'> Bebida cadastrada com sucesso!</div>";
-        header("Location: consultar_bebidas.php");
-        exit(); // Adicionando exit após o redirecionamento
+    if (empty($nome) || empty($tipo) || empty($preco)) {
+        $erro = "Por favor, preencha todos os campos.";
     } else {
-        $mensagem = "<div class='alert alert-danger' role='alert'> Erro ao cadastrar bebida " . $mysqli->error . "</div>";
-    }
+        if (isset($_FILES["foto"]) && $_FILES["foto"]["error"] == 0) {
+            $check = getimagesize($_FILES["foto"]["tmp_name"]);
+            if ($check === false) {
+                $erro = "O arquivo não é uma imagem.";
+            } else {
+                $extensoesPermitidas = array('jpeg', 'jpg', 'png', 'gif', 'jfif');
+                $extensaoArquivo = strtolower(pathinfo($_FILES["foto"]["name"], PATHINFO_EXTENSION));
+                if (!in_array($extensaoArquivo, $extensoesPermitidas)) {
+                    $erro = "Tipo de arquivo não suportado.";
+                } elseif ($_FILES["foto"]["size"] > 5000000) {
+                    $erro = "Arquivo muito grande! Max: 5MB";
+                } else {
+                    $diretorioUpload = "Lanches/bebidas/";
+                    $novoNomeArquivo = uniqid() . "." . $extensaoArquivo;
+                    $caminhoFinal = $diretorioUpload . $novoNomeArquivo;
 
-    // Fechando a conexão
-    $mysqli->close();
+                    if (move_uploaded_file($_FILES["foto"]["tmp_name"], $caminhoFinal)) {
+                        $stmt = $mysqli->prepare("INSERT INTO bebidas (nome, tipo, preco, foto, quantidade) VALUES (?, ?, ?, ?, ?)");
+                        $stmt->bind_param("sssss", $nome, $tipo, $preco, $caminhoFinal, $quantidade);
+                        if ($stmt->execute()) {
+                            $sucesso = "Bebida cadastrada com sucesso!";
+                        } else {
+                            $erro = "Erro ao cadastrar a bebida. Tente novamente.";
+                        }
+                        $stmt->close();
+                    } else {
+                        $erro = "Ocorreu um erro ao fazer o upload da imagem.";
+                    }
+                }
+            }
+        }
+    }
 }
 ?>
 
@@ -72,47 +58,73 @@ if (isset($_POST['nome'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Bebidas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="gabriell.css">
 </head>
 
 <body>
     <?php include("menu.php"); ?>
-    <h1 class="text-center" style="background-color: #FFA500; color: white;">Cadastrar Bebidas</h1>
-    <div class="container d-flex justify-content-center">
-        <form class="form" method="post" enctype="multipart/form-data">
+    <header>
+        <h1>Cadastrar Bebidas</h1>
+    </header>
 
-            <p class="title">Cadastre sua bebida</p>
-            <p class="message">Preencha abaixo as informações da bebida</p>
+    <div class="mt-3 d-flex justify-content-center">
+        <form class="form" method="post" enctype="multipart/form-data">
+            <p class="title">Bebidas</p>
+
+            <?php if (isset($erro)): ?>
+                <div class="alert alert-danger"><?php echo $erro; ?></div>
+            <?php elseif (isset($sucesso)): ?>
+                <div class="alert alert-success"><?php echo $sucesso; ?></div>
+            <?php endif; ?>
+
             <label>
-                <input required type="text" name="nome" class="input" id="nome">
-                <span>Nome:</span>
+                <input required type="text" class="input" name="nome">
+                <span>Nome da Bebida</span>
             </label>
+
             <label>
-                <input required type="text" name="tipo" class="input" id="tipo">
-                <span>Tipo:</span>
+                <input required type="text" class="input" name="tipo">
+                <span>Tipo da Bebida</span>
             </label>
+
             <label>
-                <input required name="quantidade" class="input" type="number" id="quantidade">
-                <span>Quantidade:</span>
+                <input required type="number" step="0.01" class="input" name="preco">
+                <span>Preço</span>
             </label>
+
             <label>
-                <input required type="number" name="preco" class="input" id="preco">
-                <span>Preço:</span>
+                <input required type="number" class="input" name="quantidade">
+                <span>Quantidade</span>
             </label>
+
             <label>
                 <span>Foto: </span>
-                <input type="file" class="form-control" name="foto" required>
+                <input required type="file" class="form-control" name="foto">
             </label>
-            <?php if (isset($mensagem)) {
-                echo $mensagem;
-            } ?>
-            <button type="submit" class="submit">Cadastrar</button>
+
+            <img id="imagePreview" src="#" alt="Sua imagem" style="display:none; width: 200px;" />
+
+            <button class="submit btn btn-primary">Cadastrar</button>
             <a class="btn btn-primary d-flex justify-content-center" href="area_funcionarios.php">Voltar</a>
         </form>
     </div>
 
+    <script>
+        document.querySelector('input[type="file"]').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('imagePreview');
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+    <br><br><br><br><br><br><br>
     <?php include("rodape.php"); ?>
 </body>
 
