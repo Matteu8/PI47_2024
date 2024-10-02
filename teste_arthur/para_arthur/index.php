@@ -86,7 +86,7 @@ $sobremesa_result = $mysqli->query($sobremesa) or die($mysqli->error);
 <body>
     <?php include "menu.php"; ?>
 
-    <h1 class="mt-5">Cardapio</h1>
+    <h1 class="text-center" style="background-color: #FFA500; color: white;">CARDAPIO</h1>
 
     <h1 class="mt-5">Lanches</h1>
     <!-- Lanches -->
