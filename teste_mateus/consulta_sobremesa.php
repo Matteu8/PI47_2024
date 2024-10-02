@@ -1,6 +1,12 @@
 <?php
 include("conexao.php");
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['truncate_sobremesa'])) {
+    $mysqli->query("TRUNCATE TABLE sobremesa") or die($mysqli->error);
+    header("Location: " . $_SERVER['PHP_SELF']); // Redireciona após esvaziar
+    exit();
+}
+
 $consultar_banco = "SELECT * FROM sobremesa";
 $retorno_consulta = $mysqli->query($consultar_banco) or die($mysqli->error);
 $qntd = $retorno_consulta->num_rows; // retornar quantidade de linhas
@@ -8,25 +14,18 @@ $qntd = $retorno_consulta->num_rows; // retornar quantidade de linhas
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../../img/logo2.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Lista - Profissionais</title>
+    <link rel="stylesheet" href="gabriell.css">
     <style>
         body {
             background-color: #f4f7fa;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        .container {
-            margin-top: 40px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .especialidade h1 {
@@ -52,7 +51,8 @@ $qntd = $retorno_consulta->num_rows; // retornar quantidade de linhas
             text-align: center;
         }
 
-        .table td, .table th {
+        .table td,
+        .table th {
             vertical-align: middle;
             padding: 12px;
             text-align: center;
@@ -105,46 +105,61 @@ $qntd = $retorno_consulta->num_rows; // retornar quantidade de linhas
 </head>
 
 <body>
+    <?php include("menu.php") ?>
+    <div class="container">
+        <div class="especialidade">
+            <h1>Lista - Consulta Sobremesa</h1>
+        </div>
 
-<div class="container">
-    <div class="especialidade">
-        <h1>Lista - Consulta Sobremesa</h1>
-    </div>
-
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Preço</th>
-                <th>Quantidade</th>
-                <th>Foto</th>
-                <th>Alterar</th>
-                <th>Deletar</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php while ($profissional = $retorno_consulta->fetch_assoc()) { ?>
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                   
-                    <td><?php echo htmlspecialchars($profissional['nome']); ?></td>
-                    <td><?php echo htmlspecialchars($profissional['preco']); ?></td>
-                    <td><?php echo htmlspecialchars($profissional['quantidade']); ?></td>
-                    <td>
-                        <img src="<?php echo($profissional['imagem']); ?>" alt="Foto do profissional" class="img-thumbnail">
-                    </td>
-                    
-                    <td><a class="btn btn-primary" href="alterar_sobremesa.php?id_alterar=<?php echo $profissional['id_sobremesa']; ?>">Alterar</a></td>
-                    <td><a class="btn btn-danger" href="deletar_sobremesa.php?id_sobremesa=<?php echo $profissional['id_sobremesa']; ?>">Deletar</a></td>
+                    <th>Nome</th>
+                    <th>Ingredientes</th>
+                    <th>Preço</th>
+                    <th>Quantidade</th>
+                    <th>Foto</th>
+                    <th>Alterar</th>
+                    <th>Deletar</th>
                 </tr>
-            <?php } ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php while ($profissional = $retorno_consulta->fetch_assoc()) { ?>
+                    <tr>
 
-    <div class="back-button">
-        <a class="btn btn-primary" href="cadastrar_funcionario.php">Voltar</a>
+                        <td><?php echo htmlspecialchars($profissional['nome']); ?></td>
+                        <td><?php echo htmlspecialchars($profissional['ingrediente']); ?></td>
+                        <td><?php echo 'R$ ' . number_format($profissional['preco'], 2, ',', '.'); ?></td>
+                        
+                        <td><?php echo htmlspecialchars($profissional['quantidade']); ?></td>
+                        <td>
+                            <img src="<?php echo ($profissional['imagem']); ?>" alt="Foto do profissional"
+                                class="img-thumbnail">
+                        </td>
+
+                        <td><a class="btn btn-primary"
+                                href="alterar_sobremesa.php?id_alterar=<?php echo $profissional['id_sobremesa']; ?>">Alterar</a>
+                        </td>
+                        <td><a class="btn btn-danger"
+                                href="deletar_sobremesa.php?id_sobremesa=<?php echo $profissional['id_sobremesa']; ?>">Deletar</a>
+                        </td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+
+        <!-- Botão para esvaziar a tabela de lanches -->
+        <form method="post" class="text-center"
+            onsubmit="return confirm('Você tem certeza que deseja esvaziar a tabela de lanches?');">
+            <button type="submit" name="truncate_sobremesa" class="btn btn-warning">Esvaziar Tabela Sobremesas</button>
+        </form>
+
+        <div class="back-button">
+            <a class="btn btn-primary" href="area_funcionarios.php">Voltar</a>
+        </div>
     </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <?php include("rodape.php") ?>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

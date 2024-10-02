@@ -38,10 +38,10 @@ if (!isset($_SESSION)) {
                 Funcionário</a>
             <a href="cadastro_lanche.php" class="list-group-item list-group-item-action">Cadastrar Lanches</a>
             <a href="cadastrar_bebidas.php" class="list-group-item list-group-item-action">Cadastrar Bebidas</a>
-            <a href="#" class="list-group-item list-group-item-action">Cadastrar Sobremesas</a>
+            <a href="cadastrar_sobremesas.php" class="list-group-item list-group-item-action">Cadastrar Sobremesas</a>
             <a href="lista_lanches.php" class="list-group-item list-group-item-action">Lista Lanches</a>
             <a href="consultar_bebidas.php" class="list-group-item list-group-item-action">Lista Bebidas</a>
-            <a href="#" class="list-group-item list-group-item-action">Lista Sobremesas</a>
+            <a href="consulta_sobremesa.php" class="list-group-item list-group-item-action">Lista Sobremesas</a>
             <a href="feedback_funcionario.php" class="list-group-item list-group-item-action">Visualizar Feedback</a>
             <a href="sair.php" class="list-group-item list-group-item-action ">Sair</a>
         </div>

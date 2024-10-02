@@ -70,7 +70,7 @@ if (isset($_GET['id_alterar'])) {
     <link rel="icon" href="img/logo2.png">
     <title>Alterar - Sobremesa</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="meu.css">
+    <link rel="stylesheet" href="gabriell.css">
 </head>
 
 <!DOCTYPE html>
@@ -83,6 +83,41 @@ if (isset($_GET['id_alterar'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<div class="d-flex justify-content-center">
+        <form class="form" method="post" enctype="multipart/form-data">
+            <p class="title">Alterar Lanche</p>
+            <label>
+            <input type="hidden" name="id_sobremesa" value="<?php echo htmlspecialchars($consultar['id_sobremesa']); ?>">
+            </label>
+
+            <label>
+            <input class="form-control" type="text" id="nome" name="nome" value="<?php echo htmlspecialchars($consultar['nome']); ?>" required>
+                <span>Nome:</span>
+            </label>
+
+            <label>
+            <input class="form-control" type="text" id="preco" name="preco" value="<?php echo htmlspecialchars($consultar['preco']); ?>" required>
+                <span>Ingredientes:</span>
+            </label>
+
+            <label>
+            <input class="form-control" type="number" id="quantidade" name="quantidade" value="<?php echo htmlspecialchars($consultar['quantidade']); ?>" required>
+                <span>Quantidade:</span>
+            </label>
+            
+            <label>
+                <input required="" value="<?php echo $row["quantidade"] ?>" class="input" name="quantidade" type="number" min="0">
+                <span>Quantidade:</span>
+            </label>
+
+            <label>
+                <input type="file" class="form-control" name="foto">
+                <span></span>
+            </label>
+            <button class="submit">Atualizar</button>
+            <a class="d-flex btn btn-primary justify-content-center" href="lista_lanches.php">Voltar</a>
+        </form>
+    </div>
     <div class="container mt-4">
         <form action="" method="post" enctype="multipart/form-data">
             <h1 class="text-center">Alterar - Sobremesa</h1>
