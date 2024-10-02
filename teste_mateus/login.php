@@ -106,13 +106,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <p class="signin">Não tem uma conta? <a href="cadastro_cliente.php">Cadastre-se</a></p>
     </form>
   </div>
-  <br><br><br><br>
-  <footer class="text-center mt-4">
-    <div class="footer-links">
-      <a href="#sobre">Sobre Nós</a>
-    </div>
-    <p>&copy; 2024 Senac-PR. Todos os direitos reservados.</p>
-  </footer>
+  <br><br><br><br><br><br>
+  <?php include("rodape.php") ?>
 </body>
 
 </html>

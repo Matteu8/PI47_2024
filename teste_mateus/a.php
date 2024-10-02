@@ -28,8 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['id_lanche'])) {
     $preco_lanche = htmlspecialchars($_POST['preco_lanche']);
     $quantidade = intval($_POST['quantidade']);
 
-    $item_key = 'lanche_' . $id_lanche;
-
     // Verifica a quantidade disponível no banco de dados
     $stmt_verifica = $mysqli->prepare("SELECT quantidade FROM lanches WHERE id_lanches = ?");
     $stmt_verifica->bind_param("i", $id_lanche);
@@ -40,10 +38,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['id_lanche'])) {
 
     if ($quantidade <= $quantidade_disponivel) {
         // Adiciona ou atualiza o lanche no carrinho
-        if (isset($_SESSION['carrinho'][$item_key])) {
-            $_SESSION['carrinho'][$item_key]['quantidade'] += $quantidade;
+        if (isset($_SESSION['carrinho'][$id_lanche])) {
+            $_SESSION['carrinho'][$id_lanche]['quantidade'] += $quantidade;
         } else {
-            $_SESSION['carrinho'][$item_key] = [
+            $_SESSION['carrinho'][$id_lanche] = [
                 'id_lanche' => $id_lanche,
                 'nome' => $nome_lanche,
                 'preco' => $preco_lanche,
@@ -170,15 +168,8 @@ $resultado = $mysqli->query("SELECT * FROM lanches");
                     <tbody>
                         <?php
                         $totalCarrinho = 0;
-                        foreach ($_SESSION['carrinho'] as $item_key => $item) {
-                            // Verifica se é um lanche ou uma bebida
-                            if (strpos($item_key, 'lanche_') === 0) {
-                                // É um lanche
-                                $totalItem = $item['quantidade'] * floatval(str_replace(['R$', ','], ['', '.'], $item['preco']));
-                            } elseif (strpos($item_key, 'bebida_') === 0) {
-                                // É uma bebida
-                                $totalItem = $item['quantidade'] * floatval(str_replace(['R$', ','], ['', '.'], $item['preco']));
-                            }
+                        foreach ($_SESSION['carrinho'] as $item) {
+                            $totalItem = $item['quantidade'] * floatval(str_replace(['R$', ','], ['', '.'], $item['preco']));
                             $totalCarrinho += $totalItem;
                             ?>
                             <tr>

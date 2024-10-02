@@ -92,7 +92,6 @@ if (isset($_GET["id_alterar"])) {
         <h1>Alterar Lanches</h1>
     </header>
     <br><br>
-
     <div class="d-flex justify-content-center">
         <form class="form" method="post" enctype="multipart/form-data">
             <p class="title">Alterar Lanche</p>
@@ -125,9 +124,10 @@ if (isset($_GET["id_alterar"])) {
                 <span></span>
             </label>
             <button class="submit">Atualizar</button>
+            <a class="d-flex btn btn-primary justify-content-center" href="lista_lanches.php">Voltar</a>
         </form>
     </div>
-
+    <?php include("rodape.php") ?>
 </body>
 
 </html>

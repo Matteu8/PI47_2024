@@ -45,12 +45,12 @@ if ($_SESSION['tipo_usuario'] == 'cliente') {
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="gabriell.css">
 </head>
 
 <body>
     <?php include("menu.php") ?>
-    <h1 class="text-center">Pedidos</h1>
+    <h1 class="text-center" style="background-color: #FFA500; color: white;" >Pedidos</h1>
 
     <div class="container d-flex justify-content-center">
         <div class="row justify-content-center">
@@ -71,7 +71,7 @@ if ($_SESSION['tipo_usuario'] == 'cliente') {
                     <img src="img/bebida.jfif" class="card-img-top" alt="Bebidas" style="height: 200px; object-fit: cover;">
                     <div class="card-body text-center">
                         <h5 class="card-title">Bebidas</h5>
-                        <a href="#" class="btn btn-primary">Pedir</a>
+                        <a href="bebidas.php" class="btn btn-primary">Pedir</a>
                     </div>
                 </div>
             </div>
@@ -94,7 +94,8 @@ if ($_SESSION['tipo_usuario'] == 'cliente') {
             <a href="<?php echo isset($voltar_url) ? $voltar_url : 'login.php'; ?>" style="text-decoration: none; color: white;">Voltar</a>
         </button>
     </div>
-    
+    <br><br><br><br><br><br><br>
+    <?php include("rodape.php") ?>
 </body>
 
 </html>

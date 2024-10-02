@@ -1,5 +1,5 @@
 <?php
-require("conexao.php");
+include("conexao.php");
 
 if (isset($_GET["id_alterar"])) {
     $id_alterar = $_GET["id_alterar"];
@@ -14,47 +14,56 @@ if (isset($_GET["id_alterar"])) {
         $tipo = $_POST["tipo"];
         $preco = $_POST["preco"];
         $quantidade = $_POST["quantidade"];
-        $caminhoFinal = $row['foto']; // Mantém a foto existente
+        $caminhoFinal = $row['foto']; // Mantém a foto existente por padrão
 
+        // Verifica se uma nova imagem foi enviada
         if (isset($_FILES["foto"]) && $_FILES["foto"]["error"] == 0) {
-            // Verifica se o arquivo é uma imagem
+            // Verifica se o arquivo é uma imagem válida
             if (getimagesize($_FILES["foto"]["tmp_name"]) === false) {
-                die("O arquivo não é uma imagem.");
-            }
+                $erro = "O arquivo enviado não é uma imagem válida.";
+            } else {
+                // Verifica a extensão do arquivo
+                $extensoesPermitidas = ['jpeg', 'jpg', 'png', 'gif', 'jfif'];
+                $extensaoArquivo = strtolower(pathinfo($_FILES["foto"]["name"], PATHINFO_EXTENSION));
 
-            // Verifica a extensão do arquivo
-            $extensoesPermitidas = ['jpeg', 'jpg', 'png', 'gif', 'jfif'];
-            $extensaoArquivo = strtolower(pathinfo($_FILES["foto"]["name"], PATHINFO_EXTENSION));
-            if (!in_array($extensaoArquivo, $extensoesPermitidas)) {
-                die("Tipo de arquivo não suportado.");
-            }
+                if (!in_array($extensaoArquivo, $extensoesPermitidas)) {
+                    $erro = "Tipo de arquivo não suportado. Apenas JPEG, JPG, PNG, GIF e JFIF são permitidos.";
+                }
 
-            // Verifica o tamanho do arquivo (limite de 5MB)
-            if ($_FILES["foto"]["size"] > 5000000) {
-                die("Arquivo muito grande! Max: 5MB");
-            }
+                // Verifica o tamanho do arquivo (limite de 5MB)
+                if ($_FILES["foto"]["size"] > 5000000) {
+                    $erro = "Arquivo muito grande! O tamanho máximo é de 5MB.";
+                }
 
-            // Define o local para salvar a imagem
-            $diretorioUpload = "receber/";
-            $novoNomeArquivo = uniqid() . "." . $extensaoArquivo;
-            $caminhoFinal = $diretorioUpload . $novoNomeArquivo;
+                if (!isset($erro)) {
+                    // Define o local para salvar a imagem
+                    $diretorioUpload = "receber/";
+                    $novoNomeArquivo = uniqid() . "." . $extensaoArquivo;
+                    $caminhoFinal = $diretorioUpload . $novoNomeArquivo;
 
-            // Tenta mover o arquivo temporário para o diretório final
-            if (!move_uploaded_file($_FILES["foto"]["tmp_name"], $caminhoFinal)) {
-                die("Ocorreu um erro ao fazer o upload da imagem.");
+                    // Tenta mover o arquivo temporário para o diretório final
+                    if (!move_uploaded_file($_FILES["foto"]["tmp_name"], $caminhoFinal)) {
+                        $erro = "Ocorreu um erro ao fazer o upload da imagem.";
+                    }
+                }
             }
         }
 
-        // Atualiza os dados no banco de dados
-        $stmt = $mysqli->prepare("UPDATE bebidas SET nome = ?, tipo = ?, preco = ?, quantidade = ?, foto = ? WHERE id = ?");
-        $stmt->bind_param("sssssi", $nome, $tipo, $preco, $quantidade, $caminhoFinal, $id_alterar);
-        $stmt->execute();
+        // Se não houver erros de upload ou outros
+        if (!isset($erro)) {
+            // Atualiza os dados no banco de dados
+            $stmt = $mysqli->prepare("UPDATE bebidas SET nome = ?, tipo = ?, preco = ?, quantidade = ?, foto = ? WHERE id = ?");
+            $stmt->bind_param("sssssi", $nome, $tipo, $preco, $quantidade, $caminhoFinal, $id_alterar);
+            $stmt->execute();
 
-        header("Location: consultar_bebidas.php");
-        exit();
+            // Exibe mensagem de sucesso e redireciona após 2 segundos
+            echo "<script>alert('Bebida atualizada com sucesso!');</script>";
+            echo "<meta http-equiv='refresh' content='2;url=consultar_bebidas.php'>";
+            exit();
+        }
     }
 } else {
-    die("ID não fornecido.");
+    die("ID da bebida não fornecido.");
 }
 ?>
 
@@ -64,51 +73,61 @@ if (isset($_GET["id_alterar"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Bebida</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="dieimes.css">
+    <title>Alterar Bebida</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="gabriell.css">
 </head>
 
 <body>
-    <div class="row" style="background-color:#3a6da1;">
-        <div class="col-md-5">
-            <a href="/principal/"><img src="img/topo_site_bl1_2018.png" class="img-fluid" alt="Topo do Site"></a>
-        </div>
-    </div>
-    <h1 class="text-center" style="background-color: #FFA500; color: white;">Editar Bebida</h1>
-    <div class="container d-flex justify-content-center mt-5">
+    <?php include("menu.php") ?>
+    <h1 class="text-center" style="background-color: #FFA500; color: white;">Alterar Bebida</h1>
+
+    <div class="container d-flex justify-content-center">
         <form class="form" method="post" enctype="multipart/form-data">
-            <p class="title"> Edite aqui sua bebida </p>
-            <p class="message">Edite os valores da sua bebida </p>
-            
+            <p class="title"> Alterar Bebida</p>
+            <?php if (isset($erro)) { ?>
+                <div class="alert alert-danger">
+                    <?php echo $erro; ?>
+                </div>
+            <?php } ?>
+
             <label>
-                    <input required type="text" name="nome" class="input" value="<?php echo htmlspecialchars($row['nome']); ?>">
-                    <span>Nome:</span>
+                <input required type="text" name="nome" class="input"
+                    value="<?php echo htmlspecialchars($row['nome']); ?>">
+                <span>Nome:</span>
             </label>
+
             <label>
-                    <input required type="text" name="tipo" class="input" value="<?php echo htmlspecialchars($row['tipo']); ?>">
-                    <span>Tipo:</span>
+                <input required type="text" name="tipo" class="input"
+                    value="<?php echo htmlspecialchars($row['tipo']); ?>">
+                <span>Tipo:</span>
             </label>
+
             <label>
-                <input required type="number" name="quantidade" class="input" value="<?php echo htmlspecialchars($row['quantidade']); ?>">
+                <input required type="number" name="quantidade" class="input"
+                    value="<?php echo htmlspecialchars($row['quantidade']); ?>">
                 <span>Quantidade:</span>
             </label>
+
             <label>
-                <input required type="text" name="preco" class="input" value="<?php echo htmlspecialchars($row['preco']); ?>">
+                <input required type="text" name="preco" class="input"
+                    value="<?php echo htmlspecialchars($row['preco']); ?>">
                 <span>Preço:</span>
             </label>
+
             <label>
+                <span>Foto:</span>
                 <input type="file" class="form-control" name="foto">
+                <small>Deixe em branco se não quiser alterar a imagem.</small>
             </label>
 
             <button type="submit" class="submit">Atualizar</button>
+            <a class="btn btn-primary d-flex justify-content-center" href="consultar_bebidas.php">Voltar</a>
         </form>
+        
     </div>
-
+    <br><br><br><br><br><br><br>
     <?php include "rodape.php"; ?>
 </body>
 
