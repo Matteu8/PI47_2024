@@ -13,15 +13,16 @@ if (isset($_GET['id_alterar'])) {
     if (isset($_POST['id_sobremesa'])) {
         $id_sobremesa = $_POST['id_sobremesa'];
         $nome = $_POST['nome'];
+        $ingrediente = $_POST['ingrediente'];
         $preco = $_POST['preco'] ?? '';
         $quantidade = intval($_POST['quantidade'] ?? 0);
         $caminho_banco = $consultar['imagem']; // Preserva o caminho da foto antiga
 
-        
+
 
         if (isset($_FILES['bt_imagem']) && $_FILES['bt_imagem']['error'] === 0) {
             $arquivo = $_FILES['bt_imagem'];
-            
+
             // Limite de tamanho do arquivo
             if ($arquivo['size'] > 15000000) {
                 die("Arquivo muito grande!! Max: 15MB");
@@ -48,16 +49,16 @@ if (isset($_GET['id_alterar'])) {
         if (isset($_GET['status']) && $_GET['status'] == 'success') {
             echo "<p>Sobremesa atualizada com sucesso!</p>";
         }
-        
+
         // Atualizando os dados no banco de dados
-        $sql_alterar = "UPDATE sobremesa SET nome = '$nome', preco = '$preco', quantidade = '$quantidade', imagem = '$caminho_banco' WHERE id_sobremesa = '$id_sobremesa'";
+        $sql_alterar = "UPDATE sobremesa SET nome = '$nome', preco = '$preco', ingrediente = '$ingrediente', quantidade = '$quantidade', imagem = '$caminho_banco' WHERE id_sobremesa = '$id_sobremesa'";
         $mysqli_alterar = $mysqli->query($sql_alterar) or die($mysqli->error);
-       
-        header ("location:consulta_sobremesa.php");
+
+        header("location:consulta_sobremesa.php");
     }
-}else{
+} else {
 }
-   
+
 ?>
 
 <!DOCTYPE html>
@@ -73,92 +74,66 @@ if (isset($_GET['id_alterar'])) {
     <link rel="stylesheet" href="gabriell.css">
 </head>
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alterar - Sobremesa</title>
-    <!-- Inclua o CSS do Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
 <body>
-<div class="d-flex justify-content-center">
+    <?php include("menu.php") ?>
+    <header>
+        <h1>Alterar Sobremesa</h1>
+    </header>
+    <br><br>
+    <div class="d-flex justify-content-center">
         <form class="form" method="post" enctype="multipart/form-data">
-            <p class="title">Alterar Lanche</p>
+            <p class="title">Alterar</p>
             <label>
-            <input type="hidden" name="id_sobremesa" value="<?php echo htmlspecialchars($consultar['id_sobremesa']); ?>">
+                <input type="hidden" name="id_sobremesa"
+                    value="<?php echo htmlspecialchars($consultar['id_sobremesa']); ?>">
             </label>
 
             <label>
-            <input class="form-control" type="text" id="nome" name="nome" value="<?php echo htmlspecialchars($consultar['nome']); ?>" required>
                 <span>Nome:</span>
+                <input class="form-control" type="text" id="nome" name="nome"
+                    value="<?php echo htmlspecialchars($consultar['nome']); ?>" required>
+
             </label>
 
             <label>
-            <input class="form-control" type="text" id="preco" name="preco" value="<?php echo htmlspecialchars($consultar['preco']); ?>" required>
                 <span>Ingredientes:</span>
+                <input class="form-control" type="text" id="preco" name="preco"
+                    value="<?php echo htmlspecialchars($consultar['preco']); ?>" required>
+
             </label>
 
             <label>
-            <input class="form-control" type="number" id="quantidade" name="quantidade" value="<?php echo htmlspecialchars($consultar['quantidade']); ?>" required>
                 <span>Quantidade:</span>
+                <input class="form-control" type="number" id="quantidade" name="quantidade"
+                    value="<?php echo htmlspecialchars($consultar['quantidade']); ?>" required>
+
             </label>
-            
+
             <label>
-                <input required="" value="<?php echo $row["quantidade"] ?>" class="input" name="quantidade" type="number" min="0">
-                <span>Quantidade:</span>
+                <span>Preço:</span>
+                <input class="form-control" type="text" id="preco" name="ingrediente"
+                    value="<?php echo htmlspecialchars($consultar['ingrediente']); ?>" required>
+
             </label>
 
             <label>
                 <input type="file" class="form-control" name="foto">
                 <span></span>
             </label>
-            <button class="submit">Atualizar</button>
-            <a class="d-flex btn btn-primary justify-content-center" href="lista_lanches.php">Voltar</a>
-        </form>
-    </div>
-    <div class="container mt-4">
-        <form action="" method="post" enctype="multipart/form-data">
-            <h1 class="text-center">Alterar - Sobremesa</h1>
-            
-            <input type="hidden" name="id_sobremesa" value="<?php echo htmlspecialchars($consultar['id_sobremesa']); ?>">
-            
-            <div class="mb-3">
-                <label class="form-label" for="nome">Nome</label>
-                <input class="form-control" type="text" id="nome" name="nome" value="<?php echo htmlspecialchars($consultar['nome']); ?>" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label" for="preco">Preço</label>
-                <input class="form-control" type="text" id="preco" name="preco" value="<?php echo htmlspecialchars($consultar['preco']); ?>" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label" for="quantidade">Quantidade</label>
-                <input class="form-control" type="number" id="quantidade" name="quantidade" value="<?php echo htmlspecialchars($consultar['quantidade']); ?>" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label" for="bt_imagem">Foto</label>
-                <input class="form-control" type="file" id="bt_imagem" name="bt_imagem">
-            </div>
-
-            <?php if (empty($consultar['imagem'])) : ?>
+            <?php if (empty($consultar['imagem'])): ?>
                 <div class="mt-3 text-center">
-                    <img src="<?php echo htmlspecialchars($consultar['imagem']); ?>" alt="imagem da sobremesa" class="img-thumbnail">
+                    <img src="<?php echo htmlspecialchars($consultar['imagem']); ?>" alt="imagem da sobremesa"
+                        class="img-thumbnail">
                 </div>
             <?php endif; ?>
 
-            <div class="mt-3 d-flex justify-content-between">
-                <input class="btn btn-success" type="submit" value="Alterar">
-                <a class="btn btn-primary" href="consulta_sobremesa.php">Voltar</a>
-                
-            </div>
+            <button class="submit">Atualizar</button>
+            <a class="d-flex btn btn-primary justify-content-center" href="consulta_sobremesa.php">Voltar</a>
         </form>
     </div>
-
+    <?php include("rodape.php") ?>
     <!-- Inclua o JS do Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

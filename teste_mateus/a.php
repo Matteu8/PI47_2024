@@ -246,3 +246,52 @@ $resultado = $mysqli->query("SELECT * FROM lanches");
 </body>
 
 </html>
+
+
+
+
+
+<!-- <div class="container mt-4">
+        <form action="" method="post" enctype="multipart/form-data">
+            <h1 class="text-center">Alterar - Sobremesa</h1>
+
+            <input type="hidden" name="id_sobremesa"
+                value="<?php echo htmlspecialchars($consultar['id_sobremesa']); ?>">
+
+            <div class="mb-3">
+                <label class="form-label" for="nome">Nome</label>
+                <input class="form-control" type="text" id="nome" name="nome"
+                    value="<?php echo htmlspecialchars($consultar['nome']); ?>" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="preco">Preço</label>
+                <input class="form-control" type="text" id="preco" name="preco"
+                    value="<?php echo htmlspecialchars($consultar['preco']); ?>" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="quantidade">Quantidade</label>
+                <input class="form-control" type="number" id="quantidade" name="quantidade"
+                    value="<?php echo htmlspecialchars($consultar['quantidade']); ?>" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="bt_imagem">Foto</label>
+                <input class="form-control" type="file" id="bt_imagem" name="bt_imagem">
+            </div>
+
+            <?php if (empty($consultar['imagem'])): ?>
+                <div class="mt-3 text-center">
+                    <img src="<?php echo htmlspecialchars($consultar['imagem']); ?>" alt="imagem da sobremesa"
+                        class="img-thumbnail">
+                </div>
+            <?php endif; ?>
+
+            <div class="mt-3 d-flex justify-content-between">
+                <input class="btn btn-success" type="submit" value="Alterar">
+                <a class="btn btn-primary" href="consulta_sobremesa.php">Voltar</a>
+
+            </div>
+        </form>
+    </div> -->

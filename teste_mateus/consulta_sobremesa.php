@@ -114,6 +114,7 @@ $qntd = $retorno_consulta->num_rows; // retornar quantidade de linhas
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Nome</th>
                     <th>Ingredientes</th>
                     <th>Preço</th>
@@ -126,7 +127,7 @@ $qntd = $retorno_consulta->num_rows; // retornar quantidade de linhas
             <tbody>
                 <?php while ($profissional = $retorno_consulta->fetch_assoc()) { ?>
                     <tr>
-
+                    <td><?php echo htmlspecialchars($profissional['id_sobremesa'], ENT_QUOTES, 'UTF-8'); ?></td>
                         <td><?php echo htmlspecialchars($profissional['nome']); ?></td>
                         <td><?php echo htmlspecialchars($profissional['ingrediente']); ?></td>
                         <td><?php echo 'R$ ' . number_format($profissional['preco'], 2, ',', '.'); ?></td>
