@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 18-Set-2024 às 18:28
+-- Tempo de geração: 02-Out-2024 às 17:40
 -- Versão do servidor: 5.7.36
 -- versão do PHP: 7.4.26
 
@@ -110,16 +110,22 @@ CREATE TABLE IF NOT EXISTS `sobremesa` (
   `quantidade` int(11) NOT NULL,
   `imagem` varchar(300) NOT NULL,
   PRIMARY KEY (`id_sobremesa`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `sobremesa`
 --
 
 INSERT INTO `sobremesa` (`id_sobremesa`, `nome`, `preco`, `quantidade`, `imagem`) VALUES
-(3, 'bolo ', '85', 1, 'recebidos.img/66e867cb71c88.webp'),
-(4, 'brigadeiro', '5', 1, 'recebidos.img/66e88044bd4a7.webp'),
-(6, 'bolo de cenoura', '5', 1, 'recebidos.img/66e880715d398.jpg');
+(12, 'beta bebida boa ', '100', 1, 'recebidos.img/66fd7624acd9a.jpg'),
+(13, 'doce de leite', '5', 12, 'recebidos.img/66fd76c2c3d9f.jpg'),
+(14, 'Ganin', '5', 5, 'recebidos.img/66fd76dba729c.png'),
+(15, 'torta de maÃ§a', '15', 3, 'recebidos.img/66fd7f5772a4b.jpg'),
+(16, 'brawnie', '17', 12, 'recebidos.img/66fd7f6f1c3ab.png'),
+(17, 'dois amores', '5', 8, 'recebidos.img/66fd7f82b169e.jpeg'),
+(18, 'bolo toalha felpuda', '6', 1, 'recebidos.img/66fd7f9e570f0.jpg'),
+(19, 'musse de morango', '4', 4, 'recebidos.img/66fd7fc19c9ec.avif'),
+(20, 'pudim', '3', 1, 'recebidos.img/66fd81e2e93c3.avif');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
