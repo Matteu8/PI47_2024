@@ -169,6 +169,7 @@ $resultado = $mysqli->query("SELECT * FROM bebidas");
                         <?php
                         $totalCarrinho = 0;
                         foreach ($_SESSION['carrinho'] as $item) {
+                            var_dump($_SESSION);
                             $totalItem = $item['quantidade'] * floatval(str_replace(['R$', ','], ['', '.'], $item['preco']));
                             $totalCarrinho += $totalItem;
                             ?>

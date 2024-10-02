@@ -25,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['truncate_bebidas'])) 
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -92,19 +93,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['truncate_bebidas'])) 
                             <td><?php echo htmlspecialchars($bebidas['nome'], ENT_QUOTES, 'UTF-8'); ?></td>
                             <td><?php echo htmlspecialchars($bebidas['tipo'], ENT_QUOTES, 'UTF-8'); ?></td>
                             <td><?php echo 'R$ ' . number_format($bebidas['preco'], 2, ',', '.'); ?></td>
-                            <td><?php echo htmlspecialchars($bebidas['quantidade'], ENT_QUOTES, 'UTF-8'); ?></td> <!-- Mostrando a quantidade -->
+                            <td><?php echo htmlspecialchars($bebidas['quantidade'], ENT_QUOTES, 'UTF-8'); ?></td>
+                            <!-- Mostrando a quantidade -->
                             <td>
                                 <img src="<?php echo htmlspecialchars($bebidas['foto'], ENT_QUOTES, 'UTF-8'); ?>"
-                                     class="img-thumbnail"
-                                     alt="<?php echo htmlspecialchars($bebidas['nome'], ENT_QUOTES, 'UTF-8'); ?>">
+                                    class="img-thumbnail"
+                                    alt="<?php echo htmlspecialchars($bebidas['nome'], ENT_QUOTES, 'UTF-8'); ?>">
                             </td>
                             <td>
                                 <a class="btn btn-primary"
-                                   href="editar_bebidas.php?id_alterar=<?php echo $bebidas['id']; ?>">Alterar</a>
+                                    href="editar_bebidas.php?id_alterar=<?php echo $bebidas['id']; ?>">Alterar</a>
                             </td>
                             <td>
                                 <a class="btn btn-danger"
-                                   href="deletar_bebidas.php?id_deletar=<?php echo $bebidas['id']; ?>">Deletar</a>
+                                    href="deletar_bebidas.php?id_deletar=<?php echo $bebidas['id']; ?>">Deletar</a>
                             </td>
                         </tr>
                     <?php } ?>
@@ -116,7 +118,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['truncate_bebidas'])) 
         <nav>
             <ul class="pagination mt-4 justify-content-center">
                 <?php for ($i = 1; $i <= $total_paginas; $i++) { ?>
-                    <li class="page-item <?php if ($pagina == $i) echo 'active'; ?>">
+                    <li class="page-item <?php if ($pagina == $i)
+                        echo 'active'; ?>">
                         <a class="page-link" href="?pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
                     </li>
                 <?php } ?>
@@ -125,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['truncate_bebidas'])) 
 
         <!-- Botão para esvaziar a tabela de bebidas -->
         <form method="post" class="text-center"
-              onsubmit="return confirm('Você tem certeza que deseja esvaziar a tabela de bebidas?');">
+            onsubmit="return confirm('Você tem certeza que deseja esvaziar a tabela de bebidas?');">
             <button type="submit" name="truncate_bebidas" class="btn btn-warning">Esvaziar Tabela Bebidas</button>
         </form>
 
@@ -133,7 +136,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['truncate_bebidas'])) 
             <a class="btn btn-primary" href="area_funcionarios.php">Voltar</a>
         </div>
     </div>
-
+    <?php include("rodape.php") ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
