@@ -31,14 +31,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['id_sobremesa'])) {
 
     // Verifica a quantidade disponível no banco de dados
     $stmt_verifica = $mysqli->prepare("SELECT quantidade FROM sobremesa WHERE id_sobremesa = ?");
-    $stmt_verifica->bind_param("i", $id_bebida);
+    $stmt_verifica->bind_param("i", $id_sobremesa);
     $stmt_verifica->execute();
     $stmt_verifica->bind_result($quantidade_disponivel);
     $stmt_verifica->fetch();
     $stmt_verifica->close();
 
     if ($quantidade <= $quantidade_disponivel) {
-        // Adiciona ou atualiza a bebida no carrinho
+        // Adiciona ou atualiza a sobremesa no carrinho
         if (isset($_SESSION['carrinho'][$item_key])) {
             $_SESSION['carrinho'][$item_key]['quantidade'] += $quantidade;
         } else {
@@ -129,8 +129,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['finalizar_pedido'])) 
     header("Refresh:0");
 }
 
-// Consulta as bebidas da tabela bebidas
-$resultado = $mysqli->query("SELECT * FROM bebidas");
+// Consulta as sobremedsa da tabela sobremesa
+$resultado = $mysqli->query("SELECT * FROM sobremesa");
 ?>
 
 <!DOCTYPE html>
@@ -139,11 +139,11 @@ $resultado = $mysqli->query("SELECT * FROM bebidas");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bebidas</title>
+    <title>Senac-PR - Sobremesas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="gabriell.css">
     <style>
-        .img-bebida {
+        .img-sobremesa {
             height: 200px;
             object-fit: cover;
         }
@@ -157,6 +157,7 @@ $resultado = $mysqli->query("SELECT * FROM bebidas");
 
         <?php if (isset($_SESSION['tipo_usuario'])): ?>
             <h2>Carrinho</h2>
+            
             <?php if (!empty($_SESSION['carrinho'])): ?>
                 <table class="table table-bordered">
                     <thead>
@@ -171,12 +172,17 @@ $resultado = $mysqli->query("SELECT * FROM bebidas");
                         <?php
                         $totalCarrinho = 0;
                         foreach ($_SESSION['carrinho'] as $item_key => $item) {
+                            
                             // Verifica se é um lanche ou uma bebida
                             if (strpos($item_key, 'lanche_') === 0) {
                                 // É um lanche
                                 $totalItem = $item['quantidade'] * floatval(str_replace(['R$', ','], ['', '.'], $item['preco']));
                             } elseif (strpos($item_key, 'bebida_') === 0) {
                                 // É uma bebida
+                                $totalItem = $item['quantidade'] * floatval(str_replace(['R$', ','], ['', '.'], $item['preco']));
+                            }
+                            elseif (strpos($item_key, 'sobremesa_') === 0) {
+                                // É uma sobremesa
                                 $totalItem = $item['quantidade'] * floatval(str_replace(['R$', ','], ['', '.'], $item['preco']));
                             }
                             $totalCarrinho += $totalItem;
@@ -203,33 +209,34 @@ $resultado = $mysqli->query("SELECT * FROM bebidas");
                 <p>Carrinho vazio.</p>
             <?php endif; ?>
         <?php endif; ?>
+        
 
-        <h1 class="text-center mt-2">Lista de Bebidas</h1>
+        <h1 class="text-center mt-2">Lista de Sobremesas</h1>
         <div class="row">
-            <?php while ($bebida = $resultado->fetch_assoc()): ?>
+            <?php while ($sobremesa = $resultado->fetch_assoc()): ?>
                 <div class="col-md-4 mb-4">
                     <div class="card h-100">
-                        <img src="<?php echo htmlspecialchars($bebida['foto']); ?>" class="card-img-top img-bebida"
-                            alt="<?php echo htmlspecialchars($bebida['nome']); ?>">
+                        <img src="<?php echo htmlspecialchars($sobremesa['foto']); ?>" class="card-img-top img-sobremesa"
+                            alt="<?php echo htmlspecialchars($sobremesa['nome']); ?>">
                         <div class="card-body">
-                            <h5 class="card-title"><?php echo htmlspecialchars($bebida['nome']); ?></h5>
-                            <p class="card-text">Tipo: <?php echo htmlspecialchars($bebida['tipo']); ?></p>
+                            <h5 class="card-title"><?php echo htmlspecialchars($sobremesa['nome']); ?></h5>
+                            <p class="card-text">Ingrediente: <?php echo htmlspecialchars($sobremesa['ingrediente']); ?></p>
                             <p class="card-text">Preço: R$
-                                <?php echo number_format((float) $bebida['preco'], 2, ',', '.'); ?>
+                                <?php echo number_format((float) $sobremesa['preco'], 2, ',', '.'); ?>
                             </p>
                             <p class="card-text">Quantidade disponível:
-                                <?php echo htmlspecialchars($bebida['quantidade']); ?>
+                                <?php echo htmlspecialchars($sobremesa['quantidade']); ?>
                             </p>
                             <?php if (isset($_SESSION['tipo_usuario'])): ?>
                                 <form method="post">
-                                    <input type="hidden" name="id" value="<?php echo $bebida['id']; ?>">
-                                    <input type="hidden" name="nome_bebida"
-                                        value="<?php echo htmlspecialchars($bebida['nome']); ?>">
-                                    <input type="hidden" name="preco_bebida"
-                                        value="<?php echo isset($bebida['preco']) ? number_format((float) $bebida['preco'], 2, ',', '.') : '0,00'; ?>">
+                                    <input type="hidden" name="id_sobremesa" value="<?php echo $sobremesa['id_sobremesa']; ?>">
+                                    <input type="hidden" name="nome_sobremesa"
+                                        value="<?php echo htmlspecialchars($sobremesa['nome']); ?>">
+                                    <input type="hidden" name="preco_sobremesa"
+                                        value="<?php echo isset($sobremesa['preco']) ? number_format((float) $sobremesa['preco'], 2, ',', '.') : '0,00'; ?>">
                                     <label for="quantidade">Quantidade:</label>
                                     <input class="form-control" type="number" name="quantidade" min="1"
-                                        max="<?php echo htmlspecialchars($bebida['quantidade']); ?>" value="1" required>
+                                        max="<?php echo htmlspecialchars($sobremesa['quantidade']); ?>" value="1" required>
                                     <button type="submit" class="btn btn-primary mt-3">Adicionar ao Carrinho</button>
                                 </form>
                             <?php else: ?>
@@ -247,9 +254,6 @@ $resultado = $mysqli->query("SELECT * FROM bebidas");
             <button class="btn btn-primary">
                 <a href="<?php echo isset($voltar_url) ? $voltar_url : 'login.php'; ?>"
                     style="text-decoration: none; color: white;">Voltar</a>
-            </button>
-            <button class="btn btn-primary ms-3">
-                <a href="sobremesas.php" style="text-decoration: none; color: white;">Página de Sobremesas</a>
             </button>
         </div>
     </div>

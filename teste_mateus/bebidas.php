@@ -139,7 +139,7 @@ $resultado = $mysqli->query("SELECT * FROM bebidas");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bebidas</title>
+    <title>Senac-PR - Bebidas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="gabriell.css">
     <style>
@@ -176,6 +176,10 @@ $resultado = $mysqli->query("SELECT * FROM bebidas");
                                 // É um lanche
                                 $totalItem = $item['quantidade'] * floatval(str_replace(['R$', ','], ['', '.'], $item['preco']));
                             } elseif (strpos($item_key, 'bebida_') === 0) {
+                                // É uma bebida
+                                $totalItem = $item['quantidade'] * floatval(str_replace(['R$', ','], ['', '.'], $item['preco']));
+                            }
+                            elseif (strpos($item_key, 'sobremesa_') === 0) {
                                 // É uma bebida
                                 $totalItem = $item['quantidade'] * floatval(str_replace(['R$', ','], ['', '.'], $item['preco']));
                             }

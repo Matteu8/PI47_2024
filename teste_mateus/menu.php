@@ -33,7 +33,7 @@
                     <a class="nav-link text-white" href="bebidas.php">Bebidas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="">Sobremesas</a>
+                    <a class="nav-link text-white" href="sobremesas.php">Sobremesas</a>
                 </li>
                 <?php if (isset($_SESSION['id_cliente'])): ?>
                     <li class="nav-item">

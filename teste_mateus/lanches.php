@@ -179,6 +179,10 @@ $resultado = $mysqli->query("SELECT * FROM lanches");
                                 // É uma bebida
                                 $totalItem = $item['quantidade'] * floatval(str_replace(['R$', ','], ['', '.'], $item['preco']));
                             }
+                            elseif (strpos($item_key, 'sobremesa_') === 0) {
+                                // É uma bebida
+                                $totalItem = $item['quantidade'] * floatval(str_replace(['R$', ','], ['', '.'], $item['preco']));
+                            }
                             $totalCarrinho += $totalItem;
                             ?>
                             <tr>

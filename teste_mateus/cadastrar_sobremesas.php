@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 } elseif ($_FILES["foto"]["size"] > 5000000) {
                     $erro = "Arquivo muito grande! Max: 5MB";
                 } else {
-                    $diretorioUpload = "Lanches/bebidas/";
+                    $diretorioUpload = "recebidos.img";
                     $novoNomeArquivo = uniqid() . "." . $extensaoArquivo;
                     $caminhoFinal = $diretorioUpload . $novoNomeArquivo;
 
