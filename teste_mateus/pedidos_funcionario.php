@@ -6,8 +6,23 @@ if (!isset($_SESSION)) {
 }
 
 if (isset($_SESSION["id_funcionario"])) {
-    // Consulta para obter todos os pedidos
-    $stmt = $mysqli->prepare("SELECT id_pedido, data_pedido, status, id_clientes, nome_funcionario FROM pedidos");
+    // Definir o número de pedidos por página
+    $pedidos_por_pagina = 10; // Exibir 10 pedidos por página
+    $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1; // Pega a página atual, padrão é 1
+    $offset = ($pagina_atual - 1) * $pedidos_por_pagina; // Calcula o offset
+
+    // Consulta para contar o total de pedidos
+    $stmt_total = $mysqli->prepare("SELECT COUNT(*) AS total FROM pedidos");
+    $stmt_total->execute();
+    $resultado_total = $stmt_total->get_result();
+    $total_pedidos = $resultado_total->fetch_assoc()['total']; // Total de pedidos
+
+    // Calcular o número total de páginas
+    $total_paginas = ceil($total_pedidos / $pedidos_por_pagina);
+
+    // Consulta para obter os pedidos com limite e offset
+    $stmt = $mysqli->prepare("SELECT id_pedido, data_pedido, status, id_clientes, nome_funcionario FROM pedidos LIMIT ?, ?");
+    $stmt->bind_param("ii", $offset, $pedidos_por_pagina);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -44,11 +59,11 @@ if (isset($_SESSION["id_funcionario"])) {
         $stmt_truncate_items = $mysqli->prepare("TRUNCATE TABLE itens_pedido");
         $stmt_truncate_items->execute();
         $stmt_truncate_items->close();
-
+        
         $stmt_truncate_pedidos = $mysqli->prepare("TRUNCATE TABLE pedidos");
         $stmt_truncate_pedidos->execute();
         $stmt_truncate_pedidos->close();
-
+        
         // Recarregar a lista de pedidos
         $stmt->execute();
         $result = $stmt->get_result();
@@ -60,7 +75,6 @@ if (isset($_SESSION["id_funcionario"])) {
 
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -69,10 +83,9 @@ if (isset($_SESSION["id_funcionario"])) {
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="gabriell.css">
 </head>
-
 <body>
     <?php include("menu.php") ?>
-    <div class="container mt-4">
+    <div class="container">
         <h1 class="text-center">Todos os Pedidos</h1>
         <div class="table-responsive">
             <table class="table table-striped mt-4 text-center">
@@ -111,19 +124,45 @@ if (isset($_SESSION["id_funcionario"])) {
                             $cliente = $resultado_cliente->fetch_assoc();
                             $nome_cliente = $cliente ? htmlspecialchars($cliente['nome']) : '';
 
-                            // Verifica se o pedido é de cliente e se o nome do funcionário deve ser preenchido
                             $nome_funcionario = ($pedido['id_clientes'] ? '' : htmlspecialchars($pedido['nome_funcionario']));
 
                             while ($item = $result_itens->fetch_assoc()) {
-                                // Obter o nome e o preço do lanche
-                                $stmt_produto = $mysqli->prepare("SELECT nome, preco FROM lanches WHERE id_lanches = ?");
-                                $stmt_produto->bind_param("i", $item['id_lanches']);
-                                $stmt_produto->execute();
-                                $resultado_produto = $stmt_produto->get_result();
-                                $produto = $resultado_produto->fetch_assoc();
+                                $nome_produto = 'Desconhecido';
+                                $preco = 0;
 
-                                $nome_produto = $produto ? htmlspecialchars($produto['nome']) : 'Desconhecido';
-                                $preco = $produto ? $produto['preco'] : 0;
+                                // Verificar se é lanche
+                                if ($item['id_lanches']) {
+                                    $stmt_produto = $mysqli->prepare("SELECT nome, preco FROM lanches WHERE id_lanches = ?");
+                                    $stmt_produto->bind_param("i", $item['id_lanches']);
+                                    $stmt_produto->execute();
+                                    $resultado_produto = $stmt_produto->get_result();
+                                    $produto = $resultado_produto->fetch_assoc();
+                                    $nome_produto = $produto ? htmlspecialchars($produto['nome']) : 'Desconhecido';
+                                    $preco = $produto ? $produto['preco'] : 0;
+                                }
+
+                                // Verificar se é sobremesa
+                                if ($item['id_sobremesa']) {
+                                    $stmt_produto = $mysqli->prepare("SELECT nome, preco FROM sobremesa WHERE id_sobremesa = ?");
+                                    $stmt_produto->bind_param("i", $item['id_sobremesa']);
+                                    $stmt_produto->execute();
+                                    $resultado_produto = $stmt_produto->get_result();
+                                    $produto = $resultado_produto->fetch_assoc();
+                                    $nome_produto = $produto ? htmlspecialchars($produto['nome']) : 'Desconhecido';
+                                    $preco = $produto ? $produto['preco'] : 0;
+                                }
+
+                                // Verificar se é bebida
+                                if ($item['id']) {
+                                    $stmt_produto = $mysqli->prepare("SELECT nome, preco FROM bebidas WHERE id = ?");
+                                    $stmt_produto->bind_param("i", $item['id']);
+                                    $stmt_produto->execute();
+                                    $resultado_produto = $stmt_produto->get_result();
+                                    $produto = $resultado_produto->fetch_assoc();
+                                    $nome_produto = $produto ? htmlspecialchars($produto['nome']) : 'Desconhecido';
+                                    $preco = $produto ? $produto['preco'] : 0;
+                                }
+
                                 $totalItem = $preco * $item['quantidade'];
                                 ?>
                                 <tr>
@@ -139,16 +178,14 @@ if (isset($_SESSION["id_funcionario"])) {
                                         <?php if ($pedido['status'] == 'Aguardando Pagamento'): ?>
                                             <form method="post" style="display:inline;">
                                                 <input type="hidden" name="id_pedido" value="<?php echo $pedido['id_pedido']; ?>">
-                                                <button type="submit" name="concluir_pedido" class="btn btn-success btn-sm">Concluir
-                                                    Pedido</button>
+                                                <button type="submit" name="concluir_pedido" class="btn btn-success btn-sm">Concluir Pedido</button>
                                             </form>
                                         <?php else: ?>
                                             <span class="text-muted">Ação indisponível</span>
                                         <?php endif; ?>
                                         <form method="post" style="display:inline;">
                                             <input type="hidden" name="id_pedido" value="<?php echo $pedido['id_pedido']; ?>">
-                                            <button type="submit" name="remover_pedido"
-                                                class="btn btn-danger btn-sm">Remover</button>
+                                            <button type="submit" name="remover_pedido" class="btn btn-danger btn-sm">Remover</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -158,6 +195,32 @@ if (isset($_SESSION["id_funcionario"])) {
                 </tbody>
             </table>
         </div>
+        <!-- Paginação -->
+        <nav aria-label="Navegação de páginas" class="mt-4">
+            <ul class="pagination justify-content-center">
+                <?php if ($pagina_atual > 1): ?>
+                    <li class="page-item">
+                        <a class="page-link" href="?pagina=<?php echo $pagina_atual - 1; ?>" aria-label="Anterior">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+
+                <?php for ($i = 1; $i <= $total_paginas; $i++): ?>
+                    <li class="page-item <?php echo ($i == $pagina_atual) ? 'active' : ''; ?>">
+                        <a class="page-link" href="?pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
+                    </li>
+                <?php endfor; ?>
+
+                <?php if ($pagina_atual < $total_paginas): ?>
+                    <li class="page-item">
+                        <a class="page-link" href="?pagina=<?php echo $pagina_atual + 1; ?>" aria-label="Próxima">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </nav>
         <div class="mt-4 text-center">
             <form method="post">
                 <button type="submit" name="esvaziar_tabela" class="btn btn-warning">Esvaziar Tabela</button>
@@ -169,5 +232,4 @@ if (isset($_SESSION["id_funcionario"])) {
     </div>
     <?php include("rodape.php") ?>
 </body>
-
 </html>
