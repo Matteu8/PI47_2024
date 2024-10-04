@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 30-Set-2024 às 17:38
+-- Tempo de geração: 04-Out-2024 às 16:42
 -- Versão do servidor: 5.7.36
 -- versão do PHP: 7.4.26
 
@@ -38,19 +38,16 @@ CREATE TABLE IF NOT EXISTS `bebidas` (
   `quantidade` int(11) NOT NULL,
   `foto` varchar(300) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `bebidas`
 --
 
 INSERT INTO `bebidas` (`id`, `nome`, `tipo`, `preco`, `quantidade`, `foto`) VALUES
-(1, 'Suco de Laranja', 'Suco no copo', '2.99', 20, 'receber/66f46256722a0.png'),
-(2, 'Guarana Jesus', 'Lata', '5.00', 30, 'receber/66f1aec1a37c9.jpg'),
-(3, 'Del vale', 'Garafinha de suco ', '5.00', 20, 'receber/66f1b0ee41751.jpg'),
-(4, 'CafÃ©', 'Copo descartavel ', '1.00', 50, 'receber/66f1b15815108.png'),
-(5, 'Pepsi', 'Lata', '5.00', 20, 'receber/66f1b1bdb6fa7.png'),
-(6, 'Coca Cola', 'Lata', '5.00', 20, 'receber/66f1b1e03b8dd.png');
+(1, 'roberto', 'asd', '12.00', 1010101010, 'receber/66fd7fcf2f79b.jpg'),
+(3, 'b', 'b', '2.00', 101010101, 'Lanches/bebidas/66fd8054b27dd.jpg'),
+(4, 'c', 'c', '3.00', 1010101010, 'Lanches/bebidas/66fd80609b902.jpg');
 
 -- --------------------------------------------------------
 
@@ -162,15 +159,7 @@ CREATE TABLE IF NOT EXISTS `itens_pedido` (
   KEY `fk_lanches` (`id_lanches`),
   KEY `fk_bebidas` (`id`),
   KEY `fk_sobremesa` (`id_sobremesa`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
---
--- Extraindo dados da tabela `itens_pedido`
---
-
-INSERT INTO `itens_pedido` (`id_item_pedido`, `id_pedido`, `id_lanches`, `id`, `id_sobremesa`, `quantidade`) VALUES
-(1, 1, 1, NULL, NULL, 1),
-(2, 2, 1, NULL, NULL, 8);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -187,16 +176,16 @@ CREATE TABLE IF NOT EXISTS `lanches` (
   `quantidade` int(11) NOT NULL,
   `foto` varchar(300) NOT NULL,
   PRIMARY KEY (`id_lanches`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `lanches`
 --
 
 INSERT INTO `lanches` (`id_lanches`, `nome`, `ingredientes`, `preco`, `quantidade`, `foto`) VALUES
-(1, 'SanduÃ­che', 'PÃ£o, Alface, Presunto, Tomate', '123', 10, 'Lanches/img/66f8426e0dd7b.jpg'),
-(2, 'Claudio', 'Ã“leo', '2', 10, 'Lanches/img/66f84302cbdf3.jpg'),
-(3, 'Hamburguer', '6', '20', 10, 'Lanches/img/66f8435124fce.jpg');
+(1, 'SanduÃ­che', 'PÃ£o, Alface, Presunto, Tomate', '123', 1010101009, 'Lanches/img/66f8426e0dd7b.jpg'),
+(2, 'Claudio', 'Ã“leo', '2', 1010100, 'Lanches/img/66f84302cbdf3.jpg'),
+(3, 'Hamburguer', '6', '20', 101009, 'Lanches/img/66f8435124fce.jpg');
 
 -- --------------------------------------------------------
 
@@ -213,14 +202,7 @@ CREATE TABLE IF NOT EXISTS `pedidos` (
   `status` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_pedido`),
   KEY `fk_clientes` (`id_clientes`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
---
--- Extraindo dados da tabela `pedidos`
---
-
-INSERT INTO `pedidos` (`id_pedido`, `id_clientes`, `nome_funcionario`, `data_pedido`, `status`) VALUES
-(1, 7, 'Mateus Vinicius', '2024-09-30', 'Pedido ConcluÃ­do');
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -232,20 +214,21 @@ DROP TABLE IF EXISTS `sobremesa`;
 CREATE TABLE IF NOT EXISTS `sobremesa` (
   `id_sobremesa` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(300) NOT NULL,
+  `ingrediente` varchar(300) NOT NULL,
   `preco` varchar(300) NOT NULL,
   `quantidade` int(11) NOT NULL,
-  `imagem` varchar(300) NOT NULL,
+  `foto` varchar(300) NOT NULL,
   PRIMARY KEY (`id_sobremesa`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `sobremesa`
 --
 
-INSERT INTO `sobremesa` (`id_sobremesa`, `nome`, `preco`, `quantidade`, `imagem`) VALUES
-(3, 'bolo 222', '85', 1, ''),
-(4, 'brigadeiro', '5', 1, 'recebidos.img/66e88044bd4a7.webp'),
-(6, 'bolo de cenoura', '5', 1, 'recebidos.img/66e880715d398.jpg');
+INSERT INTO `sobremesa` (`id_sobremesa`, `nome`, `ingrediente`, `preco`, `quantidade`, `foto`) VALUES
+(1, 'sobremesa', '12', '1', 10101, 'Lanches/bebidas/66fda41cda5fa.jpg'),
+(2, 'asd', '12', '123', 1201010, 'Lanches/bebidas/66fda42342a3c.jpg'),
+(3, 'asd', '12', '123', 12010120, 'Lanches/bebidas/66fda4295ea04.jpg');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
