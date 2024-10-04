@@ -16,12 +16,12 @@ if (isset($_GET['id_alterar'])) {
         $ingrediente = $_POST['ingrediente'];
         $preco = $_POST['preco'] ?? '';
         $quantidade = intval($_POST['quantidade'] ?? 0);
-        $caminho_banco = $consultar['imagem']; // Preserva o caminho da foto antiga
+        $caminho_banco = $consultar['foto']; // Preserva o caminho da foto antiga
 
 
 
-        if (isset($_FILES['bt_imagem']) && $_FILES['bt_imagem']['error'] === 0) {
-            $arquivo = $_FILES['bt_imagem'];
+        if (isset($_FILES['bt_foto']) && $_FILES['bt_foto']['error'] === 0) {
+            $arquivo = $_FILES['bt_foto'];
 
             // Limite de tamanho do arquivo
             if ($arquivo['size'] > 15000000) {
@@ -51,7 +51,7 @@ if (isset($_GET['id_alterar'])) {
         }
 
         // Atualizando os dados no banco de dados
-        $sql_alterar = "UPDATE sobremesa SET nome = '$nome', preco = '$preco', ingrediente = '$ingrediente', quantidade = '$quantidade', imagem = '$caminho_banco' WHERE id_sobremesa = '$id_sobremesa'";
+        $sql_alterar = "UPDATE sobremesa SET nome = '$nome', preco = '$preco', ingrediente = '$ingrediente', quantidade = '$quantidade', foto = '$caminho_banco' WHERE id_sobremesa = '$id_sobremesa'";
         $mysqli_alterar = $mysqli->query($sql_alterar) or die($mysqli->error);
 
         header("location:consulta_sobremesa.php");
@@ -120,9 +120,9 @@ if (isset($_GET['id_alterar'])) {
                 <input type="file" class="form-control" name="foto">
                 <span></span>
             </label>
-            <?php if (empty($consultar['imagem'])): ?>
+            <?php if (empty($consultar['foto'])): ?>
                 <div class="mt-3 text-center">
-                    <img src="<?php echo htmlspecialchars($consultar['imagem']); ?>" alt="imagem da sobremesa"
+                    <img src="<?php echo htmlspecialchars($consultar['foto']); ?>" alt="foto da sobremesa"
                         class="img-thumbnail">
                 </div>
             <?php endif; ?>
