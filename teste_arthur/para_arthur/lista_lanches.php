@@ -21,6 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['truncate_lanches'])) 
     header("Location: " . $_SERVER['PHP_SELF']); // Redireciona após esvaziar
     exit();
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -82,12 +84,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['truncate_lanches'])) 
                         <th>Foto</th>
                         <th>Alterar</th>
                         <th>Deletar</th>
-                        <th>Ocultar Produto</th>
-                        <th>Enviar para a pagina principal</th>
+                    
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while ($lanches = $retorno_consulta->fetch_assoc()) { ?>
+                    <?php  while ($lanches = $retorno_consulta->fetch_assoc()) { ?>
                         <tr>
                             <td><?php echo htmlspecialchars($lanches['id_lanches'], ENT_QUOTES, 'UTF-8'); ?></td>
                             <td><?php echo htmlspecialchars($lanches['nome'], ENT_QUOTES, 'UTF-8'); ?></td>
@@ -96,8 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['truncate_lanches'])) 
                             <td><?php echo number_format($lanches['quantidade'], 0); ?></td>
                             <td>
                                 <img src="<?php echo htmlspecialchars($lanches['foto'], ENT_QUOTES, 'UTF-8'); ?>"
-                                     class="img-thumbnail"
-                                     alt="<?php echo htmlspecialchars($lanches['nome'], ENT_QUOTES, 'UTF-8'); ?>">
+                                     class="img-thumbnail" alt="<?php echo htmlspecialchars($lanches['nome'], ENT_QUOTES, 'UTF-8'); ?>">
                             </td>
                             <td>
                                 <a class="btn btn-primary" href="alterar_lanches.php?id_alterar=<?php echo $lanches['id_lanches']; ?>">Alterar</a>
@@ -105,15 +105,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['truncate_lanches'])) 
                             <td>
                                 <a class="btn btn-danger" href="deletar_lanches.php?id_deletar=<?php echo $lanches['id_lanches']; ?>">Deletar</a>
                             </td>
-                            <td>
-                                <a class="btn btn-secondary d-flex justify-content-center" href="deletar_lanches.php?id_deletar=<?php echo $lanches['id_lanches']; ?>">Ocultar</a>
-                            </td>
-                            <td>
-                                <a class="btn btn-info disable d-flex justify-content-center" href="deletar_lanches.php?id_deletar=<?php echo $lanches['id_lanches']; ?>">Enviar</a>
-                                <?php $index?>
-                                <?php if (isset())  ?>
-                            </td>
-                            
                         </tr>
                     <?php } ?>
                 </tbody>

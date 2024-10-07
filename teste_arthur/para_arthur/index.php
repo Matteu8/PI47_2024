@@ -150,7 +150,7 @@ $sobremesa_result = $mysqli->query($sobremesa) or die($mysqli->error);
             <?php while ($sobremesa = $sobremesa_result->fetch_assoc()) { ?>
                 <div class="col-md-3 mb-4">
                     <div class="card">
-                        <img src="<?php echo htmlspecialchars($sobremesa['imagem']); ?>" class="card-img-top"
+                        <img src="<?php echo htmlspecialchars($sobremesa['foto']); ?>" class="card-img-top"
                             alt="<?php echo htmlspecialchars($sobremesa['nome']); ?>">
                         <div class="card-body">
                             <h5 class="card-title"><?php echo htmlspecialchars($sobremesa['nome']); ?></h5>
