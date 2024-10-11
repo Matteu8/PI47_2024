@@ -1,0 +1,191 @@
+:root{
+    --azul_senac: #3a6da1;
+    --laranja_senac: #f7941d;
+
+}
+
+footer {
+
+    background-color: var(--azul_senac); /* Cor personalizada */
+    color: white;
+    padding: 20px 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+/* Define a altura do navbar para corresponder à altura da imagem */
+.navbar {
+    padding: 0;
+    margin: 0;
+    height: 118px; /* Ajusta a altura para igualar à da imagem */
+    position: relative; /* Permite posicionamento absoluto do botão "hamburger" */
+}
+
+/* Garante que a imagem ocupe todo o espaço horizontal */
+.navbar-brand img {
+    margin: 0;
+    padding: 0;
+    height: 100%; /* A imagem ocupará toda a altura do navbar */
+    width: 100%; /* A imagem ocupará todo o espaço horizontal */
+    object-fit: cover; /* Garante que a imagem se ajuste ao container sem distorção */
+}
+
+/* Ajusta o botão "hamburger" no lado direito e centraliza verticalmente */
+.navbar-toggler {
+    position: absolute;
+    right: 15px; /* Posição no lado direito */
+    top: 50%;
+    transform: translateY(-50%); /* Centraliza verticalmente */
+    z-index: 10; /* Garante que o botão fique sobre a imagem */
+}
+
+/* Remove padding extra do container fluid */
+.container-fluid {
+    padding: 0;
+}
+
+@media (max-width: 992px) {
+    .navbar-collapse {
+    background-color: #3a6da1; /* Mesmo fundo azul da barra de navegação */
+    }
+}
+
+
+
+/* Regras para o formulário */
+
+/* From Uiverse.io by Yaya12085 */ 
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 350px;
+    background-color: #edecec;
+    padding: 20px;
+    border-radius: 20px;
+    position: relative;
+  }
+  
+  .title {
+    font-size: 28px;
+    color: var(--azul_senac);
+    font-weight: 600;
+    letter-spacing: -1px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+  }
+  
+  .title::before,.title::after {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    left: 0px;
+    background-color: var(--azul_senac);
+  }
+  
+  .title::before {
+    width: 18px;
+    height: 18px;
+    background-color: var(--azul_senac);
+  }
+  
+  .title::after {
+    width: 18px;
+    height: 18px;
+    animation: pulse 1s linear infinite;
+  }
+  
+  .message, .signin {
+    color: rgba(88, 87, 87, 0.822);
+    font-size: 14px;
+  }
+  
+  .signin {
+    text-align: center;
+  }
+  
+  .signin a {
+    color: var(--azul_senac);
+  }
+  
+  .signin a:hover {
+    text-decoration: underline var(--azul_senac);
+  }
+  
+  .flex {
+    display: flex;
+    width: 100%;
+    gap: 6px;
+  }
+  
+  .form label {
+    position: relative;
+  }
+  
+  .form label .input {
+    width: 100%;
+    padding: 10px 10px 20px 10px;
+    outline: 0;
+    border: 1px solid rgba(105, 105, 105, 0.397);
+    border-radius: 10px;
+  }
+  
+  .form label .input + span {
+    position: absolute;
+    left: 10px;
+    top: 15px;
+    color: grey;
+    font-size: 0.9em;
+    cursor: text;
+    transition: 0.3s ease;
+  }
+  
+  .form label .input:placeholder-shown + span {
+    top: 15px;
+    font-size: 0.9em;
+  }
+  
+  .form label .input:focus + span,.form label .input:valid + span {
+    top: 30px;
+    font-size: 0.7em;
+    font-weight: 600;
+  }
+  
+  .form label .input:valid + span {
+    color: var(--laranja_senac);
+  }
+  
+  .submit {
+    border: none;
+    outline: none;
+    background-color: var(--azul_senac);
+    padding: 10px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 16px;
+    transform: .3s ease;
+  }
+  
+  .submit:hover {
+    background-color: var(--laranja_senac);
+  }
+  
+  @keyframes pulse {
+    from {
+      transform: scale(0.9);
+      opacity: 1;
+    }
+  
+    to {
+      transform: scale(1.8);
+      opacity: 0;
+    }
+  }
+
+/* Fim formulário */  
